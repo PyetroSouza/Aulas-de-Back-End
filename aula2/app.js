@@ -44,7 +44,15 @@
     E -> AND -> &&
     OU -> OR -> ||
     NAO -> NOT -> !
+
+    Formas de conversão de tipos de dados
+        parseInt() -> Permite converter um conteúdo em um número do tipo inteiro
+        parseFloat -> Permite converter um conteúdo em um número do tipo decimal
+        Number -> Permite converter um conteúdo para NUMERO, podendo ser inteiro ou decimal
+        String() - Permite converter um conteúdo em STRING
+        Boolean() - Permite converter um conteúdo para BOOLEANO (true ou false)   
         
+        typeof() -> retorna o tipo de dados de uma variável (String, Number, Bolean ou Object)
 
 */
 
@@ -80,15 +88,30 @@ entradaDeDados.question('Digite o nome do aluno: ', function (nome) {
                     let nota4 = valor4
 
                     //Validação de entrada vazia
-                    if(nomeAluno == '' || nota1 == '' || nota2 == '' || nota3 =='' || nota4 ==''){
+                    if (nomeAluno == '' || nota1 == '' || nota2 == '' || nota3 == '' || nota4 == '') {
                         console.log("[ERRO] Preencha os campos!")
                         //Validação de entrada de números apenas entre 0 até 100
-                    }else if(nota1< 0 || nota1 > 100 || nota2 < 0 || nota2 > 100 || nota3 < 0 || nota3 > 100 || nota4 < 0 || nota4 > 100){
+                    } else if (nota1 < 0 || nota1 > 100 || nota2 < 0 || nota2 > 100 || nota3 < 0 || nota3 > 100 || nota4 < 0 || nota4 > 100) {
                         console.log("[ERRO] As notas só podem ser 0 a 100")
                         //Validação de entrada somente de números
+
                         // IsNaN() -> Permite a validação de números ou letras
-                    } else if(isNaN(nota1) || isNaN(nota2) || isNaN(nota3) || isNaN(nota4)){
+                    } else if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3) || isNaN(nota4)) {
                         console.log('[ERRO] Apenas números permitidos na entrada das notas ')
+                    } else {
+                        let media = (Number(nota1) + Number(nota2) + Number(nota3) + Number(nota4)) / 4
+                        //Validação do status do aluno
+                        let status
+                        if (media >= 70.00){
+                            status = "Aprovado"
+                        } else if (media < 50.00){
+                            status = "Reprovado"
+                        } else {
+                            status = "Recuperação"
+                        }
+                        //Exibir o boletim do Aluno
+                        //toFixed() -> É um método que permite fixar a qtde de casas decimais
+                        console.log(` A média do(a) aluno(a), ${nomeAluno}, é ${media.toFixed(2)}, \n ${status}`)
                     }
                 }) //Fecha nota4
             }) //Fecha nota3
