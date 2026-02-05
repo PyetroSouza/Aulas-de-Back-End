@@ -129,9 +129,9 @@ entradaDeDados.question('Olá, somos a empresa VIVA MODA, BEM VINDO! \n Digite o
 
                             console.log(`\n *************************** VIVA MODA ***************************\n`)
                             console.log(` Muito obrigado por realizar a sua compra conosco Sr(a) ${nomeComprador}.`)
-                            console.log(`A compra do produto ${nomeProduto}, tem um valor de: ${valorProduto.toFixed(2)}.`)
-                            console.log(`A sua compra será parcelada em ${quantidadesParcelas} vezes e o Sr(a) pagará: ${montante.toFixed(2)}.`)
-                            console.log(`O acréscimo realizado ao valor de: ${valorProduto.toFixed(2)} será de ${diferencaValor.toFixed(2)}.\n`)
+                            console.log(`A compra do produto ${nomeProduto}, tem um valor de: R$${valorProduto.toFixed(2)}.`)
+                            console.log(`A sua compra será parcelada em ${quantidadesParcelas} vezes e o Sr(a) pagará: R$${montante.toFixed(2)}.`)
+                            console.log(`O acréscimo realizado ao valor de: R$${valorProduto.toFixed(2)} será de ${diferencaValor.toFixed(2)}.\n`)
                             console.log(`Muito obrigado por escolher a VIVA MODA`)
                             console.log('******************************************************************')
                         }
