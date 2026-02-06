@@ -14,6 +14,9 @@ const entradaDeDados = readline.createInterface({
     output: process.stdout
 })
 
+//Váriavel de validação de símbolos especiais e quantidade mínima de caracteres
+const verificarSimbolos = /^[\p{L} ]{2,}$/u
+
 //Entrada de Dados do nome do cliente
 entradaDeDados.question('Olá, somos a empresa VIVA MODA, BEM VINDO! \n Digite o nome do cliente: ', function (nome) {
     //Recebe o nome do cliente
@@ -27,6 +30,10 @@ entradaDeDados.question('Olá, somos a empresa VIVA MODA, BEM VINDO! \n Digite o
         //Validação de entrada com números
     } else if (!isNaN(nome)) {
         console.log('[ERRO] Apenas caracteres válidos')
+        return
+
+    } else if (!verificarSimbolos.test(nome)) {
+        console.log('[ERRO] Apenas caracteres válidos e mínimo dois caracteres')
         return
     }
 
@@ -44,12 +51,16 @@ entradaDeDados.question('Olá, somos a empresa VIVA MODA, BEM VINDO! \n Digite o
         } else if (!isNaN(produto)) {
             console.log('[ERRO] Apenas caracteres válidos')
             return
+
+        } else if (!verificarSimbolos.test(produtoJo)) {
+            console.log('[ERRO] Apenas caracteres válidos e mínimo dois caracteres')
+            return
         }
 
         //Entrada de Dados do valor da compra
         entradaDeDados.question('Digite o valor da compra: ', function (valor) {
             //Recebe o valor do produto
-             let valorProduto = Number(valor)
+            let valorProduto = Number(valor)
 
             //Validação de entrada vazia
             if (valor == '') {
@@ -92,7 +103,7 @@ entradaDeDados.question('Olá, somos a empresa VIVA MODA, BEM VINDO! \n Digite o
 
                         //Validação de entrada vazia
                     } else if (tempo == '') {
-                        console.log('[ERRO] Digite a forma de pagamento')
+                        console.log('[ERRO] Digite a forma de pagamento se será em anos ou meses')
                         return
 
                         //Validação de entrada de números que não seja [1] ou [2]
@@ -100,7 +111,7 @@ entradaDeDados.question('Olá, somos a empresa VIVA MODA, BEM VINDO! \n Digite o
                         console.log('[ERRO] Digite apenas valores [1] para meses ou [2] para anos')
                         return
                     }
-                    
+
                     //Entrada de Dados de quantas vezes será pagos o produto
                     entradaDeDados.question('Será pago em quantas vezes o produto?: ', function (vezes) {
                         //Recebe o quanto de vezes será pago o produto
@@ -120,7 +131,6 @@ entradaDeDados.question('Olá, somos a empresa VIVA MODA, BEM VINDO! \n Digite o
                             console.log('[ERRO] Digite quantas vezes será pago o produto')
                             return
                         } else {
-
                             //Cálculo do montante
                             let montante = valorProduto * (1 + taxaJuros) ** quantidadesParcelas
 
@@ -132,11 +142,10 @@ entradaDeDados.question('Olá, somos a empresa VIVA MODA, BEM VINDO! \n Digite o
                             console.log(`A compra do produto ${nomeProduto}, tem um valor de: R$${valorProduto.toFixed(2)}.`)
                             console.log(`A sua compra será parcelada em ${quantidadesParcelas} vezes e o Sr(a) pagará: R$${montante.toFixed(2)}.`)
                             console.log(`O acréscimo realizado ao valor de: R$${valorProduto.toFixed(2)} será de ${diferencaValor.toFixed(2)}.\n`)
-                            console.log(`Muito obrigado por escolher a VIVA MODA`)
+                            console.log(`               Muito obrigado por escolher a VIVA MODA`)
                             console.log('******************************************************************')
                         }
                     })
-
                 })
             })
         })
