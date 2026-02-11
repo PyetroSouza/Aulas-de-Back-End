@@ -70,10 +70,7 @@ const entradaDeDados = readline.createInterface({
 entradaDeDados.question('Digite o nome do aluno: ', function (nome) {
     //Recebe o nome do Aluno
     let nomeAluno = nome
-    if (nome == "" || !isNaN(nome)){
-        console.log('[ERRO] Coloque o nome válido')
-        return
-    }
+ 
 
     //Entrada de dados da nota1
     entradaDeDados.question('Digite a nota1: ', function (valor1) {
@@ -91,27 +88,34 @@ entradaDeDados.question('Digite o nome do aluno: ', function (nome) {
                 entradaDeDados.question('Digite a nota4: ', function (valor4) {
                     let nota4 = valor4
 
+                    //Validação de entrada vazia
+                    if (nomeAluno == '' || nota1 == '' || nota2 == '' || nota3 == '' || nota4 == '') {
+                        console.log("[ERRO] Preencha os campos!")
+                        //Validação de entrada de números apenas entre 0 até 100
+                    } else if (nota1 < 0 || nota1 > 100 || nota2 < 0 || nota2 > 100 || nota3 < 0 || nota3 > 100 || nota4 < 0 || nota4 > 100) {
+                        console.log("[ERRO] As notas só podem ser 0 a 100")
+                        //Validação de entrada somente de números
 
-                    {
-                        let calcular = require('./modulo/calculo')
-                        let media = calcular.calcularMedia(nota1,nota2,nota3,nota4)
-                        let status = calcular.validarStatus(media)
-                        // let status = validarStatus(media)
-                        // console.log(status)
+                        // IsNaN() -> Permite a validação de números ou letras
+                    } else if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3) || isNaN(nota4)) {
+                        console.log('[ERRO] Apenas números permitidos na entrada das notas ')
+                    } else {
+                        let media = (Number(nota1) + Number(nota2) + Number(nota3) + Number(nota4)) / 4
+                        //Validação do status do aluno
+                        let status
+                        if (media >= 70.00) {
+                            status = "Aprovado"
+                        } else if (media < 50.00) {
+                            status = "Reprovado"
+                        } else {
+                            status = "Recuperação"
+                        }
                         //Exibir o boletim do Aluno
                         //toFixed() -> É um método que permite fixar a qtde de casas decimais
-                        if (nomeAluno,media,status){
-                            console.log(` A média do(a) aluno(a), ${nomeAluno}, é ${media}, \n ${status}`)
-                             entradaDeDados.close
-                        } else {
-                            console.log('[ERRO]: Não foi possível processar o cálculo')
-                            entradaDeDados.close
-                        }
-                        
+                        console.log(` A média do(a) aluno(a), ${nomeAluno}, é ${media.toFixed(2)}, \n ${status}`)
                     }
                 }) //Fecha nota4
             }) //Fecha nota3
         }) //Fecha nota2
     }) //Fecha nota1
 }) //Fecha nome 
-
