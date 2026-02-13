@@ -70,7 +70,7 @@ const entradaDeDados = readline.createInterface({
 entradaDeDados.question('Digite o nome do aluno: ', function (nome) {
     //Recebe o nome do Aluno
     let nomeAluno = nome
-    if (nome == "" || !isNaN(nome)){
+    if (nome == "" || !isNaN(nome)) {
         console.log('[ERRO] Coloque o nome válido')
         return
     }
@@ -91,24 +91,22 @@ entradaDeDados.question('Digite o nome do aluno: ', function (nome) {
                 entradaDeDados.question('Digite a nota4: ', function (valor4) {
                     let nota4 = valor4
 
-
-                    {
-                        let calcular = require('./modulo/calculo')
-                        let media = calcular.calcularMedia(nota1,nota2,nota3,nota4)
-                        let status = calcular.validarStatus(media)
-                        // let status = validarStatus(media)
-                        // console.log(status)
-                        //Exibir o boletim do Aluno
-                        //toFixed() -> É um método que permite fixar a qtde de casas decimais
-                        if (nomeAluno,media,status){
-                            console.log(` A média do(a) aluno(a), ${nomeAluno}, é ${media}, \n ${status}`)
-                             entradaDeDados.close
-                        } else {
-                            console.log('[ERRO]: Não foi possível processar o cálculo')
-                            entradaDeDados.close
-                        }
-                        
+                    let calcular = require('./modulo/calculo')
+                    let media = calcular.calcularMedia(nota1, nota2, nota3, nota4)
+                    let status = calcular.validarStatus(media)
+                    // let status = validarStatus(media)
+                    // console.log(status)
+                    //Exibir o boletim do Aluno
+                    //toFixed() -> É um método que permite fixar a qtde de casas decimais
+                    if (nomeAluno, media, status) {
+                        console.log(` A média do(a) aluno(a), ${nomeAluno}, é ${media}, \n ${status}`)
+                        entradaDeDados.close
+                    } else {
+                        console.log('[ERRO]: Não foi possível processar o cálculo')
+                        entradaDeDados.close
                     }
+
+
                 }) //Fecha nota4
             }) //Fecha nota3
         }) //Fecha nota2
