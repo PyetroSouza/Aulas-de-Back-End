@@ -23,7 +23,7 @@ entradaDeDados.question('Olá! Seja bem vindo a empresa Cálculo SA \nDigite pri
         entradaDeDados.question('Qual operação quer utilizar? \n -Soma \n -Subtração \n -Multiplicação \n -Divisão \nDigite umas das operações: ', function(operacao){
             let operador = operacao
 
-            let calcular = require("./calculo")
+            let calcular = require("./modulo/calculo")
             let calculo = calcular.calcularConta(numero1,numero2,operador)
             console.log(calculo)
             entradaDeDados.close()
