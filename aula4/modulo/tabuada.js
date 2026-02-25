@@ -1,7 +1,7 @@
 /**********************
  * Objetivo: Arquivo responsável por gerar uma tabuada utilizando WHILE e FOR
  * Data: 25/02/26
- * Autor: Marcel
+ * Autor: Pyetro Ferreira
  * Versão 1.0
  */
 
