@@ -4,12 +4,17 @@
  * Autor: Pyetro Ferreira
  * Versão: 1.0
  ***********************************************************/
-const calcularMedia = function (nota1, nota2, nota3, nota4) {
+const calcularMedia = function (nota1, nota2, nota3, nota4, notaExame) {
     n1 = Number(nota1)
     n2 = Number(nota2)
     n3 = Number(nota3)
     n4 = Number(nota4)
+    nE = Number(notaExame)
     let media = (nota1 + nota2 + nota3 + nota4) / 4
+    if (media >= 50 && media <= 69) {
+        media = (media + nE)
+    }
+
     return media
 }
 const classificarMedia = function (media, notaExame) {
@@ -26,8 +31,8 @@ const classificarMedia = function (media, notaExame) {
     return status
 }
 const classificarSexo = function (sexoAluno, sexoProfessor) {
-    sxAluno = String(sexoAluno)
-    sxProfessor = String(sexoProfessor)
+    let sxAluno = String(sexoAluno)
+    let sxProfessor = String(sexoProfessor)
     if (sexoAluno == "masculino")
         sxAluno == "aluno"
     else
@@ -35,4 +40,12 @@ const classificarSexo = function (sexoAluno, sexoProfessor) {
     if (sexoProfessor == 'masculino')
         sxProfessor == "professor"
     else sxProfessor == "professora"
+
+    return sxAluno, sxProfessor
+} 
+
+module.exports = {
+    calcularMedia,
+    classificarMedia,
+    classificarSexo
 }
