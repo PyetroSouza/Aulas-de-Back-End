@@ -17,8 +17,10 @@ const calcularFatorial = function (numeroFatorial) {
             expressao += "x"
         }
     }
-
+console.log(`Fatorial de ${num} é ${expressao} = ${fatorial}`)
     return `Fatorial de ${num} é ${expressao} = ${fatorial}`
 }
 
-calcularFatorial(3)
+ module.exports = {
+    calcularFatorial
+ }

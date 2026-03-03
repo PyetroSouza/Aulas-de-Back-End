@@ -4,19 +4,34 @@
  * Autor: Pyetro Ferreira
  * Versão: 1.0
  ***********************************************************/
-const calcularMedia = function (nota1, nota2, nota3, nota4, notaExame) {
-    n1 = Number(nota1)
-    n2 = Number(nota2)
-    n3 = Number(nota3)
-    n4 = Number(nota4)
-    nE = Number(notaExame)
-    let media = (nota1 + nota2 + nota3 + nota4) / 4
-    if (media >= 50 && media <= 69) {
-        media = (media + nE)
+
+const validarMediaEscolares = function (nota1, nota2, nota3, nota4) {
+    if (nota1 < 0 || nota1 > 100 ||
+        nota2 > 100 || nota2 < 0 ||
+        nota3 > 100 || nota3 < 0 ||
+        nota4 > 100 || nota4 < 0) {
+        return false
+    } else {
+        return true
     }
+}
+
+const calcularMedia = function (nota1, nota2, nota3, nota4) {
+
+    let n1 = Number(nota1)
+    let n2 = Number(nota2)
+    let n3 = Number(nota3)
+    let n4 = Number(nota4)
+
+    let media = (n1 + n2 + n3 + n4) / 4
 
     return media
 }
+
+const calcularMediaExame = function (media, notaExame) {
+    return (media + Number(notaExame)) / 2
+}
+
 const classificarMedia = function (media, notaExame) {
     let status
     if (media >= 70)
@@ -30,6 +45,7 @@ const classificarMedia = function (media, notaExame) {
             status = 'Reprovado'
     return status
 }
+
 const classificarSexo = function (sexoAluno, sexoProfessor) {
     let sxAluno = String(sexoAluno)
     let sxProfessor = String(sexoProfessor)
@@ -42,10 +58,11 @@ const classificarSexo = function (sexoAluno, sexoProfessor) {
     else sxProfessor == "professora"
 
     return sxAluno, sxProfessor
-} 
-
+}
 module.exports = {
+    validarMediaEscolares,
     calcularMedia,
+    calcularMediaExame,
     classificarMedia,
     classificarSexo
 }

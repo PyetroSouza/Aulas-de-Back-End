@@ -25,3 +25,7 @@ const gerarTabuada = function (tabuadaInicial, tabuadaFinal, numeroInicial, nume
 }
 
 gerarTabuada(1, 5, 1, 10)
+
+ module.exports = {
+  gerarTabuada  
+ }

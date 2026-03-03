@@ -9,27 +9,31 @@
 const calcularImc = function (peso, altura) {
     let pesoPessoa = Number(peso)
     let alturaPessoa = Number(altura)
-    let imc = pesoPessoa / (alturaPessoa * alturaPessoa)
-    return imc
+
+    return pesoPessoa / (alturaPessoa * alturaPessoa)
 }
 
-//Função para classificar o IMC, recebendo o imc
-const classificarImc = function(imc){
-        let classificacao
-        if (imc < 18.5)
-        classificacao = 'Abaixo do peso'
-    else if (imc > 18.5 && imc < 24.9)
-        classificacao = 'Peso normal'
-    else if (imc > 25 && imc < 29.9)
-        console.log('Acima do peso (sobrepeso')
-    else if (imc > 30 && imc < 34.9)
-        classificacao = 'Obesidade I'
-    else if (imc > 35 && imc < 39.9)
-        classificacao = 'Obesidade II'
-    else if (imc > 40)
-        classificacao = 'Obesidade III'
-    return classificacao
+const classificarImc = function (imc) {
+
+    if (imc < 18.5)
+        return 'Abaixo do peso'
+
+    else if (imc >= 18.5 && imc <= 24.9)
+        return 'Peso normal'
+
+    else if (imc >= 25 && imc <= 29.9)
+        return 'Sobrepeso'
+
+    else if (imc >= 30 && imc <= 34.9)
+        return 'Obesidade I'
+
+    else if (imc >= 35 && imc <= 39.9)
+        return 'Obesidade II'
+
+    else
+        return 'Obesidade III'
 }
+
 module.exports = {
     calcularImc,
     classificarImc
