@@ -33,7 +33,7 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
             if (escolhaCalculo == "IMC")
                 entradaDeDados.question('\n Digite o seu peso em kilos (kg): ', function (peso) {
 
-                    let pesoPessoa = peso.replace(',', ' .')
+                    let pesoPessoa = peso.replace(',', '.')
                     let pesoVerificado = validacao.validarEntradaNumber(pesoPessoa)
 
                     if (pesoVerificado)
