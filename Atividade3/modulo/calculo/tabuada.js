@@ -1,6 +1,4 @@
-const { calcular } = require("../../../aula4/modulo/calculo")
-
-/**********************************************************
+  /**********************************************************
  * Objetivo: Arquivo responsável pelo cálculo de tabuada
  * Data: 28/02/2026
  * Autor: Pyetro Ferreira
@@ -24,8 +22,14 @@ const gerarTabuada = function (tabuadaInicial, tabuadaFinal, numeroInicial, nume
     return resultado
 }
 
+<<<<<<< HEAD
 gerarTabuada(1, 5, 1, 10)
 
  module.exports = {
   gerarTabuada  
  }
+=======
+module.exports = {
+ gerarTabuada
+}
+>>>>>>> e206bf100ab168a68a9dc5ca6b305222684c17d6
