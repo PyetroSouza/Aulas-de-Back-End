@@ -1,6 +1,4 @@
-const { calcular } = require("../../../aula4/modulo/calculo")
-
-/**********************************************************
+  /**********************************************************
  * Objetivo: Arquivo responsável pelo cálculo de tabuada
  * Data: 28/02/2026
  * Autor: Pyetro Ferreira
