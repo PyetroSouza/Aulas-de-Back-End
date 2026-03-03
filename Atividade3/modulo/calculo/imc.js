@@ -6,27 +6,20 @@
  ***********************************************************/
 
 
-const validarUnidadeMedidaAltura = function (unidadeMedida) {
-    let medida = unidadeMedida.toUpperCase()
-    if (medida === "CM" || medida === "M") {
-        return true
-    } else {
-        return false
-    }
-}
 
 
 //Função para calcular IMC, recebendo peso e altura
-const calcularImc = function (peso, altura) {
+const calcularImc = function (peso, altura, unidadeMedida) {
     let pesoPessoa = Number(peso)
     let alturaPessoa = Number(altura)
+    let medida = unidadeMedida
+    let imc 
 
-        if (medida === 'CM') {
-        alturaUsuario = alturaUsuario / 100
-    } else if (medida !== "M") {
+    if (medida === "CM")
+        alturaPessoa = alturaPessoa / 100
+    else if (medida !== "M"){
         return false
     }
-
    imc = (pesoPessoa / (alturaPessoa) ** 2).toFixed(2)
    return imc
 }
@@ -59,5 +52,4 @@ const classificarImc = function (imc) {
 module.exports = {
     calcularImc,
     classificarImc,
-    validarUnidadeMedidaAltura
 }

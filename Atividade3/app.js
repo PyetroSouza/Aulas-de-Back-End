@@ -22,21 +22,41 @@ let calculoFatorial = require('./modulo/calculo/fatorial')
 let calculoParImpar = require('./modulo/calculo/par_impar')
 let validacao = require('./modulo/validar')
 
-entradaDeDados.question("'Olá! Seja bem vindo a empresa Cálculo SA \n Qual calculadora você gostaria de usar? \n - IMC \n - Médias Escolares \n - Cálculo de Tabuada \n - Fatorial \n - Par ou Ímpar \n Escreva uma delas que queira usar: ", function (informarCalculo) {
+entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calculadora você gostaria de usar? \n - IMC \n - Médias Escolares \n - Cálculo de Tabuada \n - Fatorial \n - Par ou Ímpar \n Escreva uma delas que queira usar: ", function (informarCalculo) {
 
     let escolhaCalculo = informarCalculo.trim().toUpperCase()
     let validarCalculadora = validacao.validarEntradaString(informarCalculo)
     let validarEscolhaCalculadora = validacao.validarCalculadora(informarCalculo)
 
-    if (escolhaCalculo){
-        if (escolhaCalculo == "IMC"){
-            entradaDeDados.question('\n Digite o seu peso em kilos (kg): ', function(peso){
-                let pesoPessoa = peso.replace(',' , ' .')
-                let pesoVerificado = validacao.validarEntradaNumber(pesoPessoa)
+    if (validarCalculadora && validarEscolhaCalculadora)
+        if (escolhaCalculo)
+            if (escolhaCalculo == "IMC")
+                entradaDeDados.question('\n Digite o seu peso em kilos (kg): ', function (peso) {
 
-                if(pesoVerificado)
+                    let pesoPessoa = peso.replace(',', ' .')
+                    let pesoVerificado = validacao.validarEntradaNumber(pesoPessoa)
 
-            })
-        }
-    }
+                    if (pesoVerificado)
+                        entradaDeDados.question('Qual será a unidade de medida para altura? Em metros (m) ou em centímetros (cm)?: ', function (unidadeMedida) {
+
+                            let unidadeEscolhida = unidadeMedida.toUpperCase()
+                            let unidadeValString = validacao.validarEntradaString(unidadeEscolhida)
+                            let unidadeValAltura = validacao.validarUnidadeMedidaAltura(unidadeEscolhida)
+
+                            if (unidadeValString && unidadeValAltura)
+                                entradaDeDados.question(`Informe a altura em ${unidadeEscolhida}: `, function (altura) {
+
+                                    let alturaInformada = altura.replace(',', '.')
+                                    let alturaVal = validacao.validarEntradaNumber(alturaInformada)
+
+                                    if (alturaVal) {
+                                        let resultadoIMC = calculoImc.calcularImc(pesoPessoa, alturaInformada, unidadeEscolhida)
+                                        let classificarImc = calculoImc.classificarImc(resultadoIMC)
+
+                                        console.log(`\n Resultado IMC é: ${resultadoIMC} \n IMC está classificado como: ${classificarImc}`)
+                                        entradaDeDados.close()
+                                    }
+                                })
+                        })
+                })
 })

@@ -5,7 +5,7 @@
  * Versão: 1.0
  *********************************************************/
 
- 
+ //Validação para entrada de String
 const validarEntradaString = function (dado) {
 
     if (dado == undefined || dado.trim() === '')
@@ -17,6 +17,7 @@ const validarEntradaString = function (dado) {
     return true
 }
 
+//Validação para entrada de Number
 const validarEntradaNumber = function (valor) {
 
     if (valor == undefined)
@@ -31,6 +32,7 @@ const validarEntradaNumber = function (valor) {
     return true
 }
 
+//Validação da escolha da Calculadora
 const validarCalculadora = function (informarCalculo){
         let escolha = String(informarCalculo).trim().toUpperCase()
     let calculadoraEscolhida = ['PAR/IMPAR', 'IMPAR/PAR', 'IMPAR OU PAR', 'PAR OU IMPAR', 'IMPAR E PAR', 'PAR E IMPAR', 'IMPAR', 'PAR',
@@ -44,8 +46,19 @@ const validarCalculadora = function (informarCalculo){
         }
 }
 
+//Validações do IMC
+const validarUnidadeMedidaAltura = function (unidadeMedida) {
+    let medida = unidadeMedida.toUpperCase()
+    if (medida === "CM" || medida === "M") {
+        return true
+    } else {
+        return false
+    }
+}
+
 module.exports = {
     validarEntradaNumber,
     validarEntradaString,
-    validarCalculadora
+    validarCalculadora,
+    validarUnidadeMedidaAltura
 }
