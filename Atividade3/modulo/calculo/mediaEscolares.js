@@ -25,11 +25,15 @@ const calcularMedia = function (nota1, nota2, nota3, nota4) {
 
     let media = (n1 + n2 + n3 + n4) / 4
 
-    return media
+    return media.toFixed(2)
 }
 
 const calcularMediaExame = function (media, notaExame) {
-    return (media + Number(notaExame)) / 2
+    let valorMedia = Number(media)
+    let ntEx = Numbe(notaExame)
+    let mediaFinal
+    mediaFinal = (valorMedia + ntEx) / 2
+    return mediaFinal
 }
 
 const classificarMedia = function (media, notaExame) {
