@@ -22,4 +22,6 @@ const gerarTabuada = function (tabuadaInicial, tabuadaFinal, numeroInicial, nume
     return resultado
 }
 
-gerarTabuada(1, 5, 1, 10)
+module.exports = {
+ gerarTabuada
+}
