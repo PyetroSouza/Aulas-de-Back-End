@@ -243,4 +243,81 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
                 entradaDeDados.close()
             }
         })
+if (escolhaCalculo == "CÁLCULO DE TABUADA" || escolhaCalculo == "CALCULO DE TABUADA")
+
+    entradaDeDados.question('\nDigite o valor inicial da tabuada: ', function (valorTabuadaI) {
+
+        let tabuadaI = valorTabuadaI.replace(',', '.')
+        let tabuadaIVal =
+            validacao.validarEntradaNumber(tabuadaI) &&
+            validacao.validarEntradaTabuada(tabuadaI)
+
+        if (tabuadaIVal)
+
+            entradaDeDados.question('\nDigite o valor final da tabuada: ', function (valorTabuadaF) {
+
+                let tabuadaF = valorTabuadaF.replace(',', '.')
+                let tabuadaFVal =
+                    validacao.validarEntradaNumber(tabuadaF) &&
+                    validacao.validarEntradaTabuada(tabuadaF)
+
+                if (tabuadaFVal && Number(tabuadaF) > Number(tabuadaI))
+
+                    entradaDeDados.question('\nDigite o contador inicial: ', function (contadorInicial) {
+
+                        let contI = contadorInicial.replace(',', '.')
+                        let contIVal =
+                            validacao.validarEntradaNumber(contI) &&
+                            validacao.validarEntradaNumeroTabuada(contI)
+
+                        if (contIVal)
+
+                            entradaDeDados.question('\nDigite o contador final: ', function (contadorFinal) {
+
+                                let contF = contadorFinal.replace(',', '.')
+                                let contFVal =
+                                    validacao.validarEntradaNumber(contF) &&
+                                    validacao.validarEntradaNumeroTabuada(contF)
+
+                                if (contFVal && Number(contF) > Number(contI)) {
+
+                                    let resultado = calculoTabuada.gerarTabuada(
+                                        tabuadaI,
+                                        tabuadaF,
+                                        contI,
+                                        contF
+                                    )
+
+                                    console.log('\n===== TABUADA =====')
+                                    console.log(resultado)
+
+                                    entradaDeDados.close()
+
+                                } else {
+                                    console.log('[ERRO] Contador final inválido')
+                                    entradaDeDados.close()
+                                }
+                            })
+
+                        else {
+                            console.log('[ERRO] Contador inicial inválido')
+                            entradaDeDados.close()
+                        }
+                    })
+
+                else {
+                    console.log('[ERRO] Valor final da tabuada inválido')
+                    entradaDeDados.close()
+                }
+            })
+
+        else {
+            console.log('[ERRO] Valor inicial da tabuada inválido')
+            entradaDeDados.close()
+        }
+    })
+    else {
+        console.log('[ERRO] Digite um dos tipos de cálculos')
+        entradaDeDados.close()
+    }
 })

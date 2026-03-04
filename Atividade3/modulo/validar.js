@@ -101,6 +101,18 @@ const classificarSexoProfessor = function (sexo) {
     return false
 }
 
+//Validações do cálculo da Tabuada
+
+const validarEntradaTabuada = function (tabuadaValor) {
+    let tabValor = Number(tabuadaValor)
+    return !(tabValor < 2 || tabValor > 100)
+}
+
+const validarEntradaNumeroTabuada = function (numeroTabuada) {
+    let tabNumero = Number(numeroTabuada)
+    return !(tabNumero < 1 || tabNumero > 50)
+}
+
 
 module.exports = {
     validarEntradaNumber,
@@ -110,5 +122,7 @@ module.exports = {
     validarMediaEscolares,
     classificarSexo,
     classificarSexoAluno,
-    classificarSexoProfessor
+    classificarSexoProfessor,
+    validarEntradaTabuada,
+    validarEntradaNumeroTabuada
 }
