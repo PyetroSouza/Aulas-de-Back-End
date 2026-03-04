@@ -113,6 +113,22 @@ const validarEntradaNumeroTabuada = function (numeroTabuada) {
     return !(tabNumero < 1 || tabNumero > 50)
 }
 
+//Validação do cálculo do Fatorial
+
+const validarNumeroFatorial = function (numeroFatorial){
+
+    let numFat = Number(numeroFatorial)
+
+    return Number.isInteger(numFat) && numFat > 1
+}
+
+//Validações do cálculo de Par ou Ímpar
+const validarNumeroInicial = function (numeroInicial){
+    let numI = Number(numeroInicial)
+}
+const validarNumeroFinal = function (numeroFinal){
+    let numF = Number(numeroFinal)
+}
 
 module.exports = {
     validarEntradaNumber,
@@ -124,5 +140,8 @@ module.exports = {
     classificarSexoAluno,
     classificarSexoProfessor,
     validarEntradaTabuada,
-    validarEntradaNumeroTabuada
+    validarEntradaNumeroTabuada,
+    validarNumeroFatorial,
+    validarNumeroInicial,
+    validarNumeroFinal
 }

@@ -243,81 +243,124 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
                 entradaDeDados.close()
             }
         })
-if (escolhaCalculo == "CÁLCULO DE TABUADA" || escolhaCalculo == "CALCULO DE TABUADA")
+    if (escolhaCalculo == "CÁLCULO DE TABUADA" || escolhaCalculo == "CALCULO DE TABUADA")
 
-    entradaDeDados.question('\nDigite o valor inicial da tabuada: ', function (valorTabuadaI) {
+        entradaDeDados.question('\nDigite o valor inicial da tabuada: ', function (valorTabuadaI) {
 
-        let tabuadaI = valorTabuadaI.replace(',', '.')
-        let tabuadaIVal =
-            validacao.validarEntradaNumber(tabuadaI) &&
-            validacao.validarEntradaTabuada(tabuadaI)
+            let tabuadaI = valorTabuadaI.replace(',', '.')
+            let tabuadaIVal =
+                validacao.validarEntradaNumber(tabuadaI) &&
+                validacao.validarEntradaTabuada(tabuadaI)
 
-        if (tabuadaIVal)
+            if (tabuadaIVal)
 
-            entradaDeDados.question('\nDigite o valor final da tabuada: ', function (valorTabuadaF) {
+                entradaDeDados.question('\nDigite o valor final da tabuada: ', function (valorTabuadaF) {
 
-                let tabuadaF = valorTabuadaF.replace(',', '.')
-                let tabuadaFVal =
-                    validacao.validarEntradaNumber(tabuadaF) &&
-                    validacao.validarEntradaTabuada(tabuadaF)
+                    let tabuadaF = valorTabuadaF.replace(',', '.')
+                    let tabuadaFVal =
+                        validacao.validarEntradaNumber(tabuadaF) &&
+                        validacao.validarEntradaTabuada(tabuadaF)
 
-                if (tabuadaFVal && Number(tabuadaF) > Number(tabuadaI))
+                    if (tabuadaFVal && Number(tabuadaF) > Number(tabuadaI))
 
-                    entradaDeDados.question('\nDigite o contador inicial: ', function (contadorInicial) {
+                        entradaDeDados.question('\nDigite o contador inicial: ', function (contadorInicial) {
 
-                        let contI = contadorInicial.replace(',', '.')
-                        let contIVal =
-                            validacao.validarEntradaNumber(contI) &&
-                            validacao.validarEntradaNumeroTabuada(contI)
+                            let contI = contadorInicial.replace(',', '.')
+                            let contIVal =
+                                validacao.validarEntradaNumber(contI) &&
+                                validacao.validarEntradaNumeroTabuada(contI)
 
-                        if (contIVal)
+                            if (contIVal)
 
-                            entradaDeDados.question('\nDigite o contador final: ', function (contadorFinal) {
+                                entradaDeDados.question('\nDigite o contador final: ', function (contadorFinal) {
 
-                                let contF = contadorFinal.replace(',', '.')
-                                let contFVal =
-                                    validacao.validarEntradaNumber(contF) &&
-                                    validacao.validarEntradaNumeroTabuada(contF)
+                                    let contF = contadorFinal.replace(',', '.')
+                                    let contFVal =
+                                        validacao.validarEntradaNumber(contF) &&
+                                        validacao.validarEntradaNumeroTabuada(contF)
 
-                                if (contFVal && Number(contF) > Number(contI)) {
+                                    if (contFVal && Number(contF) > Number(contI)) {
 
-                                    let resultado = calculoTabuada.gerarTabuada(
-                                        tabuadaI,
-                                        tabuadaF,
-                                        contI,
-                                        contF
-                                    )
+                                        let resultado = calculoTabuada.gerarTabuada(
+                                            tabuadaI,
+                                            tabuadaF,
+                                            contI,
+                                            contF
+                                        )
 
-                                    console.log('\n===== TABUADA =====')
-                                    console.log(resultado)
+                                        console.log('\n===== TABUADA ===== \n')
+                                        console.log(resultado)
 
-                                    entradaDeDados.close()
+                                        entradaDeDados.close()
 
-                                } else {
-                                    console.log('[ERRO] Contador final inválido')
-                                    entradaDeDados.close()
-                                }
-                            })
+                                    } else {
+                                        console.log('[ERRO] Contador final inválido')
+                                        entradaDeDados.close()
+                                    }
+                                })
 
-                        else {
-                            console.log('[ERRO] Contador inicial inválido')
-                            entradaDeDados.close()
-                        }
+                            else {
+                                console.log('[ERRO] Contador inicial inválido')
+                                entradaDeDados.close()
+                            }
+                        })
+
+                    else {
+                        console.log('[ERRO] Valor final da tabuada inválido')
+                        entradaDeDados.close()
+                    }
+                })
+
+            else {
+                console.log('[ERRO] Valor inicial da tabuada inválido')
+                entradaDeDados.close()
+            }
+        })
+    if (escolhaCalculo == "FATORIAL")
+
+        entradaDeDados.question('Digite um número inteiro maior que 1: ', function (numeroFatorial) {
+
+            let numFat = numeroFatorial.replace(/!/g, '')
+
+            let numeroValido =
+                validacao.validarEntradaNumber(numFat) &&
+                validacao.validarNumeroFatorial(numFat)
+
+            if (numeroValido) {
+
+                let resultado = calculoFatorial.calcularFatorial(numFat)
+
+                console.log('\n===== FATORIAL =====')
+                console.log(resultado)
+
+                entradaDeDados.close()
+
+            } else {
+                console.log('[ERRO] Não é possível calcular o fatorial. O número deve ser inteiro e maior que 1.')
+                entradaDeDados.close()
+            }
+        })
+    if (escolhaCalculo == "Par ou Ímpar") {
+        entradaDeDados.question('Digite o primeiro número: ', function (numeroInicial) {
+
+            let numI = numeroInicial
+            numIVal = validacao.validarEntradaNumber(numI) && validacao.validarNumeroInicial
+
+            if (numIVal) 
+
+                entradaDeDados.question('Digite o último número: ', function (numeroFinal) {
+
+                    let numF = numeroFinal
+                    numFVal = validacao.validarEntradaNumber && validacao.validarNumeroFinal
+
+
+                    if (numFVal)
+                        entradaDeDados.question('Gostaria que calculasse apenas números ímpares, pares, ou ambos?: ', function(tipoCalculo){
+
+                    let tpCal = validacao.validarEntradaString(tipoCalculo)
                     })
-
-                else {
-                    console.log('[ERRO] Valor final da tabuada inválido')
-                    entradaDeDados.close()
-                }
-            })
-
-        else {
-            console.log('[ERRO] Valor inicial da tabuada inválido')
-            entradaDeDados.close()
-        }
-    })
-    else {
-        console.log('[ERRO] Digite um dos tipos de cálculos')
-        entradaDeDados.close()
+                })
+            
+        })
     }
 })
