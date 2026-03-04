@@ -5,7 +5,7 @@
  * Versão: 1.0
  *********************************************************/
 
- //Validação para entrada de String
+//Validação para entrada de String
 const validarEntradaString = function (dado) {
 
     if (dado == undefined || dado.trim() === '')
@@ -33,17 +33,17 @@ const validarEntradaNumber = function (valor) {
 }
 
 //Validação da escolha da Calculadora
-const validarCalculadora = function (informarCalculo){
-        let escolha = String(informarCalculo).trim().toUpperCase()
+const validarCalculadora = function (informarCalculo) {
+    let escolha = String(informarCalculo).trim().toUpperCase()
     let calculadoraEscolhida = ['PAR/IMPAR', 'IMPAR/PAR', 'IMPAR OU PAR', 'PAR OU IMPAR', 'IMPAR E PAR', 'PAR E IMPAR', 'IMPAR', 'PAR',
         'PAR/ÍMPAR', 'ÍMPAR/PAR', 'ÍMPAR OU PAR', 'PAR OU ÍMPAR', 'ÍMPAR E PAR', 'PAR E ÍMPAR', 'ÍMPAR',
         'IMC', 'MÉDIA', 'MEDIA', 'TABUADA', 'FATORIAL']
 
-        if(calculadoraEscolhida.includes(escolha)) {
-            return true
-        } else {
-            return false
-        }
+    if (calculadoraEscolhida.includes(escolha)) {
+        return true
+    } else {
+        return false
+    }
 }
 
 //Validações do IMC
@@ -56,21 +56,59 @@ const validarUnidadeMedidaAltura = function (unidadeMedida) {
     }
 }
 //Validações da Media Escolares
-const validarMediaEscolares = function (nota1, nota2, nota3, nota4) {
-    if (nota1 < 0 || nota1 > 100 ||
-        nota2 > 100 || nota2 < 0 ||
-        nota3 > 100 || nota3 < 0 ||
-        nota4 > 100 || nota4 < 0) {
-        return false
-    } else {
-        return true
-    }
+const validarMediaEscolares = function (nota) {
+    let valor = Number(nota)
+    return !(valor < 0 || valor > 100)
 }
+const classificarSexo = function (sexo) {
+
+    if (!sexo) return false
+
+    const sx = sexo.trim().toLowerCase()
+
+    const valoresValidos = ["masculino", "feminino"]
+
+    return valoresValidos.includes(sx) ? sx : false
+}
+
+const classificarSexoAluno = function (sexo) {
+
+    if (!sexo) return false
+
+    const sx = sexo.toLowerCase()
+
+    if (sx === "masculino")
+        return "Aluno"
+
+    if (sx === "feminino")
+        return "Aluna"
+
+    return false
+}
+
+const classificarSexoProfessor = function (sexo) {
+
+    if (!sexo) return false
+
+    const sx = sexo.toLowerCase()
+
+    if (sx === "masculino")
+        return "Professor"
+
+    if (sx === "feminino")
+        return "Professora"
+
+    return false
+}
+
 
 module.exports = {
     validarEntradaNumber,
     validarEntradaString,
     validarCalculadora,
     validarUnidadeMedidaAltura,
-    validarMediaEscolares
+    validarMediaEscolares,
+    classificarSexo,
+    classificarSexoAluno,
+    classificarSexoProfessor
 }

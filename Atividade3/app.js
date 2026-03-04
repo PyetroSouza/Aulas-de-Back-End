@@ -69,45 +69,178 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
                     entradaDeDados.close()
                 }
             })
-    if (escolhaCalculo == "MÉDIA ESCOLARES" || escolhaCalculo == "MEDIA ESCOLARES") {
-        entradaDeDados.question('\n Qual é o nome do aluno?: ', function (nomeAluno) {
-            let nmAl = nomeAluno.trim()
-            let nomeAlunoVal = validacao.validarEntradaString(nmAl)
+    if (escolhaCalculo == "MÉDIAS ESCOLARES" || escolhaCalculo == "MEDIAS ESCOLARES")
 
-            if (nomeAlunoVal) {
-                entradaDeDados.question('\n Qual é o nome do professor?: ', function (nomeProfessor) {
-                    let nmProf = nomeProfessor.trim()
-                    let nomeProfVal = validacao.validarEntradaString(nmProf)
+        entradaDeDados.question('\nQual é o nome do aluno?: ', function (nomeAluno) {
 
-                    if (nomeProfVal) {
-                        entradaDeDados.question('\n Qual é o sexo do aluno?: ', function (sexoAluno) {
-                            let sxAl = sexoAluno.trim()
-                            let sxAlunoVal = validacao.validarEntradaString(sxAl)
-                            sxAlunoVal = calculoMediaEscolar.classificarSexo(sxAl)
+            let nomeAlunoVal = validacao.validarEntradaString(nomeAluno)
 
-                            if (sxAlunoVal) {
-                                entradaDeDados.question('\n Qual é o sexo do professor: ', function (sexoProfessor) {
-                                    let sxProf = sexoProfessor.trim()
-                                    let sxProfVal = validacao.validarEntradaString(sxProf)
-                                    sxProfVal = calculoMediaEscolar.classificarSexo(sxProf)
-                                    if (sxProfVal) {
-                                        entradaDeDados.question('\n Qual é o nome da disciplina?: ', function (disciplina) {
-                                            let nomeDisciplina = disciplina.trim()
-                                            let nomeDisciplinaVal = validacao.validarEntradaString(nomeDisciplina)
-                                            if (nomeDisciplinaVal){
-                                                entradaDeDados.question('\n Informe a nota1: ', function(nota1){
-                                                    let n1 = nota1.replace(',', '.')
-                                                    n1 = validacao.validarMediaEscolares(n1)
+            if (nomeAlunoVal)
+
+                entradaDeDados.question('\nQual é o nome do professor?: ', function (nomeProfessor) {
+
+                    let nomeProfVal = validacao.validarEntradaString(nomeProfessor)
+
+                    if (nomeProfVal)
+
+                        entradaDeDados.question('\nQual é o sexo do aluno?: ', function (sexoAluno) {
+
+                            let sexoAlunoVal = validacao.classificarSexo(sexoAluno)
+                            let generoAluno = validacao.classificarSexoAluno(sexoAlunoVal)
+
+                            if (sexoAlunoVal && generoAluno)
+
+                                entradaDeDados.question('\nQual é o sexo do professor?: ', function (sexoProfessor) {
+
+                                    let sexoProfVal = validacao.classificarSexo(sexoProfessor)
+                                    let generoProfessor = validacao.classificarSexoProfessor(sexoProfVal)
+
+                                    if (sexoProfVal && generoProfessor)
+
+                                        entradaDeDados.question('\nQual é o nome do curso?: ', function (curso) {
+
+                                            let nomeCursoVal = validacao.validarEntradaString(curso)
+
+                                            if (nomeCursoVal)
+
+                                                entradaDeDados.question('\nQual é o nome da disciplina?: ', function (disciplina) {
+
+                                                    let nomeDisciplinaVal = validacao.validarEntradaString(disciplina)
+
+                                                    if (nomeDisciplinaVal)
+
+                                                        entradaDeDados.question('\nInforme a nota 1: ', function (nota1) {
+
+                                                            let n1 = nota1.replace(',', '.')
+                                                            let n1Val = validacao.validarEntradaNumber(n1) && validacao.validarMediaEscolares(n1)
+
+                                                            if (n1Val)
+
+                                                                entradaDeDados.question('\nInforme a nota 2: ', function (nota2) {
+
+                                                                    let n2 = nota2.replace(',', '.')
+                                                                    let n2Val = validacao.validarEntradaNumber(n2) && validacao.validarMediaEscolares(n2)
+
+                                                                    if (n2Val)
+
+                                                                        entradaDeDados.question('\nInforme a nota 3: ', function (nota3) {
+
+                                                                            let n3 = nota3.replace(',', '.')
+                                                                            let n3Val = validacao.validarEntradaNumber(n3) && validacao.validarMediaEscolares(n3)
+
+                                                                            if (n3Val)
+
+                                                                                entradaDeDados.question('\nInforme a nota 4: ', function (nota4) {
+
+                                                                                    let n4 = nota4.replace(',', '.')
+                                                                                    let n4Val = validacao.validarEntradaNumber(n4) && validacao.validarMediaEscolares(n4)
+
+                                                                                    if (n4Val) {
+
+                                                                                        let mediaFinal = calculoMediaEscolar.calcularMedia(n1, n2, n3, n4)
+                                                                                        let status = calculoMediaEscolar.classificarMedia(mediaFinal)
+
+                                                                                        if (status === 'Exame')
+
+                                                                                            entradaDeDados.question('\nInforme a nota do exame: ', function (notaExame) {
+
+                                                                                                let nEx = notaExame.replace(',', '.')
+                                                                                                let nExVal = validacao.validarEntradaNumber(nEx) && validacao.validarMediaEscolares(nEx)
+
+                                                                                                if (nExVal) {
+
+                                                                                                    let mediaExame = calculoMediaEscolar.calcularMediaExame(mediaFinal, nEx)
+                                                                                                    let statusFinal = mediaExame >= 60 ? 'Aprovado' : 'Reprovado'
+
+                                                                                                    let statusTexto = statusFinal.toLowerCase()
+
+                                                                                                    console.log('\n===== RELATÓRIO =====')
+                                                                                                    console.log(`O ${generoAluno.toLowerCase()} ${nomeAluno} foi ${statusTexto} na disciplina ${disciplina}.`)
+                                                                                                    console.log(`Curso: ${curso}`)
+                                                                                                    console.log(`${generoProfessor} ${nomeProfessor}`)
+                                                                                                    console.log(`Notas do aluno: ${n1}, ${n2}, ${n3}, ${n4}, ${nEx}`)
+                                                                                                    console.log(`Média Final: ${mediaFinal}`)
+                                                                                                    console.log(`Média Final do Exame: ${mediaExame}`)
+                                                                                                    entradaDeDados.close()
+
+                                                                                                } else {
+                                                                                                    console.log('[ERRO] Nota do exame inválida')
+                                                                                                    entradaDeDados.close()
+                                                                                                }
+                                                                                            })
+
+                                                                                        else {
+
+                                                                                            let statusTexto = status.toLowerCase()
+
+                                                                                            console.log('\n===== RELATÓRIO =====')
+                                                                                            console.log(`O ${generoAluno.toLowerCase()} ${nomeAluno} foi ${statusTexto} na disciplina ${disciplina}.`)
+                                                                                            console.log(`Curso: ${curso}`)
+                                                                                            console.log(`${generoProfessor}: ${nomeProfessor}`)
+                                                                                            console.log(`Notas do aluno: ${n1}, ${n2}, ${n3}, ${n4}`)
+                                                                                            console.log(`Média Final: ${mediaFinal}`)
+                                                                                            console.log(`Média Final do Exame: Não foi necessário exame`)
+
+                                                                                            entradaDeDados.close()
+                                                                                        }
+
+                                                                                    } else {
+                                                                                        console.log('[ERRO] Nota 4 inválida')
+                                                                                        entradaDeDados.close()
+                                                                                    }
+                                                                                })
+
+                                                                            else {
+                                                                                console.log('[ERRO] Nota 3 inválida')
+                                                                                entradaDeDados.close()
+                                                                            }
+                                                                        })
+
+                                                                    else {
+                                                                        console.log('[ERRO] Nota 2 inválida')
+                                                                        entradaDeDados.close()
+                                                                    }
+                                                                })
+
+                                                            else {
+                                                                console.log('[ERRO] Nota 1 inválida')
+                                                                entradaDeDados.close()
+                                                            }
+                                                        })
+
+                                                    else {
+                                                        console.log('[ERRO] Nome da disciplina inválido')
+                                                        entradaDeDados.close()
+                                                    }
                                                 })
+
+                                            else {
+                                                console.log('[ERRO] Nome do curso inválido')
+                                                entradaDeDados.close()
                                             }
                                         })
+
+                                    else {
+                                        console.log('[ERRO] Sexo do professor inválido')
+                                        entradaDeDados.close()
                                     }
                                 })
+
+                            else {
+                                console.log('[ERRO] Sexo do aluno inválido')
+                                entradaDeDados.close()
                             }
                         })
+
+                    else {
+                        console.log('[ERRO] Nome do professor inválido')
+                        entradaDeDados.close()
                     }
                 })
+
+            else {
+                console.log('[ERRO] Nome do aluno inválido')
+                entradaDeDados.close()
             }
         })
-    }
 })

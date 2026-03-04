@@ -7,55 +7,34 @@
 
 const calcularMedia = function (nota1, nota2, nota3, nota4) {
 
-    let n1 = Number(nota1)
-    let n2 = Number(nota2)
-    let n3 = Number(nota3)
-    let n4 = Number(nota4)
+    let media = (
+        Number(nota1) +
+        Number(nota2) +
+        Number(nota3) +
+        Number(nota4)
+    ) / 4
 
-    let media = (n1 + n2 + n3 + n4) / 4
-
-    return media.toFixed(2)
+    return Number(media.toFixed(2))
 }
 
 const calcularMediaExame = function (media, notaExame) {
-    let valorMedia = Number(media)
-    let ntEx = Numbe(notaExame)
-    let mediaFinal
-    mediaFinal = (valorMedia + ntEx) / 2
-    return mediaFinal
+
+    let mediaFinal = (Number(media) + Number(notaExame)) / 2
+    return Number(mediaFinal.toFixed(2))
 }
 
-const classificarMedia = function (media, notaExame) {
-    let status
+const classificarMedia = function (media) {
+
     if (media >= 70)
-        status = 'Aprovado'
+        return 'Aprovado'
     else if (media < 50)
-        status = 'Reprovado'
-    else if (media >= 50 && media <= 69)
-        if (notaExame >= 60)
-            status = 'Aprovado'
-        else
-            status = 'Reprovado'
-    return status
-}
-
-const classificarSexo = function (sexoAluno, sexoProfessor) {
-    let sxAluno = String(sexoAluno)
-    let sxProfessor = String(sexoProfessor)
-    if (sexoAluno == "masculino")
-        sxAluno == "aluno"
+        return 'Reprovado'
     else
-        sxAluno == "aluna"
-    if (sexoProfessor == 'masculino')
-        sxProfessor == "professor"
-    else sxProfessor == "professora"
-
-    return sxAluno, sxProfessor
+        return 'Exame'
 }
+
 module.exports = {
-    validarMediaEscolares,
     calcularMedia,
     calcularMediaExame,
-    classificarMedia,
-    classificarSexo
+    classificarMedia
 }
