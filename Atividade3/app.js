@@ -86,15 +86,15 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
 
                             entradaDeDados.question('\nQual é o sexo do aluno?: ', function (sexoAluno) {
 
-                                let sexoAlunoVal = validacao.classificarSexo(sexoAluno)
-                                let generoAluno = validacao.classificarSexoAluno(sexoAlunoVal)
+                                let sexoAlunoVal = calculoMediaEscolar.classificarSexo(sexoAluno)
+                                let generoAluno = calculoMediaEscolar.classificarSexoAluno(sexoAlunoVal)
 
                                 if (sexoAlunoVal && generoAluno)
 
                                     entradaDeDados.question('\nQual é o sexo do professor?: ', function (sexoProfessor) {
 
-                                        let sexoProfVal = validacao.classificarSexo(sexoProfessor)
-                                        let generoProfessor = validacao.classificarSexoProfessor(sexoProfVal)
+                                        let sexoProfVal = calculoMediaEscolar.classificarSexo(sexoProfessor)
+                                        let generoProfessor = calculoMediaEscolar.classificarSexoProfessor(sexoProfVal)
 
                                         if (sexoProfVal && generoProfessor)
 
