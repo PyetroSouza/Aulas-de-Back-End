@@ -400,10 +400,6 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
                 }
             })
         }
-        else {
-            console.log('[ERRO] Calculadora inválida')
-            entradaDeDados.close()
-        }
     }
     else {
         console.log('[ERRO] Calculadora inválida')
