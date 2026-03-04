@@ -29,8 +29,8 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
     let validarEscolhaCalculadora = validacao.validarCalculadora(informarCalculo)
 
     if (validarCalculadora && validarEscolhaCalculadora)
-        if (escolhaCalculo == "IMC")
-            entradaDeDados.question('\nDigite o seu peso em kilos (kg): ', function (peso) {
+        if (escolhaCalculo == "IMC") {
+            entradaDeDados.question('\n ==== Cálculo de IMC ==== \nDigite o seu peso em kilos (kg): ', function (peso) {
 
                 let pesoPessoa = peso.replace(',', '.')
                 let pesoVerificado = validacao.validarEntradaNumber(pesoPessoa)
@@ -69,9 +69,10 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
                     entradaDeDados.close()
                 }
             })
-    if (escolhaCalculo == "MÉDIAS ESCOLARES" || escolhaCalculo == "MEDIAS ESCOLARES")
+        }
+    if (escolhaCalculo == "MÉDIAS ESCOLARES" || escolhaCalculo == "MEDIAS ESCOLARES") {
 
-        entradaDeDados.question('\nQual é o nome do aluno?: ', function (nomeAluno) {
+        entradaDeDados.question('\n ==== Cálculos de Médias Escolares ==== \nQual é o nome do aluno?: ', function (nomeAluno) {
 
             let nomeAlunoVal = validacao.validarEntradaString(nomeAluno)
 
@@ -155,9 +156,9 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
                                                                                                     let statusTexto = statusFinal.toLowerCase()
 
                                                                                                     console.log('\n===== RELATÓRIO =====')
-                                                                                                    console.log(`O ${generoAluno.toLowerCase()} ${nomeAluno} foi ${statusTexto} na disciplina ${disciplina}.`)
+                                                                                                    console.log(`${generoAluno.toLowerCase()} ${nomeAluno} foi ${statusTexto} na disciplina ${disciplina}.`)
                                                                                                     console.log(`Curso: ${curso}`)
-                                                                                                    console.log(`${generoProfessor} ${nomeProfessor}`)
+                                                                                                    console.log(`${generoProfessor}: ${nomeProfessor}`)
                                                                                                     console.log(`Notas do aluno: ${n1}, ${n2}, ${n3}, ${n4}, ${nEx}`)
                                                                                                     console.log(`Média Final: ${mediaFinal}`)
                                                                                                     console.log(`Média Final do Exame: ${mediaExame}`)
@@ -174,7 +175,7 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
                                                                                             let statusTexto = status.toLowerCase()
 
                                                                                             console.log('\n===== RELATÓRIO =====')
-                                                                                            console.log(`O ${generoAluno.toLowerCase()} ${nomeAluno} foi ${statusTexto} na disciplina ${disciplina}.`)
+                                                                                            console.log(`${generoAluno}, ${nomeAluno}, foi ${statusTexto} na disciplina ${disciplina}.`)
                                                                                             console.log(`Curso: ${curso}`)
                                                                                             console.log(`${generoProfessor}: ${nomeProfessor}`)
                                                                                             console.log(`Notas do aluno: ${n1}, ${n2}, ${n3}, ${n4}`)
@@ -243,9 +244,10 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
                 entradaDeDados.close()
             }
         })
-    if (escolhaCalculo == "CÁLCULO DE TABUADA" || escolhaCalculo == "CALCULO DE TABUADA")
+    }
+    if (escolhaCalculo == "CÁLCULO DE TABUADA" || escolhaCalculo == "CALCULO DE TABUADA") {
 
-        entradaDeDados.question('\nDigite o valor inicial da tabuada: ', function (valorTabuadaI) {
+        entradaDeDados.question('\n==== Cálculo de Tabuada ==== \nDigite o valor inicial da tabuada: ', function (valorTabuadaI) {
 
             let tabuadaI = valorTabuadaI.replace(',', '.')
             let tabuadaIVal =
@@ -316,9 +318,10 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
                 entradaDeDados.close()
             }
         })
-    if (escolhaCalculo == "FATORIAL")
+    }
+    if (escolhaCalculo == "FATORIAL") {
 
-        entradaDeDados.question('Digite um número inteiro maior que 1: ', function (numeroFatorial) {
+        entradaDeDados.question('\n ==== Cálculo de Fatorial ==== \nDigite um número inteiro maior que 1: ', function (numeroFatorial) {
 
             let numFat = numeroFatorial.replace(/!/g, '')
 
@@ -340,9 +343,10 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
                 entradaDeDados.close()
             }
         })
+    }
     if (escolhaCalculo == "PAR OU ÍMPAR" || escolhaCalculo == "PAR OU IMPAR") {
 
-        entradaDeDados.question('Digite o primeiro número: ', function (numeroInicial) {
+        entradaDeDados.question('\n ==== Cálculo de Par ou Ímpar ==== \nDigite o primeiro número: ', function (numeroInicial) {
 
             let numI = numeroInicial.replace(',', '.')
 
@@ -372,14 +376,14 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
                             let resultado = calculoParImpar.calcularParOuImpar(
                                 numI,
                                 numF,
-                                tipo
+                                tipoVal
                             )
 
                             console.log('\n===== PAR OU ÍMPAR =====\n')
                             console.log(resultado)
 
                             entradaDeDados.close()
-                        
+
                         })
                     else {
                         console.log('[ERRO] Número final inválido')
@@ -392,6 +396,6 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
                 entradaDeDados.close()
             }
         })
-        
+
     }
 })
