@@ -33,7 +33,7 @@ const classificarMedia = function (media) {
         return 'Exame'
 }
 
-//Validação para da classificação do sexo
+//Função para validação a classificação do sexo
 const classificarSexo = function (sexo) {
 
     if (!sexo) return false
@@ -44,7 +44,7 @@ const classificarSexo = function (sexo) {
 
     return valoresValidos.includes(sx) ? sx : false
 }
-
+//Função para classificar o sexo do Aluno
 const classificarSexoAluno = function (sexo) {
 
     if (!sexo) return false
@@ -60,6 +60,7 @@ const classificarSexoAluno = function (sexo) {
     return false
 }
 
+//Função para classificar o sexo do Professor
 const classificarSexoProfessor = function (sexo) {
 
     if (!sexo) return false

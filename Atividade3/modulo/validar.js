@@ -63,6 +63,7 @@ const validarUnidadeMedidaAltura = function (unidadeMedida) {
     }
 }
 //Validações da Media Escolares
+
 //Validação do valor da média
 const validarMediaEscolares = function (nota) {
 
@@ -73,11 +74,13 @@ const validarMediaEscolares = function (nota) {
 
 //Validações do cálculo da Tabuada
 
+//Validação para entrada de números da tabuada
 const validarEntradaTabuada = function (tabuadaValor) {
     let tabValor = Number(tabuadaValor)
     return !isNaN(tabValor) && tabValor >= 2 && tabValor <= 100
 }
 
+//Validação para entrada de números do contador
 const validarEntradaNumeroTabuada = function (numeroTabuada) {
     let tabNumero = Number(numeroTabuada)
     return !isNaN(tabNumero) && tabNumero >= 2 && tabNumero <= 100
@@ -85,6 +88,7 @@ const validarEntradaNumeroTabuada = function (numeroTabuada) {
 
 //Validação do cálculo do Fatorial
 
+//Validação para entrada do número fatorial
 const validarNumeroFatorial = function (numeroFatorial) {
 
     let numFat = Number(numeroFatorial)
@@ -93,16 +97,20 @@ const validarNumeroFatorial = function (numeroFatorial) {
 }
 
 //Validações do cálculo de Par ou Ímpar
+
+//Validação da entrada do primeiro número
 const validarNumeroInicial = function (numeroInicial) {
     let numI = Number(numeroInicial)
 
     return !isNaN(numI) && Number.isInteger(numI)
 }
+//Validação da entrada do último número
 const validarNumeroFinal = function (numeroFinal) {
     let numF = Number(numeroFinal)
 
     return !isNaN(numF) && Number.isInteger(numF)
 }
+//Validação para saber o tipo do resultado do par ou ímpar
 const validarTipoParImpar = function (tipo) {
 
     if (!tipo) return false
@@ -110,8 +118,8 @@ const validarTipoParImpar = function (tipo) {
     const tp = tipo
         .trim()
         .toUpperCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
+        .normalize("NFD") //Separar as letras
+        .replace(/[\u0300-\u036f]/g, "") //Tirar os acentos 
 
     const valoresValidos = [
         "PAR",
