@@ -4,6 +4,8 @@
  * Autor: Pyetro Ferreira
  * Versão: 1.0
  ***********************************************************/
+
+//Função do Cálculo do Fatorial
 const calcularFatorial = function (numeroFatorial) {
     let num = Number(numeroFatorial)
     let fatorial = 1

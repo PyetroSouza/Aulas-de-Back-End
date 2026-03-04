@@ -5,6 +5,7 @@
 * Versão: 1.0
 ***********************************************************/
 
+//Função do cálculo para gerar Tabuada
 const gerarTabuada = function (tabuadaInicial, tabuadaFinal, numeroInicial, numeroFinal) {
 
     let tabI = Number(tabuadaInicial)

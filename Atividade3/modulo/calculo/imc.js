@@ -5,9 +5,6 @@
  * Versão: 1.0
  ***********************************************************/
 
-
-
-
 //Função para calcular IMC, recebendo peso e altura
 const calcularImc = function (peso, altura, unidadeMedida) {
     let pesoPessoa = Number(peso)

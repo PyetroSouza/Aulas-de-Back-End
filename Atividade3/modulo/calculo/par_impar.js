@@ -5,6 +5,7 @@
  * Versão: 1.0
  ***********************************************************/
 
+//Função do Cálculo do Par ou Impar
 const calcularParOuImpar = function (numero1, numero2, tipoCalculo) {
 
     let numInicial = Number(numero1)
@@ -57,6 +58,7 @@ if (tpCal === "PAR") {
 return resultadoFinal
      
 }
+
 
 module.exports = {
     calcularParOuImpar

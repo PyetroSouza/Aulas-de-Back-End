@@ -53,6 +53,7 @@ const validarCalculadora = function (informarCalculo) {
 }
 
 //Validações do IMC
+//Validar a unidade medida da altura (metro ou centimetros)
 const validarUnidadeMedidaAltura = function (unidadeMedida) {
     let medida = unidadeMedida.toUpperCase()
     if (medida === "CM" || medida === "M") {
@@ -62,51 +63,12 @@ const validarUnidadeMedidaAltura = function (unidadeMedida) {
     }
 }
 //Validações da Media Escolares
+//Validação do valor da média
 const validarMediaEscolares = function (nota) {
 
     let valor = Number(nota)
 
     return !isNaN(valor) && valor >= 0 && valor <= 100
-}
-const classificarSexo = function (sexo) {
-
-    if (!sexo) return false
-
-    const sx = sexo.trim().toLowerCase()
-
-    const valoresValidos = ["masculino", "feminino"]
-
-    return valoresValidos.includes(sx) ? sx : false
-}
-
-const classificarSexoAluno = function (sexo) {
-
-    if (!sexo) return false
-
-    const sx = sexo.toLowerCase()
-
-    if (sx === "masculino")
-        return "Aluno"
-
-    if (sx === "feminino")
-        return "Aluna"
-
-    return false
-}
-
-const classificarSexoProfessor = function (sexo) {
-
-    if (!sexo) return false
-
-    const sx = sexo.toLowerCase()
-
-    if (sx === "masculino")
-        return "Professor"
-
-    if (sx === "feminino")
-        return "Professora"
-
-    return false
 }
 
 //Validações do cálculo da Tabuada
@@ -168,9 +130,6 @@ module.exports = {
     validarCalculadora,
     validarUnidadeMedidaAltura,
     validarMediaEscolares,
-    classificarSexo,
-    classificarSexoAluno,
-    classificarSexoProfessor,
     validarEntradaTabuada,
     validarEntradaNumeroTabuada,
     validarNumeroFatorial,

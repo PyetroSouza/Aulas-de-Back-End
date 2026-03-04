@@ -33,8 +33,53 @@ const classificarMedia = function (media) {
         return 'Exame'
 }
 
+//Validação para da classificação do sexo
+const classificarSexo = function (sexo) {
+
+    if (!sexo) return false
+
+    const sx = sexo.trim().toLowerCase()
+
+    const valoresValidos = ["masculino", "feminino"]
+
+    return valoresValidos.includes(sx) ? sx : false
+}
+
+const classificarSexoAluno = function (sexo) {
+
+    if (!sexo) return false
+
+    const sx = sexo.toLowerCase()
+
+    if (sx === "masculino")
+        return "Aluno"
+
+    if (sx === "feminino")
+        return "Aluna"
+
+    return false
+}
+
+const classificarSexoProfessor = function (sexo) {
+
+    if (!sexo) return false
+
+    const sx = sexo.toLowerCase()
+
+    if (sx === "masculino")
+        return "Professor"
+
+    if (sx === "feminino")
+        return "Professora"
+
+    return false
+}
+
 module.exports = {
     calcularMedia,
     calcularMediaExame,
-    classificarMedia
+    classificarMedia,
+    classificarSexo,
+    classificarSexoAluno,
+    classificarSexoProfessor,
 }
