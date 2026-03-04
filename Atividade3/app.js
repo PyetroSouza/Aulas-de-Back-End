@@ -29,34 +29,85 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
     let validarEscolhaCalculadora = validacao.validarCalculadora(informarCalculo)
 
     if (validarCalculadora && validarEscolhaCalculadora)
-        if (escolhaCalculo)
-            if (escolhaCalculo == "IMC")
-                entradaDeDados.question('\n Digite o seu peso em kilos (kg): ', function (peso) {
+        if (escolhaCalculo == "IMC")
+            entradaDeDados.question('\nDigite o seu peso em kilos (kg): ', function (peso) {
 
-                    let pesoPessoa = peso.replace(',', '.')
-                    let pesoVerificado = validacao.validarEntradaNumber(pesoPessoa)
+                let pesoPessoa = peso.replace(',', '.')
+                let pesoVerificado = validacao.validarEntradaNumber(pesoPessoa)
 
-                    if (pesoVerificado)
-                        entradaDeDados.question('Qual será a unidade de medida para altura? Em metros (m) ou em centímetros (cm)?: ', function (unidadeMedida) {
+                if (pesoVerificado)
+                    entradaDeDados.question('Qual será a unidade de medida para altura? Em metros (m) ou em centímetros (cm)?: ', function (unidadeMedida) {
 
-                            let unidadeEscolhida = unidadeMedida.toUpperCase()
-                            let unidadeValString = validacao.validarEntradaString(unidadeEscolhida)
-                            let unidadeValAltura = validacao.validarUnidadeMedidaAltura(unidadeEscolhida)
+                        let unidadeEscolhida = unidadeMedida.toUpperCase()
+                        let unidadeValString = validacao.validarEntradaString(unidadeEscolhida)
+                        let unidadeValAltura = validacao.validarUnidadeMedidaAltura(unidadeEscolhida)
 
-                            if (unidadeValString && unidadeValAltura)
-                                entradaDeDados.question(`Informe a altura em ${unidadeEscolhida}: `, function (altura) {
+                        if (unidadeValString && unidadeValAltura)
+                            entradaDeDados.question(`Informe a altura em ${unidadeEscolhida}: `, function (altura) {
 
-                                    let alturaInformada = altura.replace(',', '.')
-                                    let alturaVal = validacao.validarEntradaNumber(alturaInformada)
+                                let alturaInformada = altura.replace(',', '.')
+                                let alturaVal = validacao.validarEntradaNumber(alturaInformada)
 
-                                    if (alturaVal) {
-                                        let resultadoIMC = calculoImc.calcularImc(pesoPessoa, alturaInformada, unidadeEscolhida)
-                                        let classificarImc = calculoImc.classificarImc(resultadoIMC)
+                                if (alturaVal) {
+                                    let resultadoIMC = calculoImc.calcularImc(pesoPessoa, alturaInformada, unidadeEscolhida)
+                                    let classificarImc = calculoImc.classificarImc(resultadoIMC)
 
-                                        console.log(`\n Resultado IMC é: ${resultadoIMC} \n IMC está classificado como: ${classificarImc}`)
-                                        entradaDeDados.close()
+                                    console.log(`\nResultado IMC é: ${resultadoIMC}`)
+                                    console.log(`IMC está classificado como: ${classificarImc}`)
+                                } else
+                                    console.log('[ERRO] Altura digitada é inválida')
+
+                                entradaDeDados.close()
+                            })
+                        else {
+                            console.log('[ERRO] Unidade de medida da altura está incorreta')
+                            entradaDeDados.close()
+                        }
+                    })
+                else {
+                    console.log('[ERRO] Peso digitado é inválido')
+                    entradaDeDados.close()
+                }
+            })
+    if (escolhaCalculo == "MÉDIA ESCOLARES" || escolhaCalculo == "MEDIA ESCOLARES") {
+        entradaDeDados.question('\n Qual é o nome do aluno?: ', function (nomeAluno) {
+            let nmAl = nomeAluno.trim()
+            let nomeAlunoVal = validacao.validarEntradaString(nmAl)
+
+            if (nomeAlunoVal) {
+                entradaDeDados.question('\n Qual é o nome do professor?: ', function (nomeProfessor) {
+                    let nmProf = nomeProfessor.trim()
+                    let nomeProfVal = validacao.validarEntradaString(nmProf)
+
+                    if (nomeProfVal) {
+                        entradaDeDados.question('\n Qual é o sexo do aluno?: ', function (sexoAluno) {
+                            let sxAl = sexoAluno.trim()
+                            let sxAlunoVal = validacao.validarEntradaString(sxAl)
+                            sxAlunoVal = calculoMediaEscolar.classificarSexo(sxAl)
+
+                            if (sxAlunoVal) {
+                                entradaDeDados.question('\n Qual é o sexo do professor: ', function (sexoProfessor) {
+                                    let sxProf = sexoProfessor.trim()
+                                    let sxProfVal = validacao.validarEntradaString(sxProf)
+                                    sxProfVal = calculoMediaEscolar.classificarSexo(sxProf)
+                                    if (sxProfVal) {
+                                        entradaDeDados.question('\n Qual é o nome da disciplina?: ', function (disciplina) {
+                                            let nomeDisciplina = disciplina.trim()
+                                            let nomeDisciplinaVal = validacao.validarEntradaString(nomeDisciplina)
+                                            if (nomeDisciplinaVal){
+                                                entradaDeDados.question('\n Informe a nota1: ', function(nota1){
+                                                    let n1 = nota1.replace(',', '.')
+                                                    n1 = validacao.validarMediaEscolares(n1)
+                                                })
+                                            }
+                                        })
                                     }
                                 })
+                            }
                         })
+                    }
                 })
+            }
+        })
+    }
 })

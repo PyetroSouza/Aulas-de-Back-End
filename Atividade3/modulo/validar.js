@@ -55,10 +55,22 @@ const validarUnidadeMedidaAltura = function (unidadeMedida) {
         return false
     }
 }
+//Validações da Media Escolares
+const validarMediaEscolares = function (nota1, nota2, nota3, nota4) {
+    if (nota1 < 0 || nota1 > 100 ||
+        nota2 > 100 || nota2 < 0 ||
+        nota3 > 100 || nota3 < 0 ||
+        nota4 > 100 || nota4 < 0) {
+        return false
+    } else {
+        return true
+    }
+}
 
 module.exports = {
     validarEntradaNumber,
     validarEntradaString,
     validarCalculadora,
-    validarUnidadeMedidaAltura
+    validarUnidadeMedidaAltura,
+    validarMediaEscolares
 }
