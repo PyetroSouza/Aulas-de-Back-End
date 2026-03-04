@@ -34,16 +34,22 @@ const validarEntradaNumber = function (valor) {
 
 //Validação da escolha da Calculadora
 const validarCalculadora = function (informarCalculo) {
-    let escolha = String(informarCalculo).trim().toUpperCase()
-    let calculadoraEscolhida = ['PAR/IMPAR', 'IMPAR/PAR', 'IMPAR OU PAR', 'PAR OU IMPAR', 'IMPAR E PAR', 'PAR E IMPAR', 'IMPAR', 'PAR',
-        'PAR/ÍMPAR', 'ÍMPAR/PAR', 'ÍMPAR OU PAR', 'PAR OU ÍMPAR', 'ÍMPAR E PAR', 'PAR E ÍMPAR', 'ÍMPAR',
-        'IMC', 'MÉDIA', 'MEDIA', 'TABUADA', 'FATORIAL']
 
-    if (calculadoraEscolhida.includes(escolha)) {
-        return true
-    } else {
-        return false
-    }
+    let escolha = informarCalculo
+        .trim()
+        .toUpperCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+
+    let calculadorasValidas = [
+        "IMC",
+        "MEDIAS ESCOLARES",
+        "CALCULO DE TABUADA",
+        "FATORIAL",
+        "PAR OU IMPAR"
+    ]
+
+    return calculadorasValidas.includes(escolha)
 }
 
 //Validações do IMC
