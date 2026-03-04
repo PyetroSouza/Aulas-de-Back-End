@@ -63,8 +63,10 @@ const validarUnidadeMedidaAltura = function (unidadeMedida) {
 }
 //Validações da Media Escolares
 const validarMediaEscolares = function (nota) {
+
     let valor = Number(nota)
-    return !(valor < 0 || valor > 100)
+
+    return !isNaN(valor) && valor >= 0 && valor <= 100
 }
 const classificarSexo = function (sexo) {
 
@@ -111,17 +113,17 @@ const classificarSexoProfessor = function (sexo) {
 
 const validarEntradaTabuada = function (tabuadaValor) {
     let tabValor = Number(tabuadaValor)
-    return !(tabValor < 2 || tabValor > 100)
+    return !isNaN(tabValor) && tabValor >= 2 && tabValor <= 100
 }
 
 const validarEntradaNumeroTabuada = function (numeroTabuada) {
     let tabNumero = Number(numeroTabuada)
-    return !(tabNumero < 1 || tabNumero > 50)
+    return !isNaN(tabNumero) && tabNumero >= 2 && tabNumero <= 100
 }
 
 //Validação do cálculo do Fatorial
 
-const validarNumeroFatorial = function (numeroFatorial){
+const validarNumeroFatorial = function (numeroFatorial) {
 
     let numFat = Number(numeroFatorial)
 
@@ -129,21 +131,35 @@ const validarNumeroFatorial = function (numeroFatorial){
 }
 
 //Validações do cálculo de Par ou Ímpar
-const validarNumeroInicial = function (numeroInicial){
+const validarNumeroInicial = function (numeroInicial) {
     let numI = Number(numeroInicial)
 
-    return Number.isInteger(numI)
+    return !isNaN(numI) && Number.isInteger(numI)
 }
-const validarNumeroFinal = function (numeroFinal){
+const validarNumeroFinal = function (numeroFinal) {
     let numF = Number(numeroFinal)
 
-    return Number.isInteger(numF)
+    return !isNaN(numF) && Number.isInteger(numF)
 }
-const validarTipoParImpar = function(tipo){
+const validarTipoParImpar = function (tipo) {
 
-    return tipo === "PAR" || "PARES" || 
-           tipo === "IMPAR" || "ÍMPAR" || "IMPARES" ||
-           tipo === "AMBOS"
+    if (!tipo) return false
+
+    const tp = tipo
+        .trim()
+        .toUpperCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+
+    const valoresValidos = [
+        "PAR",
+        "PARES",
+        "IMPAR",
+        "IMPARES",
+        "AMBOS"
+    ]
+
+    return valoresValidos.includes(tp)
 }
 
 module.exports = {
