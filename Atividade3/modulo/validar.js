@@ -125,9 +125,19 @@ const validarNumeroFatorial = function (numeroFatorial){
 //Validações do cálculo de Par ou Ímpar
 const validarNumeroInicial = function (numeroInicial){
     let numI = Number(numeroInicial)
+
+    return Number.isInteger(numI)
 }
 const validarNumeroFinal = function (numeroFinal){
     let numF = Number(numeroFinal)
+
+    return Number.isInteger(numF)
+}
+const validarTipoParImpar = function(tipo){
+
+    return tipo === "PAR" || "PARES" || 
+           tipo === "IMPAR" || "ÍMPAR" || "IMPARES" ||
+           tipo === "AMBOS"
 }
 
 module.exports = {
@@ -143,5 +153,6 @@ module.exports = {
     validarEntradaNumeroTabuada,
     validarNumeroFatorial,
     validarNumeroInicial,
-    validarNumeroFinal
+    validarNumeroFinal,
+    validarTipoParImpar
 }

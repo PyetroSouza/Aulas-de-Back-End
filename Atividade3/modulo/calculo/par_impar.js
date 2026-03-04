@@ -5,10 +5,11 @@
  * Versão: 1.0
  ***********************************************************/
 
-const calcularParOuImpar = function (numero1, numero2) {
+const calcularParOuImpar = function (numero1, numero2, tipoCalculo) {
 
     let numInicial = Number(numero1)
     let numFinal = Number(numero2)
+    let tpCal = String(tipoCalculo)
 
     let qtdPares = 0
     let qtdImpares = 0
@@ -26,18 +27,38 @@ const calcularParOuImpar = function (numero1, numero2) {
             qtdImpares++
         }
     }
+    let resultadoFinal = ""
 
-    let resultadoFinal =
+if (tpCal === "PAR") {
+
+    resultadoFinal =
         "Lista de números Pares\n" +
         listaPares +
-        "Qtde de números encontrados: " + qtdPares + "\n\n" +
-        "Lista de números Impares\n" +
-        listaImpares +
-        "Qtde de números encontrados: " + qtdImpares
+        "\nQtde de números encontrados: " + qtdPares
 
-    return resultadoFinal
+} else if (tpCal === "IMPAR") {
+
+    resultadoFinal =
+        "Lista de números Ímpares\n" +
+        listaImpares +
+        "\nQtde de números encontrados: " + qtdImpares
+
+} else if (tpCal === "AMBOS") {
+
+    resultadoFinal =
+        "Lista de números Pares\n" +
+        listaPares +
+        "\nQtde de números encontrados: " + qtdPares + "\n\n" +
+        "Lista de números Ímpares\n" +
+        listaImpares +
+        "\nQtde de números encontrados: " + qtdImpares
+}
+
+return resultadoFinal
+     
 }
 
 module.exports = {
     calcularParOuImpar
 }
+
