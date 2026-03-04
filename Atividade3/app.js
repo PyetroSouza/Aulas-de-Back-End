@@ -340,27 +340,58 @@ entradaDeDados.question("Olá! Seja bem vindo a empresa Cálculo SA \n Qual calc
                 entradaDeDados.close()
             }
         })
-    if (escolhaCalculo == "Par ou Ímpar") {
+    if (escolhaCalculo == "PAR OU ÍMPAR" || escolhaCalculo == "PAR OU IMPAR") {
+
         entradaDeDados.question('Digite o primeiro número: ', function (numeroInicial) {
 
-            let numI = numeroInicial
-            numIVal = validacao.validarEntradaNumber(numI) && validacao.validarNumeroInicial
+            let numI = numeroInicial.replace(',', '.')
 
-            if (numIVal) 
+            let numIVal =
+                validacao.validarEntradaNumber(numI)
+            //&& validacao.validarNumeroInicial(numI)
+
+            if (numIVal)
 
                 entradaDeDados.question('Digite o último número: ', function (numeroFinal) {
 
-                    let numF = numeroFinal
-                    numFVal = validacao.validarEntradaNumber && validacao.validarNumeroFinal
+                    let numF = numeroFinal.replace(',', '.')
 
+                    let numFVal =
+                        validacao.validarEntradaNumber(numF)
+                    // && validacao.validarNumeroFinal(numF)
 
                     if (numFVal)
-                        entradaDeDados.question('Gostaria que calculasse apenas números ímpares, pares, ou ambos?: ', function(tipoCalculo){
 
-                    let tpCal = validacao.validarEntradaString(tipoCalculo)
-                    })
+                        entradaDeDados.question('Deseja calcular Pares, Impares ou Ambos?: ', function (tipoCalculo) {
+
+                            let tipo = tipoCalculo.trim().toUpperCase()
+
+                            let tipoVal = validacao.validarEntradaString(tipo)
+
+
+                            let resultado = calculoParImpar.calcularParOuImpar(
+                                numI,
+                                numF,
+                                tipo
+                            )
+
+                            console.log('\n===== PAR OU ÍMPAR =====\n')
+                            console.log(resultado)
+
+                            entradaDeDados.close()
+                        
+                        })
+                    else {
+                        console.log('[ERRO] Número final inválido')
+                        entradaDeDados.close()
+                    }
                 })
-            
+
+            else {
+                console.log('[ERRO] Número inicial inválido')
+                entradaDeDados.close()
+            }
         })
+        
     }
 })
