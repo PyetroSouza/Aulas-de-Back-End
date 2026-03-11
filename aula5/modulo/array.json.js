@@ -33,12 +33,12 @@ const listaDeClientes = []
 const listaDeFornecedores = []
 
 
-const exibirDados = function(){
+const exibirDados = function () {
     //Exibe o objeto ARRAY com o seu conteúdo
     console.log(listaDeAlunos)
 
     //Exibindo o tipo de dados de um indice 
-    console.log(typeof(listaDeAlunos))
+    console.log(typeof (listaDeAlunos))
 
     //Exibe o objeto ARRAY em formato de tabela, mostrando indice e conteúdo
     console.table(listaDeAlunos)
@@ -54,39 +54,39 @@ const exibirDados = function(){
     //Usando o While
     console.log('*********** Exemplo com o While ******************')
     let cont = 0
-    while(cont<listaDeAlunos.length){
+    while (cont < listaDeAlunos.length) {
         console.log(`O nome do aluno é: ${listaDeAlunos[cont]}`)
-        cont+=1
+        cont += 1
     }
 
     //Usando o For
     console.log('************ Exemplo com  ***********')
-    for(let contador = 0; contador < listaDeAlunos.length; contador++) //Não precisa de CHAVES
+    for (let contador = 0; contador < listaDeAlunos.length; contador++) //Não precisa de CHAVES
         console.log(`O nome do aluno é: ${listaDeAlunos[contador]}`)
 
     //Usando o FOR EACH
     console.log('************* Exemplo com For Each *************')
-    listaDeAlunos.forEach(function(aluno){
-        console.log(`O nome do aluno é: ${aluno}`)  
+    listaDeAlunos.forEach(function (aluno) {
+        console.log(`O nome do aluno é: ${aluno}`)
     })
 
     //Usando o FOR OF
     console.log('************* Exemplo com FOR OF ****************')
-    for (aluno of listaDeAlunos){
-        console.log(`O nome do aluno é: ${aluno}`)  
+    for (aluno of listaDeAlunos) {
+        console.log(`O nome do aluno é: ${aluno}`)
     }
 
     //Usando FOR IN
     console.log('********** EXEMPLO COM O FOR IN ******************')
-    for (item in listaDeAlunos){
-        console.log(`O nome do aluno é: ${listaDeAlunos[item]}`)  
+    for (item in listaDeAlunos) {
+        console.log(`O nome do aluno é: ${listaDeAlunos[item]}`)
     }
 
     //Retorna a quantidade de items em um array
     console.log(listaDeAlunos.length)
-    
+
 }
-const manipularDados = function(){
+const manipularDados = function () {
     //Adicionando elementos de forma manual  pelo indice
     listaDeClientes[0] = "José da Silva"
     listaDeClientes[1] = "Maria da Silva"
@@ -99,11 +99,68 @@ const manipularDados = function(){
     listaDeFornecedores.push('Antônio')
     listaDeFornecedores.push('Caio')
     listaDeFornecedores.push('Luiz')
+    listaDeFornecedores.push('Hugo', 'Maria', 'José', 'André')
 
-    console.log(listaDeFornecedores)
+    console.table(listaDeFornecedores)
+
+    //Permite adicionar novos elementos no ARRAY, sempre no INICIO
+    //Após adicionar o elemento, ele reogarniza todos os outros itens
+    listaDeFornecedores.unshift('Luciano') //Na lista de fornecedores irá adicionar no início da tabela nome Luciano   
+
+    //Permite adicionar um novo elemento em uma determinada posição do ARRAY
+    listaDeFornecedores.splice(3, 0, 'Bernardo')
+
+    console.table(listaDeFornecedores)
+
+    //Permite remover um determinado conteudo com base no indice do elemento ARRAY
+    //splice (indice, qtde de elementos a ser removido)
+    listaDeFornecedores.splice(6, 2)
+    console.table(listaDeFornecedores)
+
+    //Permite remover o último elemento do array
+    listaDeFornecedores.pop()
+    console.table(listaDeFornecedores)
+
+    //Permite remover o primeiro elemento do array
+    //Após ele remover, irá reorganizar todos os elementos
+    listaDeFornecedores.shift()
+    console.table(listaDeFornecedores)
+
+
 
 
 }
-//exibirDados()
-manipularDados()
+
+const removerNome = function (nomeItem) {
+    //versão for 1
+    // for (valor = 0; listaDeAlunos[valor] !== nomeItem; valor++) { }
+    // if (listaDeAlunos[valor] === nomeItem) listaDeAlunos.splice(valor, 1)
+    // console.table(listaDeAlunos)
+    // Para o valor recebe 0, o listaDeAlunos do indíce valor 0 for diferente ao valor do argumento de nomeItem, irá ir pro próximo índice
+    //Se o indice do listadeAlunos for igual o argumento do nomeItem, irá remover do índice valor e a quantidade dele
+
+    //Versão For In
+    // for (cont in listaDeAlunos) {
+    //     if (nomeItem == listaDeAlunos[cont]) {
+    //         listaDeAlunos.splice(cont, 1)
+    //     }
+    // }
+
+    // 
+
+    //indexOf() -> retorna o indice referente ao conteúdo que está sendo pesquisado
+    listaDeAlunos.splice(listaDeAlunos.indexOf(nomeItem), 1)
+    //Na lista de alunos ira remover na lista de alunos 1 item do seguinte conteúdo do argumento "nomeItem"
+}
+
+const verificarItem = function(nome){
+    //Verifica se o conteúdo existe dentro do ARRAY e retorna (true/false)
+    return (listaDeAlunos.includes(nome))
+    //Mostrar na listadeAlunos se tem o seguinte conteúdo no argumento "nome"
+}
+
+console.log(verificarItem('Bungas'))
+// exibirDados()
+// manipularDados()
+// removerNome('Maria')
 
