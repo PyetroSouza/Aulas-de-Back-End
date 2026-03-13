@@ -153,13 +153,136 @@ const removerNome = function (nomeItem) {
     //Na lista de alunos ira remover na lista de alunos 1 item do seguinte conteúdo do argumento "nomeItem"
 }
 
-const verificarItem = function(nome){
+const verificarItem = function (nome) {
     //Verifica se o conteúdo existe dentro do ARRAY e retorna (true/false)
     return (listaDeAlunos.includes(nome))
     //Mostrar na listadeAlunos se tem o seguinte conteúdo no argumento "nome"
 }
 
-console.log(verificarItem('Bungas'))
+const manipularDadosJSON = function () {
+    //A estrutura do JSON é Chave (atributo) : Valor (conteúdo)
+    let aluno = { "id": 1, "nome": "Bungas", "ra": 1234567890, "email": "bungas@gmail.com" }
+
+    //Exibe o objeto JSON
+    console.log(aluno)
+
+    //Exiba o conteúdo de um atributpo do JSON
+    console.log(aluno.nome)
+    console.log(aluno.email)
+
+    //Adiciona um novo atributo no JSON já existente
+    aluno.telefone = "011-971706269"
+    aluno.data_nascimento = "10/05/2000"
+
+    console.log(aluno)
+
+    //Remove um atributo do JSON
+    delete aluno.email
+    console.log(aluno)
+
+    aluno.ra = 234567890
+
+    console.log(aluno)
+
+    aluno.nota = null
+    console.log(aluno)
+}
+
+const cadastroProdutos = function () {
+    let cores = [
+        { "id": 1, "cor": "Branco", "hexa": "#fffffff" },
+        { "id": 2, "cor": "Preto", "hexa": "#0000000" },
+        { "id": 3, "cor": "Azul", "hexa": "#0000ff" },
+        { "id": 4, "cor": "Amarelo", "hexa": "#ffff00" },
+        { "id": 5, "cor": "Rosa", "hexa": "#ffb5c0" }
+    ]
+    let marca = [
+        { "id": 1, "marca": "Dell", "telefone": "972539263", "email": "dell@gmail.com" },
+        { "id": 2, "marca": "Multilaser", "telefone": "92464346", "email": "multilaser.com" },
+        { "id": 3, "marca": "Positivo", "telefone": "9354684318", "email": "positivo@gmail.com" },
+        { "id": 4, "marca": "Samsung", "telefone": "92461387954", "email": "samsung@gmail.com" },
+        { "id": 5, "marca": "Apple", "telefone": "931387543484", "email": "apple@gmail.com" }
+    ]
+    cores.forEach(function (itemCor) {
+        console.log(itemCor.cor)
+    })
+    marca.forEach(function (itemMarca) {
+        console.table(itemMarca)
+    })
+
+    let produto = [
+        {
+            "id": 1,
+            "nome": "monitor",
+            "descricao": "descricaoproduto",
+            "valor": 283,
+            "quantidade": 2,
+            "cor": [
+                cores[0],
+                cores[1]
+            ],
+            "marca": [marca[0].marca]
+        },
+        {
+            "id": 2,
+            "nome": "teclado",
+            "descricao": "descricaoteclado",
+            "valor": 456,
+            "quantidade": 50,
+            "cor": cores,
+            "marca": [
+                marca[4].marca,
+                marca[3].marca,
+                marca[4].marca
+            ]
+        },
+        {
+            "id": 3,
+            "nome": "mouse",
+            "descricao": "descricaomouse",
+            "valor": 42,
+            "quantidade": 67,
+            "cor": [
+                cores[1],
+                cores[3],
+                cores[4]
+            ],
+            "marca": [
+                marca[1].marca,
+                marca[3].marca,
+                marca[4].marca,
+                marca[2].marca
+            ]
+        }
+    ]
+    console.log('\n****************************************\n')
+    produto.forEach(function(tipoProduto){
+        console.log(`Produto: ${tipoProduto.nome}`)
+        console.log(`Quantidade: ${tipoProduto.quantidade}`)
+        console.log(`Valor: ${tipoProduto.valor}`)
+        tipoProduto.cor.forEach(function (tipoCor){
+            console.log(`Cor:   ${tipoCor.cor}`)
+        })
+        tipoProduto.marca.forEach(function(tipoMarca){
+            console.log(`Marca:   ${tipoMarca}`)
+        })
+        console.log('\n****************************************\n')
+        
+    })
+    // //Exibindo todas as cores referente ao produto "MONITOR"
+    // produto[0].cor.forEach(function (cor) {
+    //     console.log(cor.cor)
+    // })
+    // produto[1].cor.forEach(function (cor) {
+    //     console.log(cor.cor)
+    // })
+    // produto[2].cor.forEach(function (cor) {
+    //     console.log(cor.cor)
+    // }) 
+}
+cadastroProdutos()
+// manipularDadosJSON()
+// console.log(verificarItem('Bungas'))
 // exibirDados()
 // manipularDados()
 // removerNome('Maria')
