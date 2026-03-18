@@ -9,15 +9,23 @@ let arquivo = require("./aquivo")
 
 const getListaDeEstados = function () {
     let uf = []
+    let quantidade
+    let lista
     arquivo.listaDeEstados.estados.forEach(function (itemLista) {
         uf.push(itemLista.sigla)
     })
-    let quantidade = uf.length
-    let lista = {uf, quantidade}
+    quantidade = uf.length
+    lista = { uf, quantidade }
     return lista
 }
-const getDadosEstados = function (){
+const getDadosEstados = function (sigla) {
+    let nomeEstado = "SP"
+    let dados = {}
+    arquivo.listaDeEstados.estados.forEach(function (listaDados){
+        listaDados.capital
+    })
+
 
 }
 
-getListaDeEstados()
+getDadosEstados()
