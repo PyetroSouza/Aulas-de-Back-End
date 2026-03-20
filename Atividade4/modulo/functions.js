@@ -19,7 +19,7 @@ const getListaDeEstados = function () {
     return lista
 }
 const getDadosEstados = function (siglaEstado) {
-    let sigla = siglaEstado.toUpperCase()
+    let sigla = String(siglaEstado).toUpperCase()
     for (let estado of estados) {
         if (estado.sigla == sigla) {
             return {
@@ -34,7 +34,7 @@ const getDadosEstados = function (siglaEstado) {
 
 }
 const getCapitalEstado = function (capitalEstado) {
-    let sigla = capitalEstado.toUpperCase()
+    let sigla = String(capitalEstado).toUpperCase()
     for (let estado of estados) {
         if (estado.sigla == sigla) {
             return { "uf": estado.sigla, "descricao": estado.nome, "capital": estado.capital }
@@ -43,7 +43,7 @@ const getCapitalEstado = function (capitalEstado) {
     return false
 }
 const getEstadosRegiao = function (regiaoEstado) {
-    let regiao = regiaoEstado.toUpperCase()
+    let regiao = String(regiaoEstado).toUpperCase()
     let lista = {
         "regiao": regiao,
         "estados": []
@@ -86,7 +86,7 @@ const getCapitalPais = function () {
 
 }
 const getCidades = function (siglaEstado) {
-    let sigla = siglaEstado.toUpperCase()
+    let sigla = String(siglaEstado).toUpperCase()
     let lista = {
         "uf": sigla,
         "descricao": false,
@@ -109,9 +109,9 @@ const getCidades = function (siglaEstado) {
     return lista
 
 }
-console.log(getListaDeEstados())
-console.log(getDadosEstados("SP"))
-console.log(getCapitalEstado('AC'))
-console.log(getEstadosRegiao("sul"))
-console.log(getCapitalPais())
-console.log(getCidades("AC"))
+getListaDeEstados()
+getDadosEstados()
+getCapitalEstado()
+getEstadosRegiao()
+getCapitalPais()
+getCidades()
