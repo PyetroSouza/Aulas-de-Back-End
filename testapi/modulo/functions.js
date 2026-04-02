@@ -86,7 +86,7 @@ const getCapitalPais = function () {
         }
     })
     return lista
-
+    
 
 }
 

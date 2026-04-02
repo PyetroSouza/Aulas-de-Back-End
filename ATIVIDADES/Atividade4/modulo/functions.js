@@ -4,7 +4,7 @@
  * Autor: Pyetro Ferreira
  * Versão: 1.0
  ***************************************/
-let arquivo = require("./aquivo")
+let arquivo = require("./arquivo")
 const estados = arquivo.listaDeEstados.estados
 
 
@@ -18,6 +18,7 @@ const getListaDeEstados = function () {
 
     return lista
 }
+
 const getDadosEstados = function (siglaEstado) {
     let sigla = String(siglaEstado).toUpperCase()
     for (let estado of estados) {
@@ -33,6 +34,7 @@ const getDadosEstados = function (siglaEstado) {
     return false
 
 }
+
 const getCapitalEstado = function (capitalEstado) {
     let sigla = String(capitalEstado).toUpperCase()
     for (let estado of estados) {
@@ -42,6 +44,7 @@ const getCapitalEstado = function (capitalEstado) {
     }
     return false
 }
+
 const getEstadosRegiao = function (regiaoEstado) {
     let regiao = String(regiaoEstado).toUpperCase()
     let lista = {
@@ -62,6 +65,7 @@ const getEstadosRegiao = function (regiaoEstado) {
     }
     return lista
 }
+
 const getCapitalPais = function () {
     let capitais = []
     let lista = {
@@ -85,6 +89,7 @@ const getCapitalPais = function () {
 
 
 }
+
 const getCidades = function (siglaEstado) {
     let sigla = String(siglaEstado).toUpperCase()
     let lista = {
@@ -109,9 +114,3 @@ const getCidades = function (siglaEstado) {
     return lista
 
 }
-getListaDeEstados()
-getDadosEstados()
-getCapitalEstado()
-getEstadosRegiao()
-getCapitalPais()
-getCidades()

@@ -1,11 +1,7 @@
 {
-  "dependencies": {
-    "cors": "^2.8.6",
-    "express": "^5.2.1"
-  },
   "name": "modulo",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "aquivo.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -13,5 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
 }

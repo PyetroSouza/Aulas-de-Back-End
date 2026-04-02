@@ -233,7 +233,7 @@ const cadastroProdutos = function () {
             "marca": [
                 marca[4].marca,
                 marca[3].marca,
-                marca[4].marca
+                marca[2].marca
             ]
         },
         {
@@ -256,29 +256,39 @@ const cadastroProdutos = function () {
         }
     ]
     console.log('\n****************************************\n')
-    produto.forEach(function(tipoProduto){
+    produto.forEach(function (tipoProduto) {
         console.log(`Produto: ${tipoProduto.nome}`)
         console.log(`Quantidade: ${tipoProduto.quantidade}`)
         console.log(`Valor: ${tipoProduto.valor}`)
-        tipoProduto.cor.forEach(function (tipoCor){
+        //Extrai Cor
+        tipoProduto.cor.forEach(function (tipoCor) {
             console.log(`Cor:   ${tipoCor.cor}`)
         })
-        tipoProduto.marca.forEach(function(tipoMarca){
+        //Extrai Marca
+        tipoProduto.marca.forEach(function (tipoMarca) {
             console.log(`Marca:   ${tipoMarca}`)
         })
         console.log('\n****************************************\n')
-        
+
     })
-    // //Exibindo todas as cores referente ao produto "MONITOR"
-    // produto[0].cor.forEach(function (cor) {
-    //     console.log(cor.cor)
-    // })
-    // produto[1].cor.forEach(function (cor) {
-    //     console.log(cor.cor)
-    // })
-    // produto[2].cor.forEach(function (cor) {
-    //     console.log(cor.cor)
-    // }) 
+    //Filtrando produtos pelo NOME
+    console.log("Exemplo de como pesquisar um produto pelo nome")
+
+    let nomeProduto = "teclado"
+    produto.forEach(function (itemProduto) {
+        if (String(nomeProduto).toUpperCase() == String(itemProduto.nome).toUpperCase()) {
+            console.log(itemProduto)
+        }
+    })
+    let nomeCor = "preto"
+    produto.forEach(function (itemProduto) {
+        itemProduto.cor.forEach(function (itemCor) {
+            if (String(nomeCor).toUpperCase() == String(itemCor.cor).toUpperCase()) {
+                console.log(itemProduto)
+            }
+        })
+
+    })
 }
 cadastroProdutos()
 // manipularDadosJSON()
