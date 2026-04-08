@@ -28,21 +28,21 @@ const getDadosProfileUsuario = function (numero) {
         }
         if (telefone.number != numero)
             return false
-        
+
         return dados
     }
 
 }
 
-const getDadosCadaUsuario = function (numero){
+const getDadosCadaUsuario = function (numero) {
     let dados = {
         "contatos": []
     }
 
     let numeroUsuario = String(numero)
     for (let telefone of contatos) {
-        if (telefone.number == numeroUsuario){
-            telefone.contacts.forEach(function (itemContato){
+        if (telefone.number == numeroUsuario) {
+            telefone.contacts.forEach(function (itemContato) {
                 dados.contatos.push({
                     "nome": itemContato.name,
                     "foto": itemContato.image,
@@ -55,3 +55,20 @@ const getDadosCadaUsuario = function (numero){
         return false
     return dados
 }
+
+const getMensagensUsuario = function (numero) {
+    let dados = {}
+    let numeroUsuario = String(numero)
+    for (let telefone of contatos) {
+        if (telefone.number == numeroUsuario) {
+            dados.contatos = telefone.contacts
+        }
+    }
+    if (dados.contatos.length == 0)
+        return false
+    
+    return dados
+}
+
+
+console.log(getMensagensUsuario("11987876567"))
