@@ -72,16 +72,16 @@ const getMensagensUsuario = function (numero) {
     return dados
 }
 
-const getConversaUsuarioContato = function (telefone, contato) {
+const getConversaUsuarioContato = function (telefone, Usuariocontato) {
     let dados = {
         "nome": false,
-        "contato": false,
+        "contato": telefone,
     }
     let numeroUsuario = String(telefone)
     for (let telefone of contatos) {
         if (telefone.number == numeroUsuario) {
-            dados.contato.forEach(function (itemContato) {
-                if (itemContato.name == String(contato)) {
+            telefone.contacts.forEach(function (itemContato) {
+                if (itemContato.name == String(Usuariocontato)) {
                     dados.nome = itemContato.name
                     dados.mensagens = []
 
@@ -96,7 +96,9 @@ const getConversaUsuarioContato = function (telefone, contato) {
             })
         }
     }
+    
+    if (!dados.nome)
+        return false
+
     return dados
 }
-
-console.log(getConversaUsuarioContato('11987876567','Ana Maria'))
