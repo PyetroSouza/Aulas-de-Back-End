@@ -25,12 +25,10 @@ const getDadosProfileUsuario = function (numero) {
                 "início": telefone["created-since"].start,
                 "encerramento": telefone["created-since"].end
             }
+            return dados
         }
-        if (telefone.number != numero)
-            return false
-
-        return dados
     }
+    return false
 
 }
 
@@ -40,6 +38,7 @@ const getDadosCadaUsuario = function (numero) {
     }
 
     let numeroUsuario = String(numero)
+
     for (let telefone of contatos) {
         if (telefone.number == numeroUsuario) {
             telefone.contacts.forEach(function (itemContato) {
@@ -53,6 +52,7 @@ const getDadosCadaUsuario = function (numero) {
     }
     if (dados.contatos.length == 0)
         return false
+
     return dados
 }
 
@@ -61,24 +61,28 @@ const getMensagensUsuario = function (numero) {
         "contatos": false
     }
     let numeroUsuario = String(numero)
+
     for (let telefone of contatos) {
         if (telefone.number == numeroUsuario) {
             dados.contatos = telefone.contacts
         }
     }
+
     if (dados.contatos.length == 0)
         return false
 
     return dados
 }
 
-const getConversaUsuarioContato = function (telefone, Usuariocontato) {
+const getConversaUsuarioContato = function (numero, Usuariocontato) {
     let dados = {
         "nome": false,
-        "contato": telefone,
+        "contato": numero,
     }
-    let numeroUsuario = String(telefone)
+    let numeroUsuario = String(numero)
+
     for (let telefone of contatos) {
+
         if (telefone.number == numeroUsuario) {
             telefone.contacts.forEach(function (itemContato) {
                 if (itemContato.name == String(Usuariocontato)) {
@@ -96,9 +100,59 @@ const getConversaUsuarioContato = function (telefone, Usuariocontato) {
             })
         }
     }
-    
+
     if (!dados.nome)
         return false
 
     return dados
 }
+
+const pesquisarPalavraChave = function (numero, nomeContato, palavra) {
+
+    let numeroUsuario = String(numero)
+    let resultado = []
+    let termo   
+    
+     if (palavra) {
+        termo = palavra.toLowerCase().trim();
+    } else {
+        termo = "";
+    }
+
+    contatos.forEach(function (usuario) {
+
+        if (usuario.number == numeroUsuario) {
+
+            usuario.contacts.forEach(function (contato) {
+
+                if (contato.name == nomeContato) {
+
+                    contato.messages.forEach(function (msg) {
+
+                        if (termo == "" || msg.content.toLowerCase().includes(termo)) {
+
+                            resultado.push({
+                                remetente: msg.sender,
+                                conteudo: msg.content,
+                                tempo: msg.time
+                            })
+
+                        }
+
+                    })
+
+                }
+
+            })
+
+        }
+
+    })
+
+    if (resultado.length == 0)
+        return false
+
+    return resultado
+}
+
+console.log(pesquisarPalavraChave("11987876567", "Ana Maria", ""))
