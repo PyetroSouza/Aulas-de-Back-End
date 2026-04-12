@@ -107,13 +107,13 @@ const getConversaUsuarioContato = function (numero, Usuariocontato) {
     return dados
 }
 
-const pesquisarPalavraChave = function (numero, nomeContato, palavra) {
+const getFiltroPalavraChave = function (numero, nomeContato, palavra) {
 
     let numeroUsuario = String(numero)
     let resultado = []
-    let termo   
-    
-     if (palavra) {
+    let termo
+
+    if (palavra) {
         termo = palavra.toLowerCase().trim();
     } else {
         termo = "";
@@ -122,31 +122,22 @@ const pesquisarPalavraChave = function (numero, nomeContato, palavra) {
     contatos.forEach(function (usuario) {
 
         if (usuario.number == numeroUsuario) {
-
             usuario.contacts.forEach(function (contato) {
 
                 if (contato.name == nomeContato) {
-
                     contato.messages.forEach(function (msg) {
 
                         if (termo == "" || msg.content.toLowerCase().includes(termo)) {
-
                             resultado.push({
                                 remetente: msg.sender,
                                 conteudo: msg.content,
                                 tempo: msg.time
                             })
-
                         }
-
                     })
-
                 }
-
             })
-
         }
-
     })
 
     if (resultado.length == 0)
@@ -155,4 +146,11 @@ const pesquisarPalavraChave = function (numero, nomeContato, palavra) {
     return resultado
 }
 
-console.log(pesquisarPalavraChave("11987876567", "Ana Maria", ""))
+module.exports = {
+    getDadosUsuarios,
+    getDadosProfileUsuario,
+    getDadosCadaUsuario,
+    getMensagensUsuario,
+    getConversaUsuarioContato,
+    getFiltroPalavraChave
+}
