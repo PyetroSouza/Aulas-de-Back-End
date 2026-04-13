@@ -1,9 +1,9 @@
-/**
+/***************************************************************************
  * Objetivo: Arquivo responsável pela criação da API para o projeto Whatsapp
  * Data: 11/04/2026
  * Autor: Pyetro Ferreira
  * Versão: 1.0
- */
+ ***************************************************************************/
 
 const express = require('express')
 const cors = require('cors')
