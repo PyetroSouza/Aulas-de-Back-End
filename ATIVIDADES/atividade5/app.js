@@ -20,13 +20,13 @@ app.use(cors(corsOptions))
 
 const contatosMensagens = require("./modulo/functions.js")
 
-app.get('/v1/whatsapp/dados/usarios', function (request, response) {
+app.get('/v1/whatsapp/dados/usuarios', function (request, response) {
     let dadosUsarios = contatosMensagens.getDadosUsuarios()
     response.json(dadosUsarios)
     response.status(200)
 })
 
-app.get('/v1/whatsapp/dados/usarios/:numero', function (request, response) {
+app.get('/v1/whatsapp/dados/usuarios/:numero', function (request, response) {
     let numero = request.params.numero
     let dadosUsariosNumero = contatosMensagens.getDadosProfileUsuario(numero)
     if (dadosUsariosNumero) {
