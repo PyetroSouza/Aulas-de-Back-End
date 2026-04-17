@@ -50,5 +50,5 @@ insert into tbl_filme (
     '3'
 );
 
-select * from tbl_filme
+select * from tbl_filme;
 
