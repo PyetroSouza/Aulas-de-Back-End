@@ -46,8 +46,7 @@ insert into tbl_filme (
     'https://br.web.img3.acsta.net/c_310_420/img/5b/ea/5bea1aeac3323aeaaf82449a34fafbbf.jpg',
     '2026-04-02',
     '01:39:00',
-    '50.60',
-    '3'
+    '50.60'
 );
 
 select * from tbl_filme;
