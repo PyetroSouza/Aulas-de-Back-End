@@ -21,6 +21,13 @@ const ERROR_BAD_REQUEST = {
     status_code: 400,
     message: "Não foi possível processar a requisição devido a erros de entrada de dados"
 }
+
+const ERROR_NOT_FOUND = {
+    status: false,
+    status_code: 404,
+    message: "Não foram encontrados dados para retorno"
+}
+
 const ERROR_CONTENT_TYPE = {
     status: false,
     status_code: 415,
@@ -40,6 +47,12 @@ const ERROR_INTERNAL_SERVER_CONTROLLER = {
 
 
 //Mensagens de SUCESSO do projeto de filmes  
+const SUCCESS_RESPONSE = {
+    status: true,
+    status_code: 200,
+}
+
+
 const SUCCESS_CREATED_ITEM = {
     status: true,
     status_code: 201,
@@ -49,8 +62,10 @@ const SUCCESS_CREATED_ITEM = {
 module.exports = {
     DEFAULT_MESSAGE,
     ERROR_BAD_REQUEST,
+    ERROR_NOT_FOUND,
     ERROR_CONTENT_TYPE,
     ERROR_INTERNAL_SERVER_MODEL,
     ERROR_INTERNAL_SERVER_CONTROLLER,
+    SUCCESS_RESPONSE,
     SUCCESS_CREATED_ITEM
 }

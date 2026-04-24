@@ -49,5 +49,6 @@ insert into tbl_filme (
     '50.60'
 );
 
-select * from tbl_filme;
+select * from tbl_filme order by id desc;
+select  * from tbl_filme where id;
 
