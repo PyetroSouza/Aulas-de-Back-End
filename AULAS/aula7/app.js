@@ -61,6 +61,30 @@ app.get("/v1/senai/locadora/filme/:id", async function (request, response) {
     response.json(result)
 })
 
+app.put('/v1/senai/locadora/filme/:id', bodyParserJSON, async function (request, response) {
+    //Recebe o content-type da requisição, para voltar se é JSON
+    let contentType = request.headers['content-type']
+    //Recebe o ID do registro a ser atualizado
+    let id = request.params.id
+    //Recebe ps dadps dp body, que serão modificados no BD
+    let dados = request.body
+
+    //Chama a função para atualizar o filme, devemos 
+
+    let result = await controllerFilme.atualizarFilme(dados, id, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.delete('/v1/senai/locadora/filme/:id', async function (request, response){
+    let id = request.params.id
+    let result = await controllerFilme.excluirFilme(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
 app.listen(8080, function () {
     console.log('API agurdando novas requisições...')
 })

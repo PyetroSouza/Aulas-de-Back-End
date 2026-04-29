@@ -52,11 +52,23 @@ const SUCCESS_RESPONSE = {
     status_code: 200,
 }
 
+const SUCCESS_UPDATE_ITEM = {
+    status: true,
+    status_code: 200,
+    message: "Item atualizado com sucesso"
+}
+
 
 const SUCCESS_CREATED_ITEM = {
     status: true,
     status_code: 201,
     message: "Item inserido com sucesso!"
+}
+
+const SUCCESS_DELETED_ITEM = {
+    status: true,
+    status_code: 200,
+    message: "Item excluído com sucesso!"
 }
 
 module.exports = {
@@ -67,5 +79,7 @@ module.exports = {
     ERROR_INTERNAL_SERVER_MODEL,
     ERROR_INTERNAL_SERVER_CONTROLLER,
     SUCCESS_RESPONSE,
-    SUCCESS_CREATED_ITEM
+    SUCCESS_CREATED_ITEM,
+    SUCCESS_UPDATE_ITEM,
+    SUCCESS_DELETED_ITEM
 }

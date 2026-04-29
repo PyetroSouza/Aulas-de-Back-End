@@ -52,7 +52,27 @@ const insertFilme = async function (filme) {
 
 //Função para atualizar um novo filme existente no banco de dados
 const updateFilme = async function (filme) {
+    try {
+        let sql = `update tbl_filme set
+	        nome            = '${filme.nome}',
+            sinopse         = '${filme.sinopse}',
+            capa            = '${filme.capa}',
+            data_lancamento = '${filme.data_lancamento}',
+            duracao         =  '${filme.duracao}',
+            valor           = '${filme.valor}',
+            avaliacao       =  if('${filme.avaliacao}' = '', null, '${filme.avaliacao}')
+        where id  = ${filme.id}`
 
+        let result = await knexConection.raw(sql)
+
+        if (result)
+            return true
+        else
+            return false
+
+    } catch (error) {
+        return false
+    }
 }
 
 
@@ -99,7 +119,19 @@ const selectByIdFilme = async function (id) {
 
 //Função para deletar um filme filtrando pelo ID
 const deleteFilme = async function (id) {
+    try {
+        let sql = `delete from tbl_filme where id = ${id};`
 
+        let result = await knexConection.raw(sql)
+
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
 }
 
 module.exports = {
