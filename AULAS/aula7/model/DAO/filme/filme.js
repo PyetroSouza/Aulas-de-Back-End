@@ -41,7 +41,7 @@ const insertFilme = async function (filme) {
         let result = await knexConection.raw(sql)
 
         if (result)
-            return true
+            return result[0].insertId //Retorna id gerado do insert
         else
             return false
     } catch (error) {
@@ -132,6 +132,7 @@ const deleteFilme = async function (id) {
     } catch (error) {
         return false
     }
+
 }
 
 module.exports = {

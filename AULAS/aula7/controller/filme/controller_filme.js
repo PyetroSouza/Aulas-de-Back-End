@@ -27,14 +27,17 @@ const inserirNovoFilme = async function (filme, contentType) {
             if (validar) {
                 return validar
             } else {
+
                 //Encaminha os dados do filme para o DAO inserir no BD
-                let result = await filmeDAO.insertFilme(filme)
+                let result = await filmeDAO.insertFilme(await tratarDados(filme))
 
                 if (result) { //201
+                    //Cria o ID no JSON do filme e adiciona o ID gerado gerado no DAO
+                    filme.id = result
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_CREATED_ITEM.status
                     customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_CREATED_ITEM.status_code
                     customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_CREATED_ITEM.message
-
+                    customMessage.DEFAULT_MESSAGE.response = filme
                     return customMessage.DEFAULT_MESSAGE
                 } else { //erro 500
                     return customMessage.ERROR_INTERNAL_SERVER_MODEL//500 model
@@ -67,16 +70,18 @@ const atualizarFilme = async function (filme, id, contentType) {
                 //Chamar a função para validar os dados para alteração filme (Body)
                 let validar = await validarDados(filme)
                 if (!validar) {
+
                     //Adicionar um atributo ID no JSON de filme, para enviar ao DAO um único objeto
                     filme.id = Number(id)
 
                     //Chama a função para atualizar o filme no BD
-                    let result = await filmeDAO.updateFilme(filme)
+                    let result = await filmeDAO.updateFilme(await tratarDados(filme))
 
                     if (result) {
                         customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_UPDATE_ITEM.status
                         customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_UPDATE_ITEM.status_code
                         customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_UPDATE_ITEM.message
+                        customMessage.DEFAULT_MESSAGE.response = filme
 
                         return customMessage.DEFAULT_MESSAGE //200
                     } else {
@@ -172,6 +177,7 @@ const excluirFilme = async function (id) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
     try {
+        //Chama a função de buscar filme para validar se o filme existe
         let buscarFilmeResult = await buscarFilme(id)
 
         if (buscarFilmeResult.status) {
@@ -222,6 +228,22 @@ const validarDados = async function (filme) {
     else {
         return false
     }
+}
+
+//Função para tratar os dados a serem inseridos
+const tratarDados = async function (filme) {
+    //Tratamento para elimanar a chegada de aspas simples (') como caracter inválido
+
+    filme.nome = filme.nome.replaceAll("'", "")
+    filme.sinopse = filme.sinopse.replaceAll("'", "")
+    filme.capa = filme.capa.replaceAll("'", "")
+    filme.data_lancamento = filme.data_lancamento.replaceAll("'", "")
+    filme.duracao = filme.duracao.replaceAll("'", "")
+    filme.valor = filme.valor.replaceAll("'", "")
+    filme.avaliacao = filme.avaliacao.replaceAll("'", "")
+
+
+    return filme
 }
 
 module.exports = {
