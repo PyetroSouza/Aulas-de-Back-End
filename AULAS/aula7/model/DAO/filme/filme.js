@@ -2,7 +2,7 @@
  * Objeivo: Arquivo responsável pelo CRUD de dados do Filme no banco de dados
  *           MySQL
  * Data: 15/04/2026
- * Autor: Marcel
+ * Autor: Pyetro
  * Versão: 1.0
  *****************************************************************************/
 
@@ -49,7 +49,6 @@ const insertFilme = async function (filme) {
     }
 }
 
-
 //Função para atualizar um novo filme existente no banco de dados
 const updateFilme = async function (filme) {
     try {
@@ -75,7 +74,6 @@ const updateFilme = async function (filme) {
     }
 }
 
-
 //Função para retornar todos os dados de filme do banco de dados
 const selectAllFilme = async function () {
     try {
@@ -98,7 +96,6 @@ const selectAllFilme = async function () {
     }
 
 }
-
 
 //Função para retornar um filme filtrando pelo ID
 const selectByIdFilme = async function (id) {
