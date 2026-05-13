@@ -86,6 +86,7 @@ const listarGenero = async function () {
 
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
+    
     try {
         let result = await generoDAO.selectAllGenero()
 
@@ -94,12 +95,14 @@ const listarGenero = async function () {
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                 customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
                 customMessage.DEFAULT_MESSAGE.response.count = result.length
-                customMessage.DEFAULT_MESSAGE.response.filme = result
+                customMessage.DEFAULT_MESSAGE.response.genero = result
 
                 return customMessage.DEFAULT_MESSAGE
             } else {
-                return customMessage.ERROR_INTERNAL_SERVER_MODEL
+                return customMessage.ERROR_NOT_FOUND
             }
+        } else {
+            return customMessage.ERROR_INTERNAL_SERVER_MODEL
         }
     } catch (error) {
         return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
@@ -161,7 +164,6 @@ const excluirGenero = async function (id) {
         return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
     }
 }
-
 const validarDados = async function (genero) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
@@ -181,5 +183,5 @@ module.exports = {
     atualizarGenero,
     listarGenero,
     buscarGenero,
-    excluirGenero,
+    excluirGenero
 }

@@ -138,3 +138,145 @@ app.listen(8080, function () {
     console.log('API agurdando novas requisições...')
 })
 
+//ENDPOINTS - TABELA NACIONALIDADE
+//IMPORT DAS CONTROLLERS DO PROJETO
+const controllerNacionalidade = require('./controller/nacionalidade/controller_nacionalidade.js')
+
+app.post('/v1/senai/locadora/nacionalidade', bodyParserJSON, async function (request, response) {
+    let dados = request.body
+    let contentType = request.headers['content-type']
+    let result = await controllerNacionalidade.inserirNovaNacionalidade(dados, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get("/v1/senai/locadora/nacionalidade", async function (request, response) {
+
+    let result = await controllerNacionalidade.listarNacionalidade()
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/nacionalidade/:id', async function (request, response) {
+    let id = request.params.id
+    let result = await controllerNacionalidade.buscarNacionalidade(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.put('/v1/senai/locadora/nacionalidade/:id', bodyParserJSON, async function (request, response) {
+    let contentType = request.headers['content-type']
+    let id = request.params.id
+    let dados = request.body
+
+    let result = await controllerNacionalidade.atualizarNacionalidade(dados, id, contentType)
+    response.status(result.status_code)
+    response.json(result)
+
+})
+
+app.delete('/v1/senai/locadora/nacionalidade/:id', async function (request, response) {
+    let id = request.params.id
+    let result = await controllerNacionalidade.excluirNacionalidade(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+//ENDPOINTS - TABELA ATIVIDADE
+//IMPORT DAS CONTROLLERS DO PROJETO
+const controllerAtividade = require('./controller/atividade/controller_atividade.js')
+
+app.post('/v1/senai/locadora/atividade', bodyParserJSON, async function (request, response) {
+    let dados = request.body
+    let contentType = request.headers['content-type']
+    let result = await controllerAtividade.inserirNovaAtividade(dados, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/atividade', async function (request, response) {
+    let result = await controllerAtividade.listarAtividade()
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/atividade/:id', bodyParserJSON, async function (request, response) {
+    let id = request.params.id
+    let result = await controllerAtividade.buscarAtividade(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.put('/v1/senai/locadora/atividade/:id', bodyParserJSON, async function (request, response) {
+    let contentType = request.headers['content-type']
+    let id = request.params.id
+    let dados = request.body
+
+    let result = await controllerAtividade.atualizarAtividade(dados, id, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.delete('/v1/senai/locadora/atividade/:id', async function (request, response) {
+    let id = request.params.id
+    let result = await controllerAtividade.excluirAtividade(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+//ENDPOINTS - TABELA FOTO
+//IMPORT DAS CONTROLLERS DO PROJETO
+const controllerFoto = require('./controller/foto/controller_foto.js')
+
+app.post('/v1/senai/locadora/foto',bodyParserJSON, async function (request, response) {
+
+    let dados = request.body
+    let contentType = request.headers['content-type']
+    let result = await controllerFoto.inserirNovaFoto(dados,contentType)
+    response.status(result.status_code)
+    response.json(result)
+
+})
+
+app.get('/v1/senai/locadora/foto', async function (request,response){
+    let result = await controllerFoto.listarFoto()
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/foto/:id', bodyParserJSON, async function (request, response) {
+    let id = request.params.id
+    let result = await controllerFoto.buscarFoto(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.put('/v1/senai/locadora/foto/:id', bodyParserJSON, async function (request, response) {
+    let contentType = request.headers['content-type']
+    let id = request.params.id
+    let dados = request.body
+
+    let result = await controllerFoto.atualizarFoto(dados, id, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.delete('/v1/senai/locadora/foto/:id', async function (request, response) {
+    let id = request.params.id
+    let result = await controllerFoto.excluirFoto(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})

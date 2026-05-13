@@ -1,6 +1,6 @@
 /***************************************************************************************************************
- * Objetivo: Arquivo responsável pela validação, tratamento, manipulação de dados para realizar o CRUD de nacionalidade
- * Data: 17/04/2026
+ * Objetivo: Arquivo responsável pela validação, tratamento, manipulação de dados para realizar o CRUD de atividade
+ * Data: 13/05/2026
  * Autor: Pyetro Ferreira
  * Versão: 1.0
  ***************************************************************************************************************/
@@ -9,54 +9,56 @@
 const configMessage = require("../modulo/configMessage.js")
 
 //Import do arquivo do DAO para manipular os dados de filme no Banco de Dados
-const nacionalidadeDAO = require('../../model/DAO/nacionalidade/nacionalidade.js')
+const atividadeDAO = require('../../model/DAO/atividade/atividade.js')
+const { default: knex } = require("knex")
 
-const inserirNovaNacionalidade = async function (nacionalidade, contentType) {
+const inserirNovaAtividade = async function (atividade, contentType) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
     try {
         if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
-            let validar = await validarDados(nacionalidade)
+            let validar = await validarDados(atividade)
 
             if (validar) {
                 return validar
             } else {
-                let result = await nacionalidadeDAO.insertNacionalidade((nacionalidade))
-
+                let result = await atividadeDAO.insertAtividade((atividade))
 
                 if (result) {
-                    nacionalidade.id = result
+                    atividade.id = result
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_CREATED_ITEM.status
                     customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_CREATED_ITEM.status_code
                     customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_CREATED_ITEM.message
-                    customMessage.DEFAULT_MESSAGE.response = nacionalidade
+                    customMessage.DEFAULT_MESSAGE.response = atividade
                     return customMessage.DEFAULT_MESSAGE
                 } else {
                     return customMessage.ERROR_INTERNAL_SERVER_MODEL
                 }
             }
         } else {
-            return customMessage.ERROR_CONTENT_TYPE
+            return customMessage.ERROR_CONTENT_TUPE
         }
     } catch (error) {
         return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
     }
 }
-const atualizarNacionalidade = async function (nacionalidade, id, contentType) {
+const atualizarAtividade = async function (atividade, id, contentType) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
     try {
         if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
-            let resultBuscarNacionalidade = await buscarNacionalidade(id)
+            let resultBuscarAtividade = await buscarAtividade(id)
 
-            if (resultBuscarNacionalidade.status) {
-                let validar = await validarDados(nacionalidade)
+            if (resultBuscarAtividade.status) {
+                let validar = await validarDados(atividade)
                 if (!validar) {
-                    nacionalidade.id = Number(id)
-                    let result = await nacionalidadeDAO.updateNacionalidade((nacionalidade))
+                    atividade.id = Number(id)
+
+                    let result = await atividadeDAO.updateAtividade((atividade))
+
                     if (result) {
                         customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_UPDATE_ITEM.status
                         customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_UPDATE_ITEM.status_code
                         customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_UPDATE_ITEM.message
-                        customMessage.DEFAULT_MESSAGE.response = nacionalidade
+                        customMessage.DEFAULT_MESSAGE.response = atividade
 
                         return customMessage.DEFAULT_MESSAGE
                     } else {
@@ -66,29 +68,26 @@ const atualizarNacionalidade = async function (nacionalidade, id, contentType) {
                     return validar
                 }
             } else {
-                return resultBuscarNacionalidade
+                return resultBuscarAtividade
             }
         } else {
-            return customMessage.ERROR_CONTENT_TYPE
+            return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
         }
     } catch (error) {
-        return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
+
     }
-
 }
-const listarNacionalidade = async function () {
-
+const listarAtividade = async function () {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
-
     try {
-        let result = await nacionalidadeDAO.selectAllNacionalidade()
+        let result = await atividadeDAO.selectAllAtividade()
 
         if (result) {
             if (result.length > 0) {
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                 customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
                 customMessage.DEFAULT_MESSAGE.response.count = result.length
-                customMessage.DEFAULT_MESSAGE.response.nacionalidade = result
+                customMessage.DEFAULT_MESSAGE.response.atividade = result
 
                 return customMessage.DEFAULT_MESSAGE
             } else {
@@ -101,7 +100,7 @@ const listarNacionalidade = async function () {
         return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
     }
 }
-const buscarNacionalidade = async function (id) {
+const buscarAtividade = async function (id) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
     try {
         if (id == undefined || String(id).replaceAll(' ', '') == '' || id == null || isNaN(id) || id <= 0) {
@@ -109,7 +108,7 @@ const buscarNacionalidade = async function (id) {
 
             return customMessage.ERROR_BAD_REQUEST
         } else {
-            let result = await nacionalidadeDAO.selectByIdNacionalidade(id)
+            let result = await atividadeDAO.selectByIdAtividade(id)
             if (result) {
                 if (result.length > 0) {
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
@@ -121,20 +120,21 @@ const buscarNacionalidade = async function (id) {
                     return customMessage.ERROR_NOT_FOUND
                 }
             } else {
-                return customMessage.ERROR_NOT_FOUND
+                return customMessage.ERROR_INTERNAL_SERVER_MODEL
             }
         }
     } catch (error) {
-        return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
+
     }
 }
-const excluirNacionalidade = async function (id) {
+const excluirAtividade = async function (id) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
     try {
-        let buscarNacionalidadeResult = await buscarNacionalidade(id)
+        let buscarAtividadeResult = await buscarAtividade(id)
 
-        if (buscarNacionalidadeResult.status) {
-            let result = await nacionalidadeDAO.deleteNacionalidade(id)
+        if (buscarAtividadeResult.status) {
+            let result = await atividadeDAO.deleteAtividade(id)
+
             if (result) {
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_DELETED_ITEM.status
                 customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_DELETED_ITEM.status_code
@@ -145,17 +145,16 @@ const excluirNacionalidade = async function (id) {
                 return customMessage.ERROR_INTERNAL_SERVER_MODEL
             }
         } else {
-            return buscarNacionalidadeResult
+            return buscarAtividadeResult
         }
     } catch (error) {
         return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
     }
 }
-const validarDados = async function (nacionalidade) {
+const validarDados = async function (atividade) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
-
-    if (nacionalidade.nacionalidade == undefined || nacionalidade.nacionalidade == '' || nacionalidade.nacionalidade == null || nacionalidade.nacionalidade.lenght > 25) {
-        customMessage.ERROR_BAD_REQUEST.field = '[NACIONALIDADE] INVÁLIDO'
+    if (atividade.area_atuacao == undefined || atividade.area_atuacao == "" || atividade.area_atuacao == null || atividade.area_atuacao > 40) {
+        customMessage.ERROR_BAD_REQUEST.field = "[ÁREA ATUAÇÃO] INVÁLIDO"
     }
     else {
         return false
@@ -163,9 +162,9 @@ const validarDados = async function (nacionalidade) {
 }
 
 module.exports = {
-    inserirNovaNacionalidade,
-    atualizarNacionalidade,
-    listarNacionalidade,
-    buscarNacionalidade,
-    excluirNacionalidade
+    inserirNovaAtividade,
+    atualizarAtividade,
+    listarAtividade,
+    buscarAtividade,
+    excluirAtividade
 }
