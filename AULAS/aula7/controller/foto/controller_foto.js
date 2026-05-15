@@ -10,9 +10,8 @@ const configMessage = require("../modulo/configMessage.js")
 
 //Import do arquivo do DAO para manipular os dados de filme no Banco de Dados
 const fotoDAO = require('../../model/DAO/foto/foto.js')
-const knexConfig = require("../../model/database_config/knexConfig.js")
 
-const inserirNovaFoto = async function (foto, contentType) {
+const inserirNovoFoto = async function (foto, contentType) {
 
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
@@ -135,7 +134,7 @@ const excluirFoto = async function (id) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
     try {
-let buscarFotoResult = await buscarFoto(id)
+        let buscarFotoResult = await buscarFoto(id)
 
         if (buscarFotoResult.status) {
             let result = await fotoDAO.deleteFoto(id)
@@ -168,7 +167,7 @@ const validarDados = async function (foto) {
 }
 
 module.exports = {
-    inserirNovaFoto,
+    inserirNovoFoto,
     atualizarFoto,
     listarFoto,
     buscarFoto,
