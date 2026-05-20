@@ -12,7 +12,6 @@ const configMessage = require("../modulo/configMessage.js")
 const classificacaoDAO = require('../../model/DAO/classificacao/classificacao.js')
 
 const inserirNovaClassificacao = async function (classificacao, contentType) {
-
     let customMessage = JSON.parse(JSON.stringify(configMessage))
     try {
         if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {

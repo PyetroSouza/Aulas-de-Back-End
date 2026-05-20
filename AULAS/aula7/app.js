@@ -295,9 +295,9 @@ app.post('/v1/senai/locadora/sexo', bodyParserJSON, async function (request, res
 
 app.get('/v1/senai/locadora/sexo', async function (request, response){
     let result = await controllerSexo.listarSexo()
-
     response.status(result.status_code)
     response.json(result)
+    console.log(result)
 })
 
 app.get('/v1/senai/locadora/sexo/:id', bodyParserJSON, async function (request, response){
@@ -370,6 +370,24 @@ app.delete('/v1/senai/locadora/classificacao/:id', bodyParserJSON, async functio
     let id = request.params.id
     let result = await controllerClassificacao.excluirClassificacao(id)
 
+    response.status(result.status_code)
+    response.json(result)
+})
+
+//Tabela Diretor
+//import da controller
+const controllerDiretor = require('./controller/diretor/controller_diretor.js')
+
+app.post('/v1/senai/locadora/diretor', bodyParserJSON, async function (request, response){
+    let dados = request.body
+    let contentType = request.headers['content-type']
+    let result = await controllerDiretor.inserirNovoDiretor(dados, contentType)
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/diretor', async function (request, response){
+    let result = await controllerDiretor.listarDiretor()
     response.status(result.status_code)
     response.json(result)
 })

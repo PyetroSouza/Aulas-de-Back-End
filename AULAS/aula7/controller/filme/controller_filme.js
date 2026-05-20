@@ -11,6 +11,8 @@ const configMessage = require("../modulo/configMessage.js")
 //Import do arquivo do DAO para manipular os dados de filme no Banco de Dados
 const filmeDAO = require('../../model/DAO/filme/filme.js')
 
+//Import das Controllers
+const controllerClassificacao = require('../classificacao/controller_classificacao.js')
 
 //Função para inserir um novo filme
 const inserirNovoFilme = async function (filme, contentType) {
@@ -42,7 +44,6 @@ const inserirNovoFilme = async function (filme, contentType) {
                 } else { //erro 500
                     return customMessage.ERROR_INTERNAL_SERVER_MODEL//500 model
                 }
-
             }
         } else {
             return customMessage.ERROR_CONTENT_TYPE //415
@@ -118,6 +119,21 @@ const listarFilme = async function () {
             //Validação para verificar se o conteúdo do array tem dados de retornos
             //Ou retorno se está vazio 
             if (result.length > 0) {
+
+                //Manipulação dos dados da Classificação 
+                //Percorre o array de filme
+                for (filme of result) {
+                    //Busca na controller da classificação o ID referente a FK da classficação
+                    let resultClassificacao = await controllerClassificacao.buscarClassificacao(filme.id_classificacao)
+                    //Se encontrar o ID
+                    if (resultClassificacao.status) {
+                        //Adicionar um atributo classificação no JSON do filme e colocar o resultado com os dados da claissficação
+                        filme.classificacao = resultClassificacao.response.classificacao
+                        //Apaga o id_classificacao do JSON de filme
+                        delete filme.id_classificacao
+                    }
+                }
+
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                 customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
                 customMessage.DEFAULT_MESSAGE.response.count = result.length
@@ -155,6 +171,19 @@ const buscarFilme = async function (id) {
             if (result) {
                 //Validação para verificar se o DAO sem algum dado no ARRAY 
                 if (result.length > 0) {
+                    //Manipulação dos dados da Classificação 
+                    //Percorre o array de filme
+                    for (filme of result) {
+                        //Busca na controller da classificação o ID referente a FK da classficação
+                        let resultClassificacao = await controllerClassificacao.buscarClassificacao(filme.id_classificacao)
+                        //Se encontrar o ID
+                        if (resultClassificacao.status) {
+                            //Adicionar um atributo classificação no JSON do filme e colocar o resultado com os dados da claissficação
+                            filme.classificacao = resultClassificacao.response.classificacao
+                            //Apaga o id_classificacao do JSON de filme
+                            delete filme.id_classificacao
+                        }
+                    }
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                     customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
                     customMessage.DEFAULT_MESSAGE.response.filme = result
@@ -224,6 +253,9 @@ const validarDados = async function (filme) {
 
     } else if (filme.avaliacao == undefined || isNaN(filme.avaliacao) || filme.avaliacao.length > 3) {
         customMessage.ERROR_BAD_REQUEST.field = "[AVALIAÇÃO] INVÁLIDO"
+        //Validação para a FK da classificação
+    } else if (filme.id_classificacao == undefined || filme.id_classificacao == "" || filme.id_classificacao == null || isNaN(filme.id_classificacao) || filme.id_classificacao <= 0) {
+        customMessage.ERROR_BAD_REQUEST.field = "[ID_CLASSIFICAÇÃO] INVÁLIDO"
     }
     else {
         return false

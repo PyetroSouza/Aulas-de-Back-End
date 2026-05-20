@@ -10,6 +10,7 @@ use db_filmes_20261_b;
 #Permite visualizar todas as tabelas existentes dentro do database
 show tables;
 
+#Tabela de Filme
 create table tbl_filme (
 	id 					int not null auto_increment primary key,
     nome 				varchar(80) not null,
@@ -49,8 +50,72 @@ insert into tbl_filme (
     '50.60'
 );
 
-select * from tbl_filme order by id desc;
-select  * from tbl_filme where id;
+#select * from tbl_filme order by id desc;
+#select  * from tbl_filme where id;
 
-delete from tbl_filme where id = 2;
+#delete from tbl_filme where id = 5;
 
+#Tabela de gênero
+create table tbl_genero(
+	id int not null auto_increment primary key,
+    genero varchar(35) not null
+);
+
+#Tabela de Classificação 
+create table tbl_classificacao(
+		id int not null auto_increment primary key,
+        classificacao varchar(5) not null,
+        descricao text ,
+        idade_minima int default 0
+);
+
+#Tabela de Sexo
+create table tbl_sexo(
+	id int not null auto_increment primary key,
+    sexo varchar(15) not null,
+    sigla varchar(3) not null
+);
+
+#Tabela de nacionalidade
+create table tbl_nacionalidade (
+ 	id int not null auto_increment primary key,
+    nacionalidade varchar(25) not null
+);
+
+#Tabela de Foto
+create table tbl_foto (
+	id int not null auto_increment primary key,
+    foto varchar(200) not null
+);
+
+#Tabela de atividade
+create table tbl_atividade (
+	id int not null auto_increment primary key,
+    area_atuacao varchar(40) not null
+);
+
+desc tbl_filme;
+
+delete from tbl_filme;
+select * from tbl_filme;
+
+alter table tbl_filme
+	add column id_classificacao int not null,
+    add constraint FK_CLASSIFICACAO_FILME
+		foreign key (id_classificacao)
+        references tbl_classificacao(id);
+
+select * from tbl_genero;
+
+#Tabela de ator
+create table tbl_ator (
+id int not null auto_increment primary key,
+nome varchar(100) not null,
+data_nascimento date not null,
+ano_inicio_carreira year not null,
+biografia text not null,
+
+constraint FK_SEXO_ATOR
+foreign key (id_sexo)
+references tbl_sexo(id)
+);
