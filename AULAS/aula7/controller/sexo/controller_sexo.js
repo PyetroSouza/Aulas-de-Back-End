@@ -85,7 +85,7 @@ const listarSexo = async function () {
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                 customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
                 customMessage.DEFAULT_MESSAGE.response.count = result.length
-                customMessage.DEFAULT_MESSAGE.response.genero = result
+                customMessage.DEFAULT_MESSAGE.response.sexo = result
 
                 return customMessage.DEFAULT_MESSAGE
             } else {
@@ -111,7 +111,7 @@ const buscarSexo = async function (id) {
                 if (result.length > 0) {
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                     customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
-                    customMessage.DEFAULT_MESSAGE.response.foto = result
+                    customMessage.DEFAULT_MESSAGE.response.sexo = result
 
                     return customMessage.DEFAULT_MESSAGE
                 } else {
