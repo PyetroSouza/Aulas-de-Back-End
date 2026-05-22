@@ -51,7 +51,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Aluno'          
+                  $ref: '#/components/schemas/Filme'          
            
         '404':
           description: Not Found
@@ -100,7 +100,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Aluno'
+              $ref: '#/components/schemas/Filme'
         required: true
       responses:
         '200':
@@ -112,8 +112,7 @@ paths:
         '415':
           description: Invalid Content-Type
         '500':
-          description: Error Internel Server (Controller / Model)
-       
+          description: Error Internel Server (Controller / Model)      
     delete:
       tags:
         - Filme
@@ -147,11 +146,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/componente/schemas/Genero'
+              $ref: '#/components/schemas/Genero'
         required: true
       responses:
         '201': 
           description: Successful operation
+          content: 
+            application/json:
+              schema:
+                type: array
+                itens:
+                  $ref: '#/components/schemas/Genero'
     get:
       tags:
         - Gênero
@@ -182,6 +187,15 @@ components:
           type: integer
         avaliacao:
           type: integer
+    Genero:
+      required: 
+        - genero
+      type: objetc
+      properties:
+        id:
+          type: interger
+        genero: 
+          type: string
   requestBodies:
     Filme:
       description: Objeto que deve ser enviado no Body das requisicoes
@@ -189,4 +203,10 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Filme'
+    Genero:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Genero'
     

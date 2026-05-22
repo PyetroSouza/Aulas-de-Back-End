@@ -293,14 +293,14 @@ app.post('/v1/senai/locadora/sexo', bodyParserJSON, async function (request, res
     response.json(result)
 })
 
-app.get('/v1/senai/locadora/sexo', async function (request, response){
+app.get('/v1/senai/locadora/sexo', async function (request, response) {
     let result = await controllerSexo.listarSexo()
     response.status(result.status_code)
     response.json(result)
     console.log(result)
 })
 
-app.get('/v1/senai/locadora/sexo/:id', bodyParserJSON, async function (request, response){
+app.get('/v1/senai/locadora/sexo/:id', bodyParserJSON, async function (request, response) {
     let id = request.params.id
     let result = await controllerSexo.buscarSexo(id)
 
@@ -308,7 +308,7 @@ app.get('/v1/senai/locadora/sexo/:id', bodyParserJSON, async function (request, 
     response.json(result)
 })
 
-app.put('/v1/senai/locadora/sexo/:id', bodyParserJSON, async function (request, response){
+app.put('/v1/senai/locadora/sexo/:id', bodyParserJSON, async function (request, response) {
     let contentType = request.headers['content-type']
     let id = request.params.id
     let dados = request.body
@@ -319,7 +319,7 @@ app.put('/v1/senai/locadora/sexo/:id', bodyParserJSON, async function (request, 
     response.json(result)
 })
 
-app.delete('/v1/senai/locadora/sexo/:id', bodyParserJSON, async function (request, response){
+app.delete('/v1/senai/locadora/sexo/:id', bodyParserJSON, async function (request, response) {
     let id = request.params.id
     let result = await controllerSexo.excluirSexo(id)
 
@@ -331,7 +331,7 @@ app.delete('/v1/senai/locadora/sexo/:id', bodyParserJSON, async function (reques
 //IMPORT
 const controllerClassificacao = require('./controller/classificacao/controller_classificacao.js')
 
-app.post('/v1/senai/locadora/classificacao', bodyParserJSON, async function (request, response){
+app.post('/v1/senai/locadora/classificacao', bodyParserJSON, async function (request, response) {
     let dados = request.body
     let contentType = request.headers['content-type']
     let result = await controllerClassificacao.inserirNovaClassificacao(dados, contentType)
@@ -339,23 +339,23 @@ app.post('/v1/senai/locadora/classificacao', bodyParserJSON, async function (req
     response.json(result)
 })
 
-app.get('/v1/senai/locadora/classificacao', async function (request, response){
+app.get('/v1/senai/locadora/classificacao', async function (request, response) {
     let result = await controllerClassificacao.listarClassificacao()
 
     response.status(result.status_code)
     response.json(result)
 })
 
-app.get('/v1/senai/locadora/classificacao/:id', bodyParserJSON, async function (request, response){
+app.get('/v1/senai/locadora/classificacao/:id', bodyParserJSON, async function (request, response) {
     let id = request.params.id
-    
+
     let result = await controllerClassificacao.buscarClassificacao(id)
 
     response.status(result.status_code)
     response.json(result)
 })
 
-app.put('/v1/senai/locadora/classificacao/:id', bodyParserJSON, async function (request, response){
+app.put('/v1/senai/locadora/classificacao/:id', bodyParserJSON, async function (request, response) {
     let contentType = request.headers['content-type']
     let id = request.params.id
     let dados = request.body
@@ -366,7 +366,7 @@ app.put('/v1/senai/locadora/classificacao/:id', bodyParserJSON, async function (
     response.json(result)
 })
 
-app.delete('/v1/senai/locadora/classificacao/:id', bodyParserJSON, async function (request, response){
+app.delete('/v1/senai/locadora/classificacao/:id', bodyParserJSON, async function (request, response) {
     let id = request.params.id
     let result = await controllerClassificacao.excluirClassificacao(id)
 
@@ -378,7 +378,7 @@ app.delete('/v1/senai/locadora/classificacao/:id', bodyParserJSON, async functio
 //import da controller
 const controllerDiretor = require('./controller/diretor/controller_diretor.js')
 
-app.post('/v1/senai/locadora/diretor', bodyParserJSON, async function (request, response){
+app.post('/v1/senai/locadora/diretor', bodyParserJSON, async function (request, response) {
     let dados = request.body
     let contentType = request.headers['content-type']
     let result = await controllerDiretor.inserirNovoDiretor(dados, contentType)
@@ -386,8 +386,80 @@ app.post('/v1/senai/locadora/diretor', bodyParserJSON, async function (request, 
     response.json(result)
 })
 
-app.get('/v1/senai/locadora/diretor', async function (request, response){
+app.get('/v1/senai/locadora/diretor', async function (request, response) {
     let result = await controllerDiretor.listarDiretor()
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/diretor/:id', bodyParserJSON, async function (request, response) {
+    let id = request.params.id
+    let result = await controllerDiretor.buscarDiretor(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.put('/v1/senai/locadora/diretor/:id', bodyParserJSON, async function (request, response){
+    let contentType = request.headers['content-type']
+    let id = request.params.id
+    let dados = request.body
+
+    let result = await controllerDiretor.atualizarDiretor(dados, id, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.delete('/v1/senai/locadora/diretor/:id', bodyParserJSON, async function (request, response){
+    let id = request.params.id
+    let result = await controllerDiretor.excluirDiretor(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+//Tabela Ator
+//import da controller
+const controllerAtor = require('./controller/ator/controller_ator.js')
+
+app.post('/v1/senai/locadora/ator', bodyParserJSON, async function (request, response) {
+    let dados = request.body
+    let contentType = request.headers['content-type']
+    let result = await controllerAtor.inserirNovoAtor(dados, contentType)
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/ator', async function (request, response) {
+    let result = await controllerAtor.listarAtor()
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.get('/v1/senai/locadora/ator/:id', bodyParserJSON, async function (request, response) {
+    let id = request.params.id
+    let result = await controllerAtor.buscarAtor(id)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.put('/v1/senai/locadora/ator/:id', bodyParserJSON, async function (request, response){
+    let contentType = request.headers['content-type']
+    let id = request.params.id
+    let dados = request.body
+
+    let result = await controllerAtor.atualizarAtor(dados, id, contentType)
+
+    response.status(result.status_code)
+    response.json(result)
+})
+
+app.delete('/v1/senai/locadora/ator/:id', bodyParserJSON, async function (request, response){
+    let id = request.params.id
+    let result = await controllerAtor.excluirAtor(id)
+
     response.status(result.status_code)
     response.json(result)
 })

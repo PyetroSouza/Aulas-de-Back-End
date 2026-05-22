@@ -9,28 +9,28 @@
 const configMessage = require("../modulo/configMessage.js")
 
 //Import do arquivo do DAO para manipular os dados de filme no Banco de Dados
-const diretorDAO = require('../../model/DAO/diretor/diretor.js')
+const atorDAO = require('../../model/DAO/ator/ator.js')
 
 //Import das Controllers
 const controllerSexo = require('../sexo/controller_sexo.js')
 
-const inserirNovoDiretor = async function (diretor, contentType) {
+const inserirNovoAtor = async function (ator, contentType) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
     try {
         if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
-            let validar = await validarDados(diretor)
+            let validar = await validarDados(ator)
 
             if (validar) {
                 return validar
             } else {
-                let result = await diretorDAO.insertDiretor((diretor))
+                let result = await atorDAO.insertAtor((ator))
 
                 if (result) {
-                    diretor.id = result
+                    ator.id = result
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_CREATED_ITEM.status
                     customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_CREATED_ITEM.status_code
                     customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_CREATED_ITEM.message
-                    customMessage.DEFAULT_MESSAGE.response = diretor
+                    customMessage.DEFAULT_MESSAGE.response = ator
                     return customMessage.DEFAULT_MESSAGE
                 } else {
                     return customMessage.ERROR_INTERNAL_SERVER_MODEL
@@ -44,22 +44,22 @@ const inserirNovoDiretor = async function (diretor, contentType) {
     }
 }
 
-const atualizarDiretor = async function (diretor, id, contentType) {
+const atualizarAtor = async function (ator, id, contentType) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
     try {
         if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
-            let resultBuscarDiretor = await buscarDiretor(id)
-            if (resultBuscarDiretor.status) {
-                let validar = await validarDados(diretor)
+            let resultBuscarAtor = await buscarAtor(id)
+            if (resultBuscarAtor.status) {
+                let validar = await validarDados(ator)
                 if (!validar) {
-                    diretor.id = Number(id)
-                    let result = await diretorDAO.updateDiretor((diretor))
+                    ator.id = Number(id)
+                    let result = await atorDAO.updateAtor((ator))
 
                     if (result) {
                         customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_UPDATE_ITEM.status
                         customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_UPDATE_ITEM.status_code
                         customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_UPDATE_ITEM.message
-                        customMessage.DEFAULT_MESSAGE.response = diretor
+                        customMessage.DEFAULT_MESSAGE.response = ator
 
                         return customMessage.DEFAULT_MESSAGE //200
                     } else {
@@ -69,7 +69,7 @@ const atualizarDiretor = async function (diretor, id, contentType) {
                     return validar
                 }
             } else {
-                return resultBuscarDiretor
+                return resultBuscarAtor
             }
         } else {
             return customMessage.ERROR_CONTENT_TYPE
@@ -78,23 +78,23 @@ const atualizarDiretor = async function (diretor, id, contentType) {
         return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
     }
 }
-const listarDiretor = async function () {
+const listarAtor = async function () {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
     try {
-        let result = await diretorDAO.selectAllDiretor()
+        let result = await atorDAO.selectAllAtor()
         if (result) {
             if (result.length > 0) {
-                for (diretor of result) {
-                    let resultSexo = await controllerSexo.buscarSexo(diretor.id_sexo)
+                for (ator of result) {
+                    let resultSexo = await controllerSexo.buscarSexo(ator.id_sexo)
                     if (resultSexo.status) {
-                        diretor.sexo = resultSexo.response.sexo
-                        delete diretor.id_sexo
+                        ator.sexo = resultSexo.response.sexo
+                        delete ator.id_sexo
                     }
                 }
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                 customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
                 customMessage.DEFAULT_MESSAGE.response.count = result.length
-                customMessage.DEFAULT_MESSAGE.response.diretor = result
+                customMessage.DEFAULT_MESSAGE.response.ator = result
 
                 return customMessage.DEFAULT_MESSAGE //200
             } else {
@@ -107,7 +107,7 @@ const listarDiretor = async function () {
         return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
     }
 }
-const buscarDiretor = async function (id) {
+const buscarAtor = async function (id) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
     try {
@@ -116,20 +116,20 @@ const buscarDiretor = async function (id) {
 
             return customMessage.ERROR_BAD_REQUEST //400
         } else {
-            let result = await diretorDAO.selectByIdDiretor(id)
+            let result = await atorDAO.selectByIdAtor(id)
 
             if (result) {
                 if (result.length > 0) {
-                    for (diretor of result) {
-                        let resultSexo = await controllerSexo.buscarSexo(diretor.id_sexo)
+                    for (ator of result) {
+                        let resultSexo = await controllerSexo.buscarSexo(ator.id_sexo)
                         if (resultSexo.status) {
-                            diretor.sexo = resultSexo.response.sexo
-                            delete diretor.id_sexo
+                            ator.sexo = resultSexo.response.sexo
+                            delete ator.id_sexo
                         }
                     }
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                     customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
-                    customMessage.DEFAULT_MESSAGE.response.diretor = result
+                    customMessage.DEFAULT_MESSAGE.response.ator = result
 
                     return customMessage.DEFAULT_MESSAGE
                 } else {
@@ -143,13 +143,13 @@ const buscarDiretor = async function (id) {
         return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
     }
 }
-const excluirDiretor = async function (id) {
+const excluirAtor = async function (id) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
     try {
-        let buscarDiretorResult = await buscarDiretor(id)
+        let buscarAutorResult = await buscarAtor(id)
 
-        if (buscarDiretorResult.status) {
-            let result = await diretorDAO.deleteDiretor(id)
+        if (buscarAutorResult.status) {
+            let result = await atorDAO.deleteAtor(id)
 
             if (result) {
                 customMessage.DEFAULT_MESSAGE.status
@@ -164,31 +164,34 @@ const excluirDiretor = async function (id) {
         } else {
             return buscarDiretorResult
         }
-    } catch (error) { 
+    } catch (error) {
         return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
     }
 }
-const validarDados = async function (diretor) {
+const validarDados = async function (ator) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
-    if (diretor.nome == undefined || diretor.nome == "" || diretor.nome == null || diretor.nome.length > 100) {
+    if (ator.nome == undefined || ator.nome == "" || ator.nome == null || ator.nome.length > 100) {
         customMessage.ERROR_BAD_REQUEST.field = "[NOME] INVÁLIDO"
-    } else if (diretor.data_nascimento == undefined || diretor.data_nascimento == "" || diretor.data_nascimento == null || isNaN(diretor.data_nascimento) || diretor.data_nascimento != 10) {
+    } else if (ator.data_nascimento == undefined || ator.data_nascimento == "" || ator.data_nascimento == null || isNaN(ator.data_nascimento) || ator.data_nascimento != 10) {
         customMessage.ERROR_BAD_REQUEST.field = "[DATA_NASCIMENTO] INVÁLIDO"
-    } else if (diretor.ano_inicio_carreira == undefined || diretor.ano_inicio_carreira == "" || diretor.ano_inicio_carreira == null || isNaN(diretor.ano_inicio_carreira) || diretor.ano_inicio_carreira != 10) {
+    } else if (ator.ano_inicio_carreira == undefined || ator.ano_inicio_carreira == "" || ator.ano_inicio_carreira == null || isNaN(ator.ano_inicio_carreira) || ator.ano_inicio_carreira != 10) {
         customMessage.ERROR_BAD_REQUEST.field = "[ANO INÍCIO CARREIRA] INVÁLIDO"
-    } else if (diretor.id_sexo == undefined || diretor.id_sexo == "" || diretor.id_sexo == null || isNaN(diretor.id_sexo) || diretor.id_sexo <= 0) {
+    } else if (ator.biografia == undefined || ator.biografia == "" || ator.biografia == null) {
+        customMessage.ERROR_BAD_REQUEST.field = "[BIOGRAFIA] INVÁLIDO"
+    } else if (ator.id_sexo == undefined || ator.id_sexo == "" || ator.id_sexo == null || isNaN(ator.id_sexo) || ator.id_sexo <= 0) {
         customMessage.ERROR_BAD_REQUEST.field = "[ID_SEXO] INVÁLIDO"
-    } else {
+    }
+    else {
         return false
     }
 
 }
 
 module.exports = {
-    inserirNovoDiretor,
-    atualizarDiretor,
-    listarDiretor,
-    buscarDiretor,
-    excluirDiretor,
+    inserirNovoAtor,
+    atualizarAtor,
+    listarAtor,
+    buscarAtor,
+    excluirAtor,
 }

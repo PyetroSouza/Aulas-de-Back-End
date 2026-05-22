@@ -114,8 +114,25 @@ nome varchar(100) not null,
 data_nascimento date not null,
 ano_inicio_carreira year not null,
 biografia text not null,
+id_sexo int not null,
 
 constraint FK_SEXO_ATOR
 foreign key (id_sexo)
 references tbl_sexo(id)
 );
+
+#Tabela diretor
+create table tbl_diretor (
+id int not null auto_increment primary key,
+nome varchar(100) not null,
+data_nascimento date not null,
+ano_inicio_carreira year not null,
+id_sexo int not null,
+
+constraint FK_SEXO_DIRETOR
+foreign key (id_sexo)
+references tbl_sexo(id)
+);
+
+create table tbl_filme_genero(
+
