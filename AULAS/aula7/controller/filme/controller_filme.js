@@ -47,7 +47,10 @@ const inserirNovoFilme = async function (filme, contentType) {
                             "id_genero": itemFilme.id
                         }
                         let resultFilmeGenero = await controllerFilmeGenero.inserirNovoFilmeGenero(filmeGenero)
-                        console.log(resultFilmeGenero)
+                        //Validação para verificar se todos os itens de relacionamento foram inseridos
+                        if (!resultFilmeGenero.status) {
+                            return customMessage.SUCCESS_CREATED_ITEM_WARNING //201 com alerta de cadastro
+                        }
                     }
 
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_CREATED_ITEM.status
@@ -93,6 +96,24 @@ const atualizarFilme = async function (filme, id, contentType) {
                     let result = await filmeDAO.updateFilme(await tratarDados(filme))
 
                     if (result) {
+
+                        //Excluir as relações entre o Filme e os Gêneros (Todas as relações)
+                        let resultDeleteGeneros = await controllerFilmeGenero.excluirGenerosIdFilme(filme.id)
+
+                        if(resultDeleteGeneros.status){
+                            for (itemFilme of filme.genero) {
+                                let filmeGenero = {
+                                    "id_filme": filme.id,
+                                    "id_genero": itemFilme.id
+                                }
+                                let resultFilmeGenero = await controllerFilmeGenero.inserirNovoFilmeGenero(filmeGenero)
+                                //Validação para verificar se todos os itens de relacionamento foram inseridos
+                                if (!resultFilmeGenero.status) {
+                                    return customMessage.SUCCESS_CREATED_ITEM_WARNING //201 com alerta de cadastro
+                                }
+                            }
+                        }
+
                         customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_UPDATE_ITEM.status
                         customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_UPDATE_ITEM.status_code
                         customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_UPDATE_ITEM.message
@@ -146,6 +167,10 @@ const listarFilme = async function () {
                         //Apaga o id_classificacao do JSON de filme
                         delete filme.id_classificacao
                     }
+                    let resultFilmeGenero = await controllerFilmeGenero.buscarGenerosIdFilme(filme.id)
+                    if (resultFilmeGenero.status) {
+                        filme.genero = resultFilmeGenero.response.filme_genero
+                    }
                 }
 
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
@@ -196,6 +221,12 @@ const buscarFilme = async function (id) {
                             filme.classificacao = resultClassificacao.response.classificacao
                             //Apaga o id_classificacao do JSON de filme
                             delete filme.id_classificacao
+                        }
+
+                        //Manipulação de dados para retornar os Generos relacioandos ao Filme
+                        let resultFilmeGenero = await controllerFilmeGenero.buscarGenerosIdFilme(filme.id)
+                        if (resultFilmeGenero.status) {
+                            filme.genero = resultFilmeGenero.response.filme_genero
                         }
                     }
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
