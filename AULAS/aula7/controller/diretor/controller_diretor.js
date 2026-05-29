@@ -13,6 +13,7 @@ const diretorDAO = require('../../model/DAO/diretor/diretor.js')
 
 //Import das Controllers
 const controllerSexo = require('../sexo/controller_sexo.js')
+const controllerDiretorFoto = require('./controller_diretor_foto.js')
 
 const inserirNovoDiretor = async function (diretor, contentType) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
@@ -27,6 +28,19 @@ const inserirNovoDiretor = async function (diretor, contentType) {
 
                 if (result) {
                     diretor.id = result
+
+                    for(itemDiretor of diretor.foto){
+                        let diretorFoto = {
+                            "id_diretor": diretor.id,
+                            "id_foto": itemDiretor.id 
+                        }
+
+                        let resultDiretorFoto = await controllerDiretorFoto.inserirNovoDiretorFoto(diretorFoto)
+                        if(!resultDiretorFoto.status){
+                            return customMessage.SUCCESS_CREATED_ITEM_WARNING
+                        }
+                    }
+
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_CREATED_ITEM.status
                     customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_CREATED_ITEM.status_code
                     customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_CREATED_ITEM.message

@@ -95,7 +95,7 @@ create table tbl_atividade (
 );
 
 desc tbl_filme;
-
+	
 delete from tbl_filme;
 select * from tbl_filme;
 
@@ -135,4 +135,15 @@ references tbl_sexo(id)
 );
 
 create table tbl_filme_genero(
+id int not null auto_increment primary key,
+id_filme int not null,
+id_genero int not null,
 
+constraint FK_FILME_FILMEGENERO
+foreign key (id_filme)
+references tbl_filme(id),
+
+constraint FK_GENERO_FILMEGENERO
+foreign key (id_genero)
+references tbl_genero(id)
+);
