@@ -1,6 +1,6 @@
 /***************************************************************************************************************
- * Objetivo: Arquivo responsável pela validação, tratamento, manipulação de dados para realizar o CRUD de Diretor Foto
- * Data: 22/05/2026
+ * Objetivo: Arquivo responsável pela validação, tratamento, manipulação de dados para realizar o CRUD de Ator Nacionalidade
+ * Data: 06/06/2026
  * Autor: Pyetro Ferreira
  * Versão: 1.0
  ***************************************************************************************************************/
@@ -9,28 +9,28 @@
 const configMessage = require("../modulo/configMessage.js")
 
 //Import do arquivo do DAO para manipular os dados de filme no Banco de Dados
-const diretorFotoDAO = require('../../model/DAO/diretor_foto/diretor_foto.js')
+const atorNacionalidadeDAO = require('../../model/DAO/ator_nacionalidade/ator_nacionalidade.js')
 
 //Função para inserir um novo FilmeGenero
-const inserirNovoDiretorFoto = async function (diretorFoto) {
+const inserirNovoAtorNacionalidade = async function (atorNacionalidade) {
 
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
     try {
-        let validar = await validarDados(diretorFoto)
+        let validar = await validarDados(atorNacionalidade)
 
         if (validar) {
             return validar
         } else {
-            let result = await diretorFotoDAO.insertDiretorFoto(diretorFoto)
+            let result = await atorNacionalidadeDAO.insertAtorNacionalidade(atorNacionalidade)
 
 
             if (result) {
-                diretorFoto.id = result
+                atorNacionalidade.id = result
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_CREATED_ITEM.status
                 customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_CREATED_ITEM.status_code
                 customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_CREATED_ITEM.message
-                customMessage.DEFAULT_MESSAGE.response = diretorFoto
+                customMessage.DEFAULT_MESSAGE.response = atorNacionalidade
                 return customMessage.DEFAULT_MESSAGE
             }
             else {
@@ -43,26 +43,26 @@ const inserirNovoDiretorFoto = async function (diretorFoto) {
     }
 }
 //Função para atualizar um novo FilmeGenero
-const atualizarDiretorFoto = async function (diretorFoto, id) {
+const atualizarAtorNacionalidade = async function (atorNacionalidade, id) {
 
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
     try {
 
-        let resultBuscarDiretorFoto = await buscarDiretorFoto(id)
+        let resultBuscarAtorNacionalidade = await buscarAtorNacionalidade(id)
 
-        if (resultBuscarDiretorFoto.status) {
-            let validar = await validarDados(diretorFoto)
+        if (resultBuscarAtorNacionalidade.status) {
+            let validar = await validarDados(atorNacionalidade)
             if (!validar) {
-                diretorFoto.id = Number(id)
+                atorNacionalidade.id = Number(id)
 
-                let result = await diretorFotoDAO.updateDiretorFoto((diretorFoto))
+                let result = await atorNacionalidadeDAO.updateAtorNacionalidade((atorNacionalidade))
 
                 if (result) {
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_UPDATE_ITEM.status
                     customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_UPDATE_ITEM.status_code
                     customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_UPDATE_ITEM.message
-                    customMessage.DEFAULT_MESSAGE.response = diretorFoto
+                    customMessage.DEFAULT_MESSAGE.response = atorNacionalidade
 
                     return customMessage.DEFAULT_MESSAGE //200
                 } else {
@@ -72,27 +72,27 @@ const atualizarDiretorFoto = async function (diretorFoto, id) {
                 return validar
             }
         } else {
-            return resultBuscarDiretorFoto
+            return resultBuscarAtorNacionalidade
         }
     } catch (error) {
         return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
     }
 }
 //Função para lista FilmeGenero
-const listarDiretorFoto = async function () {
+const listarAtorNacionalidade = async function () {
 
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
 
     try {
-        let result = await diretorFotoDAO.selectAllDiretorFoto()
+        let result = await atorNacionalidadeDAO.selectAllAtorNacionalidade()
 
         if (result) {
             if (result.length > 0) {
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                 customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
                 customMessage.DEFAULT_MESSAGE.response.count = result.length
-                customMessage.DEFAULT_MESSAGE.response.diretor_foto = result
+                customMessage.DEFAULT_MESSAGE.response.ator_nacionalidade = result
 
                 return customMessage.DEFAULT_MESSAGE
             } else {
@@ -107,7 +107,7 @@ const listarDiretorFoto = async function () {
 
 }
 //Função para buscar um novo FilmeGenero
-const buscarDiretorFoto = async function (id) {
+const buscarAtorNacionalidade = async function (id) {
 
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
@@ -117,12 +117,12 @@ const buscarDiretorFoto = async function (id) {
 
             return customMessage.ERROR_BAD_REQUEST
         } else {
-            let result = await diretorFotoDAO.selectByIdDiretorFoto(id)
+            let result = await atorNacionalidadeDAO.selectByIdAtorNacionalidade(id)
             if (result) {
                 if (result.length > 0) {
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                     customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
-                    customMessage.DEFAULT_MESSAGE.response.diretor_foto = result
+                    customMessage.DEFAULT_MESSAGE.response.ator_nacionalidade = result
 
                     return customMessage.DEFAULT_MESSAGE
                 } else {
@@ -138,22 +138,22 @@ const buscarDiretorFoto = async function (id) {
 
 }
 //Função para buscar os generos filtrando pelo ID do Filme
-const buscarFotosIdDiretor = async function (idDiretor) {
+const buscarNacionalidadeIdAtor = async function (idAtor) {
 
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
     try {
-        if (idDiretor == undefined || String(idDiretor).replaceAll(' ', '') == '' || idDiretor == null || isNaN(idDiretor) || idDiretor <= 0) {
-            customMessage.ERROR_BAD_REQUEST.field = '[ID_FOTO_DIRETOR] INVÁLIDO'
+        if (idAtor == undefined || String(idAtor).replaceAll(' ', '') == '' || idAtor == null || isNaN(idAtor) || idAtor <= 0) {
+            customMessage.ERROR_BAD_REQUEST.field = '[ID_NACIONALIDADE_ATOR] INVÁLIDO'
 
             return customMessage.ERROR_BAD_REQUEST
         } else {
-            let result = await diretorFotoDAO.selectFotoByIdDiretor(idDiretor)
+            let result = await atorNacionalidadeDAO.selectNacionalidadeByIdAtor(idAtor)
             if (result) {
                 if (result.length > 0) {
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                     customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
-                    customMessage.DEFAULT_MESSAGE.response.fotos_diretor = result
+                    customMessage.DEFAULT_MESSAGE.response.nacionalidades_ator = result
 
                     return customMessage.DEFAULT_MESSAGE
                 } else {
@@ -170,22 +170,22 @@ const buscarFotosIdDiretor = async function (idDiretor) {
 }
 
 //Função para buscar os filmes filtrando pelo ID do Genero
-const buscarDiretorIdFoto = async function (idFoto) {
+const buscarAtorIdNacionalidade = async function (idNacionalidade) {
 
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
     try {
-        if (idFoto == undefined || String(idFoto).replaceAll(' ', '') == '' || idFoto == null || isNaN(idFoto) || idFoto <= 0) {
-            customMessage.ERROR_BAD_REQUEST.field = '[ID_FOTO] INVÁLIDO'
+        if (idNacionalidade == undefined || String(idNacionalidade).replaceAll(' ', '') == '' || idNacionalidade == null || isNaN(idNacionalidade) || idNacionalidade <= 0) {
+            customMessage.ERROR_BAD_REQUEST.field = '[ID_NACIONALIDADE] INVÁLIDO'
 
             return customMessage.ERROR_BAD_REQUEST
         } else {
-            let result = await diretorFotoDAO.selectDiretorByIdFoto(idFoto)
+            let result = await atorNacionalidadeDAO.selectAtorByIdNacionalidade(idNacionalidade)
             if (result) {
                 if (result.length > 0) {
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                     customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
-                    customMessage.DEFAULT_MESSAGE.response.diretor_foto = result
+                    customMessage.DEFAULT_MESSAGE.response.ator_nacionalidade = result
 
                     return customMessage.DEFAULT_MESSAGE
                 } else {
@@ -201,13 +201,13 @@ const buscarDiretorIdFoto = async function (idFoto) {
 
 }
 //Função para excluir um FilmeGenero
-const excluirDiretorFilme = async function (id) {
+const excluirAtorNacionalidade = async function (id) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
     try {
-        let buscarDiretorFotoResult = await buscarDiretorFoto(id)
+        let buscarAtorNacionalidadeResult = await buscarAtorNacionalidade(id)
 
-        if (buscarDiretorFotoResult.status) {
-            let result = await diretorFotoDAO.deleteDiretorFoto(id)
+        if (buscarAtorNacionalidadeResult.status) {
+            let result = await atorNacionalidadeDAO.deleteAtorNacionalidade(id)
 
             if (result) {
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_DELETED_ITEM.status
@@ -220,7 +220,7 @@ const excluirDiretorFilme = async function (id) {
             }
 
         } else {
-            return buscarDiretorFotoResult
+            return buscarAtorNacionalidadeResult
         }
     } catch (error) {
         return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
@@ -228,11 +228,11 @@ const excluirDiretorFilme = async function (id) {
 }
 
 //Função para excluir alteração de generos com o Filme
-const excluirFotosIdDiretor = async function (idDiretor) {
+const excluirNacionalidadeIdAtor = async function (idAtor) {
 
     let customMessage = JSON.parse(JSON.stringify(configMessage))
     try {
-        let result = await diretorFotoDAO.deleteFotosByIdDiretor(idDiretor)
+        let result = await atorNacionalidadeDAO.deleteNacionalidadeByIdAtor(idAtor)
 
         if (result) {
             return customMessage.SUCCESS_DELETED_ITEM
@@ -245,13 +245,13 @@ const excluirFotosIdDiretor = async function (idDiretor) {
     }
 }
 
-const validarDados = async function (diretorFoto) {
+const validarDados = async function (atorNacionalidade) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
-    if (diretorFoto.id_diretor == undefined || diretorFoto.id_diretor == '' || diretorFoto.id_diretor == null || isNaN(diretorFoto.id_diretor) || diretorFoto.id_diretor <= 0) {
-        customMessage.ERROR_BAD_REQUEST.field = '[ID_DIRETOR] INVÁLIDO'
-    } else if (diretorFoto.id_foto == undefined || diretorFoto.id_foto == '' || diretorFoto.id_foto == null || isNaN(diretorFoto.id_foto) || diretorFoto.id_foto <= 0) {
-        customMessage.ERROR_BAD_REQUEST.field = '[ID_FOTO] INVÁLIDO'
+    if (atorNacionalidade.id_ator == undefined || atorNacionalidade.id_ator == '' || atorNacionalidade.id_ator == null || isNaN(atorNacionalidade.id_ator) || atorNacionalidade.id_ator <= 0) {
+        return customMessage.ERROR_BAD_REQUEST.field = '[ID_ATOR] INVÁLIDO'
+    } else if (atorNacionalidade.id_nacionalidade == undefined || atorNacionalidade.id_nacionalidade == '' || atorNacionalidade.id_nacionalidade == null || isNaN(atorNacionalidade.id_nacionalidade) || atorNacionalidade.id_nacionalidade <= 0) {
+        return customMessage.ERROR_BAD_REQUEST.field = '[ID_NACIONALIDADE] INVÁLIDO'
     } else {
         return false
     }
@@ -260,12 +260,12 @@ const validarDados = async function (diretorFoto) {
 
 
 module.exports = {
-    inserirNovoDiretorFoto,
-    atualizarDiretorFoto,
-    listarDiretorFoto,
-    buscarDiretorFoto,
-    buscarFotosIdDiretor,
-    buscarDiretorIdFoto,
-    excluirDiretorFilme,
-    excluirFotosIdDiretor
+    inserirNovoAtorNacionalidade,
+    atualizarAtorNacionalidade,
+    listarAtorNacionalidade,
+    buscarAtorNacionalidade,
+    buscarNacionalidadeIdAtor,
+    buscarAtorIdNacionalidade,
+    excluirAtorNacionalidade,
+    excluirNacionalidadeIdAtor
 }

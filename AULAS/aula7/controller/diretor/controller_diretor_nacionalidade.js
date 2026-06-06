@@ -72,7 +72,7 @@ const atualizarDiretorNacionalidade = async function (diretorNacionalidade, id) 
                 return validar
             }
         } else {
-            return resultBuscarDiretorFoto
+            return resultBuscarDiretorNacionalidade
         }
     } catch (error) {
         return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER

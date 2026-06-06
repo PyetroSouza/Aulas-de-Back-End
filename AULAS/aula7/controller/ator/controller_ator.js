@@ -13,6 +13,13 @@ const atorDAO = require('../../model/DAO/ator/ator.js')
 
 //Import das Controllers
 const controllerSexo = require('../sexo/controller_sexo.js')
+const controllerFoto = require('../foto/controller_foto.js')
+const controllerNacionalidade = require('../nacionalidade/controller_nacionalidade.js')
+const controllerAtividade = require('../atividade/controller_atividade.js')
+
+const controllerAtorFoto = require('../ator/controller_ator_foto.js')
+const controllerAtorNacionalidade = require('../ator/controller_ator_nacionalidade.js')
+const controllerAtorAtividade = require('../ator/controller_ator_atividade.js')
 
 const inserirNovoAtor = async function (ator, contentType) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
@@ -26,6 +33,41 @@ const inserirNovoAtor = async function (ator, contentType) {
                 let result = await atorDAO.insertAtor((ator))
 
                 if (result) {
+                    ator.id = result
+
+                    for (let foto of ator.foto) {
+                        let atorFoto = {
+                            "id_ator": ator.id,
+                            "id_foto": foto.id
+                        }
+
+                        let resultAtorFoto = await controllerAtorFoto.inserirNovoAtorFoto(atorFoto)
+                        if (!resultAtorFoto.status) {
+                            return customMessage.SUCCESS_CREATED_ITEM_WARNING
+                        }
+                    }
+                    for (let nacionalidade of ator.nacionalidade) {
+                        let atorNacionalidade = {
+                            "id_ator": ator.id,
+                            "id_nacionalidade": nacionalidade.id
+                        }
+                        let resultAtorNacionalidade = await controllerAtorNacionalidade.inserirNovoAtorNacionalidade(atorNacionalidade)
+                        if (!resultAtorNacionalidade.status) {
+                            return customMessage.SUCCESS_CREATED_ITEM_WARNING
+                        }
+                    }
+                    for (let atividade of ator.atividade) {
+                        let atorAtividade = {
+                            "id_ator": ator.id,
+                            "id_atividade": atividade.id
+                        }
+                        let resultAtorAtividade = await controllerAtorAtividade.inserirNovoAtorAtividade(atorAtividade)
+                        console.log(resultAtorAtividade)
+                        if (!resultAtorAtividade.status) {
+                            return customMessage.SUCCESS_CREATED_ITEM_WARNING
+                        }
+                    }
+
                     ator.id = result
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_CREATED_ITEM.status
                     customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_CREATED_ITEM.status_code
@@ -56,6 +98,46 @@ const atualizarAtor = async function (ator, id, contentType) {
                     let result = await atorDAO.updateAtor((ator))
 
                     if (result) {
+                        let resultDeleteFotos = await controllerAtorFoto.excluirFotosIdAtor(ator.id)
+                        if (resultDeleteFotos.status) {
+                            for (let itemAtor of ator.foto) {
+                                let fotoAtor = {
+                                    "id_ator": ator.id,
+                                    "id_foto": itemAtor.id
+                                }
+                                let resultAtorFoto = await controllerAtorFoto.inserirNovoAtorFoto(fotoAtor)
+                                if (!resultAtorFoto.status) {
+                                    return customMessage.SUCCESS_CREATED_ITEM_WARNING
+                                }
+                            }
+
+                        }
+                        let resultDeleteNacionalidades = await controllerAtorNacionalidade.excluirNacionalidadeIdAtor(ator.id)
+                        if (resultDeleteNacionalidades.status) {
+                            for (let itemAtor of ator.nacionalidade) {
+                                let nacionalidadeAtor = {
+                                    "id_ator": ator.id,
+                                    "id_nacionalidade": itemAtor.id
+                                }
+                                let resultAtorNacionalidade = await controllerAtorNacionalidade.inserirNovoAtorNacionalidade(nacionalidadeAtor)
+                                if (!resultAtorNacionalidade.status) {
+                                    return customMessage.SUCCESS_CREATED_ITEM_WARNING
+                                }
+                            }
+                        }
+                        let resultDeleteAtividades = await controllerAtorAtividade.excluirAtividadeIdAtor(ator.id)
+                        if (resultDeleteAtividades.status) {
+                            for (let itemAtor of ator.atividade) {
+                                let atividadeAtor = {
+                                    "id_ator": ator.id,
+                                    "id_atividade": itemAtor.id
+                                }
+                                let resultAtorAtividade = await controllerAtorAtividade.inserirNovoAtorAtividade(atividadeAtor)
+                                if (!resultAtorAtividade.status) {
+                                    return customMessage.SUCCESS_CREATED_ITEM_WARNING
+                                }
+                            }
+                        }
                         customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_UPDATE_ITEM.status
                         customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_UPDATE_ITEM.status_code
                         customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_UPDATE_ITEM.message
@@ -89,6 +171,18 @@ const listarAtor = async function () {
                     if (resultSexo.status) {
                         ator.sexo = resultSexo.response.sexo
                         delete ator.id_sexo
+                    }
+                    let resultFotos = await controllerAtorFoto.buscarFotosIdAtor(ator.id)
+                    if (resultFotos.status) {
+                        ator.fotos = resultFotos.response.fotos_ator
+                    }
+                    let resultNacionalidades = await controllerAtorNacionalidade.buscarNacionalidadeIdAtor(ator.id)
+                    if (resultNacionalidades.status) {
+                        ator.nacionalidade = resultNacionalidades.response.nacionalidades_ator
+                    }
+                    let resultAtividades = await controllerAtorAtividade.buscarAtividadeIdAtor(ator.id)
+                    if (resultAtividades.status) {
+                        ator.atividade = resultAtividades.response.atividades_ator
                     }
                 }
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
@@ -126,6 +220,18 @@ const buscarAtor = async function (id) {
                             ator.sexo = resultSexo.response.sexo
                             delete ator.id_sexo
                         }
+                        let resultFotos = await controllerAtorFoto.buscarFotosIdAtor(ator.id)
+                        if (resultFotos.status) {
+                            ator.fotos = resultFotos.response.fotos_ator
+                        }
+                        let resultNacionalidades = await controllerAtorNacionalidade.buscarNacionalidadeIdAtor(ator.id)
+                        if (resultNacionalidades.status) {
+                            ator.nacionalidade = resultNacionalidades.response.nacionalidades_ator
+                        }
+                        let resultAtividades = await controllerAtorAtividade.buscarAtividadeIdAtor(ator.id)
+                        if (resultAtividades.status) {
+                            ator.atividade = resultAtividades.response.atividades_ator
+                        }
                     }
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                     customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
@@ -162,7 +268,7 @@ const excluirAtor = async function (id) {
                 return customMessage.ERROR_INTERNAL_SERVER_MODEL
             }
         } else {
-            return buscarDiretorResult
+            return buscarAutorResult
         }
     } catch (error) {
         return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
