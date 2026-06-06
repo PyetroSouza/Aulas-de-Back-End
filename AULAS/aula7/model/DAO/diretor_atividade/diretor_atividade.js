@@ -1,7 +1,7 @@
 /*****************************************************************************
- * Objeivo: Arquivo responsável pelo CRUD de dados da tabela da relação entre Diretor e Foto no banco de dados 
+ * Objeivo: Arquivo responsável pelo CRUD de dados da tabela da relação entre Diretor e Atividade no banco de dados 
  *           MySQL
- * Data: 29/05/2026
+ * Data: 05/06/2026
  * Autor: Pyetro
  * Versão: 1.0
  *****************************************************************************/
@@ -15,19 +15,19 @@ const knexDataBaseConfig = require('../../database_config/knexConfig.js')
 //Criar a conexão com o BD Mysql conforme o arquivo de configuração (no caso: knexDataBaseConfig)
 const knexConection = knex(knexDataBaseConfig.development)
 
-const insertDiretorFoto = async function (diretorFoto) {
+const insertDiretorAtividade = async function (diretorAtividade) {
     try {
         let sql =
-            `insert into tbl_diretor_foto (
+            `insert into tbl_diretor_atividade (
         id_diretor,
-        id_foto
+        id_atividade
         ) values (
-        ${diretorFoto.id_diretor},
-        ${diretorFoto.id_foto}
+        ${diretorAtividade.id_diretor},
+        ${diretorAtividade.id_atividade}
         );`
 
-        let result = await knexConection.raw(sql)
 
+        let result = await knexConection.raw(sql)
         if (result)
             return result[0].insertId
         else
@@ -38,12 +38,12 @@ const insertDiretorFoto = async function (diretorFoto) {
     }
 }
 
-const updateDiretorFoto = async function (diretorFoto) {
+const updateDiretorAtividade = async function (diretorAtividade) {
     try {
-        let sql = `update tbl_diretor_foto set
-        id_foto = ${diretorFoto.id_foto},
-        id_diretor = ${diretorFoto.id_diretor}
-        where id = ${diretorFoto.id}`
+        let sql = `update tbl_diretor_atividade set
+        id_atividade = ${diretorAtividade.id_atividade},
+        id_diretor = ${diretorAtividade.id_diretor}
+        where id = ${diretorAtividade.id}`
 
         let result = await knexConection.raw(sql)
         if (result)
@@ -55,9 +55,9 @@ const updateDiretorFoto = async function (diretorFoto) {
     }
 }
 
-const selectAllDiretorFoto = async function () {
+const selectAllDiretorAtividade = async function () {
     try {
-        let sql = `select * from tbl_diretor_foto order by id desc;`
+        let sql = `select * from tbl_diretor_atividade order by id desc;`
 
         let result = await knexConection.raw(sql)
 
@@ -71,9 +71,9 @@ const selectAllDiretorFoto = async function () {
     }
 }
 
-const selectByIdDiretorFoto = async function (id) {
+const selectByIdDiretorAtividade = async function (id) {
     try {
-        let sql = `select * from tbl_diretor_foto where id = ${id}`
+        let sql = `select * from tbl_diretor_atividade where id = ${id}`
 
         let result = await knexConection.raw(sql)
 
@@ -89,14 +89,14 @@ const selectByIdDiretorFoto = async function (id) {
 }
 
 //Função para retornar os dados do Genero filtrando pelo ID do Filme
-const selectFotoByIdDiretor = async function (idDiretor) {
+const selectAtividadeByIdDiretor = async function (idDiretor) {
     try {
-        let sql = `select tbl_foto.* 
+        let sql = `select tbl_atividade.* 
                     from tbl_diretor
-                        inner join tbl_diretor_foto
-                            on tbl_diretor.id = tbl_diretor_foto.id_diretor
-                        inner join tbl_foto
-                            on tbl_foto.id = tbl_diretor_foto.id_foto 
+                        inner join tbl_diretor_atividade
+                            on tbl_diretor.id = tbl_diretor_atividade.id_diretor
+                        inner join tbl_atividade
+                            on tbl_atividade.id = tbl_diretor_atividade.id_atividade
                     where tbl_diretor.id = ${idDiretor}`
 
         let result = await knexConection.raw(sql)
@@ -112,15 +112,15 @@ const selectFotoByIdDiretor = async function (idDiretor) {
     }
 }
 
-const selectDiretorByIdFoto = async function (idFoto) {
+const selectDiretorByIdAtividade = async function (idAtividade) {
     try {
         let sql = `select tbl_diretor.*
                     from tbl_diretor
-                        inner join tbl_diretor_foto
-                            on tbl_diretor.id = tbl_diretor_foto.id_diretor
-                        inner join tbl_foto
-                            on tbl_foto.id = tbl_diretor_foto.id_foto 
-                    where tbl_foto.id = ${idFoto}`
+                        inner join tbl_diretor_atividade
+                            on tbl_diretor.id = tbl_diretor_atividade.id_diretor
+                        inner join tbl_atividade
+                            on tbl_atividade.id = tbl_diretor_atividade.id_atividade
+                    where tbl_atividade.id = ${idAtividade}`
 
         let result = await knexConection.raw(sql)
 
@@ -136,9 +136,9 @@ const selectDiretorByIdFoto = async function (idFoto) {
 }
 
 //Função para exlcuir um Filme genero pelo ID
-const deleteDiretorFoto = async function (id) {
+const deleteDiretorAtividade = async function (id) {
     try {
-        let sql = `delete from tbl_diretor_foto where id = ${id};`
+        let sql = `delete from tbl_diretor_atividade where id = ${id};`
 
         let result = await knexConection.raw(sql)
 
@@ -154,9 +154,9 @@ const deleteDiretorFoto = async function (id) {
 
 //Função para excluir as fotos relacionados com um Diretor
 //OBS: Esta função será utilizada no PUT do Diretor
-const deleteFotosByIdDiretor = async function (idDiretor) {
+const deleteAtividadeByIdDiretor = async function (idDiretor) {
     try {
-        let sql = `delete from tbl_diretor_foto where id_diretor = ${idDiretor};`
+        let sql = `delete from tbl_diretor_atividade where id_diretor = ${idDiretor};`
 
         let result = await knexConection.raw(sql)
 
@@ -172,12 +172,12 @@ const deleteFotosByIdDiretor = async function (idDiretor) {
 
 
 module.exports = {
-    insertDiretorFoto,
-    updateDiretorFoto,
-    selectAllDiretorFoto,
-    selectByIdDiretorFoto,
-    selectFotoByIdDiretor,
-    selectDiretorByIdFoto,
-    deleteDiretorFoto,
-    deleteFotosByIdDiretor
+    insertDiretorAtividade,
+    updateDiretorAtividade,
+    selectAllDiretorAtividade,
+    selectByIdDiretorAtividade,
+    selectDiretorByIdAtividade,
+    selectAtividadeByIdDiretor,
+    deleteDiretorAtividade,
+    deleteAtividadeByIdDiretor
 }

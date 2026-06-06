@@ -1,7 +1,7 @@
 /*****************************************************************************
- * Objeivo: Arquivo responsável pelo CRUD de dados da tabela da relação entre Diretor e Foto no banco de dados 
+ * Objeivo: Arquivo responsável pelo CRUD de dados da tabela da relação entre Filme e Diretor no banco de dados 
  *           MySQL
- * Data: 29/05/2026
+ * Data: 05/06/2026
  * Autor: Pyetro
  * Versão: 1.0
  *****************************************************************************/
@@ -15,15 +15,15 @@ const knexDataBaseConfig = require('../../database_config/knexConfig.js')
 //Criar a conexão com o BD Mysql conforme o arquivo de configuração (no caso: knexDataBaseConfig)
 const knexConection = knex(knexDataBaseConfig.development)
 
-const insertDiretorFoto = async function (diretorFoto) {
+const insertFilmeDiretor = async function (filmeDiretor) {
     try {
         let sql =
-            `insert into tbl_diretor_foto (
-        id_diretor,
-        id_foto
+            `insert into tbl_filme_diretor (
+        id_filme,
+        id_diretor
         ) values (
-        ${diretorFoto.id_diretor},
-        ${diretorFoto.id_foto}
+        ${filmeDiretor.id_filme},
+        ${filmeDiretor.id_diretor}
         );`
 
         let result = await knexConection.raw(sql)
@@ -38,14 +38,15 @@ const insertDiretorFoto = async function (diretorFoto) {
     }
 }
 
-const updateDiretorFoto = async function (diretorFoto) {
+const updateFilmeDiretor = async function (filmeDiretor) {
     try {
-        let sql = `update tbl_diretor_foto set
-        id_foto = ${diretorFoto.id_foto},
-        id_diretor = ${diretorFoto.id_diretor}
-        where id = ${diretorFoto.id}`
+        let sql = `update tbl_filme_diretor set
+        id_filme = ${filmeDiretor.id_filme},
+        id_diretor = ${filmeDiretor.id_diretor}
+        where id = ${filmeDiretor.id}`
 
         let result = await knexConection.raw(sql)
+
         if (result)
             return true
         else
@@ -55,9 +56,9 @@ const updateDiretorFoto = async function (diretorFoto) {
     }
 }
 
-const selectAllDiretorFoto = async function () {
+const selectAllFilmeDiretor = async function () {
     try {
-        let sql = `select * from tbl_diretor_foto order by id desc;`
+        let sql = `select * from tbl_filme_diretor order by id desc;`
 
         let result = await knexConection.raw(sql)
 
@@ -71,9 +72,9 @@ const selectAllDiretorFoto = async function () {
     }
 }
 
-const selectByIdDiretorFoto = async function (id) {
+const selectByIdFilmeDiretor = async function (id) {
     try {
-        let sql = `select * from tbl_diretor_foto where id = ${id}`
+        let sql = `select * from tbl_filme_diretor where id = ${id}`
 
         let result = await knexConection.raw(sql)
 
@@ -89,14 +90,37 @@ const selectByIdDiretorFoto = async function (id) {
 }
 
 //Função para retornar os dados do Genero filtrando pelo ID do Filme
-const selectFotoByIdDiretor = async function (idDiretor) {
+const selectDiretorByIdFilme = async function (idFilme) {
     try {
-        let sql = `select tbl_foto.* 
-                    from tbl_diretor
-                        inner join tbl_diretor_foto
-                            on tbl_diretor.id = tbl_diretor_foto.id_diretor
-                        inner join tbl_foto
-                            on tbl_foto.id = tbl_diretor_foto.id_foto 
+        let sql = `select tbl_diretor.* 
+                    from tbl_filme
+                        inner join tbl_filme_diretor
+                            on tbl_filme.id = tbl_filme_diretor.id_filme
+                        inner join tbl_diretor
+                            on tbl_diretor.id = tbl_filme_diretor.id_diretor
+                    where tbl_filme.id = ${idFilme}`
+
+        let result = await knexConection.raw(sql)
+
+        if (Array.isArray(result)) {
+            return result[0]
+        } else {
+            return false
+        }
+
+    } catch (error) {
+        return false
+    }
+}
+
+const selectFilmesByIdDiretor = async function (idDiretor) {
+    try {
+        let sql = `select tbl_filme.*
+                    from tbl_filme
+                        inner join tbl_filme_diretor
+                            on tbl_filme.id = tbl_filme_diretor.id_filme
+                        inner join tbl_diretor
+                            on tbl_diretor.id = tbl_filme_diretor.id_diretor
                     where tbl_diretor.id = ${idDiretor}`
 
         let result = await knexConection.raw(sql)
@@ -112,33 +136,10 @@ const selectFotoByIdDiretor = async function (idDiretor) {
     }
 }
 
-const selectDiretorByIdFoto = async function (idFoto) {
-    try {
-        let sql = `select tbl_diretor.*
-                    from tbl_diretor
-                        inner join tbl_diretor_foto
-                            on tbl_diretor.id = tbl_diretor_foto.id_diretor
-                        inner join tbl_foto
-                            on tbl_foto.id = tbl_diretor_foto.id_foto 
-                    where tbl_foto.id = ${idFoto}`
-
-        let result = await knexConection.raw(sql)
-
-        if (Array.isArray(result)) {
-            return result[0]
-        } else {
-            return false
-        }
-
-    } catch (error) {
-        return false
-    }
-}
-
 //Função para exlcuir um Filme genero pelo ID
-const deleteDiretorFoto = async function (id) {
+const deleteFilmeDiretor = async function (id) {
     try {
-        let sql = `delete from tbl_diretor_foto where id = ${id};`
+        let sql = `delete from tbl_filme_diretor where id = ${id};`
 
         let result = await knexConection.raw(sql)
 
@@ -152,11 +153,11 @@ const deleteDiretorFoto = async function (id) {
     }
 }
 
-//Função para excluir as fotos relacionados com um Diretor
-//OBS: Esta função será utilizada no PUT do Diretor
-const deleteFotosByIdDiretor = async function (idDiretor) {
+//Função para excluir os generos relacionados com um filme
+//OBS: Esta função será utilizada no PUT do Filme
+const deleteDiretorByIdFilme = async function (idFilme) {
     try {
-        let sql = `delete from tbl_diretor_foto where id_diretor = ${idDiretor};`
+        let sql = `delete from tbl_filme_diretor where id_filme = ${idFilme};`
 
         let result = await knexConection.raw(sql)
 
@@ -172,12 +173,12 @@ const deleteFotosByIdDiretor = async function (idDiretor) {
 
 
 module.exports = {
-    insertDiretorFoto,
-    updateDiretorFoto,
-    selectAllDiretorFoto,
-    selectByIdDiretorFoto,
-    selectFotoByIdDiretor,
-    selectDiretorByIdFoto,
-    deleteDiretorFoto,
-    deleteFotosByIdDiretor
+    insertFilmeDiretor,
+    updateFilmeDiretor,
+    selectAllFilmeDiretor,
+    selectByIdFilmeDiretor,
+    selectDiretorByIdFilme,
+    selectFilmesByIdDiretor,
+    deleteFilmeDiretor,
+    deleteDiretorByIdFilme
 }

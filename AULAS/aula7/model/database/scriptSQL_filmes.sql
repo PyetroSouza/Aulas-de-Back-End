@@ -147,3 +147,59 @@ constraint FK_GENERO_FILMEGENERO
 foreign key (id_genero)
 references tbl_genero(id)
 );
+
+create table tbl_diretor_foto (
+id int not null auto_increment primary key,
+id_diretor int not null,
+id_foto int not null,
+
+constraint FK_DIRETOR_DIRETORFOTO
+foreign key (id_diretor)
+references tbl_diretor(id),
+
+constraint FK_FOTO_DIRETORFOTO
+foreign key (id_foto)
+references tbl_foto(id)
+);
+
+create table tbl_diretor_nacionalidade (
+id int not null auto_increment primary key,
+id_diretor int not null,
+id_nacionalidade int not null,
+
+constraint FK_DIRETOR_DIRETORNACIONALIDADE
+foreign key (id_diretor)
+references tbl_diretor(id),
+
+constraint FK_NACIONALIDADE_DIRETORNACIONALIDADE
+foreign key (id_nacionalidade)
+references tbl_nacionalidade(id)
+);
+
+create table tbl_diretor_atividade (
+id int not null auto_increment primary key,
+id_diretor int not null,
+id_atividade int not null,
+
+constraint FK_DIRETOR_DIRETORATIVIDADE
+foreign key (id_diretor)
+references tbl_diretor(id),
+
+constraint FK_ATIVIDADE_DIRETORATIVIDADE
+foreign key (id_atividade)
+references tbl_atividade(id)
+);
+
+create table tbl_filme_diretor (
+id int not null auto_increment primary key,
+id_filme int not null,
+id_diretor int not null,
+
+constraint FK_FILME_FILMEDIRETOR
+foreign key (id_filme)
+references tbl_filme(id),
+
+constraint FK_DIRETOR_FILMEDIRETOR
+foreign key (id_diretor)
+references tbl_diretor(id)
+);

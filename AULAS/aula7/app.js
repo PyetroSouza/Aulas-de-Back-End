@@ -297,7 +297,6 @@ app.get('/v1/senai/locadora/sexo', async function (request, response) {
     let result = await controllerSexo.listarSexo()
     response.status(result.status_code)
     response.json(result)
-    console.log(result)
 })
 
 app.get('/v1/senai/locadora/sexo/:id', bodyParserJSON, async function (request, response) {

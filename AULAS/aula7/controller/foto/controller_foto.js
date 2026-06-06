@@ -11,7 +11,7 @@ const configMessage = require("../modulo/configMessage.js")
 //Import do arquivo do DAO para manipular os dados de filme no Banco de Dados
 const fotoDAO = require('../../model/DAO/foto/foto.js')
 
-const inserirNovoFoto = async function (foto, contentType) {
+const inserirNovaFoto = async function (foto, contentType) {
 
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
@@ -167,7 +167,7 @@ const validarDados = async function (foto) {
 }
 
 module.exports = {
-    inserirNovoFoto,
+    inserirNovaFoto,
     atualizarFoto,
     listarFoto,
     buscarFoto,
