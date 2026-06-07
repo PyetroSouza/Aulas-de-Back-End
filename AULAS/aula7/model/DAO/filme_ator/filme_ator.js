@@ -35,7 +35,7 @@ const insertFilmeAtor = async function (filmeAtor) {
             return false
 
     } catch (error) {
-    
+
         return false
     }
 }
@@ -122,8 +122,8 @@ const selectFilmesByIdAtor = async function (idAtor) {
                         inner join tbl_filme_ator
                             on tbl_filme.id = tbl_filme_ator.id_filme
                         inner join tbl_ator
-                            on tbl_diretor.id = tbl_filme_ator.id_ator
-                    where tbl_diretor.id = ${idDiretor}`
+                            on tbl_ator.id = tbl_filme_ator.id_ator
+                    where tbl_ator.id = ${idAtor}`
 
         let result = await knexConection.raw(sql)
 
@@ -173,6 +173,22 @@ const deleteAtorByIdFilme = async function (idFilme) {
     }
 }
 
+const deleteFilmeByIdAtor = async function (idAtor) {
+    try {
+        let sql = `delete from tbl_filme_ator where id_ator = ${idAtor}`
+
+        let result = await knexConection.raw(sql)
+
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
+
 
 module.exports = {
     insertFilmeAtor,
@@ -182,5 +198,6 @@ module.exports = {
     selectAtorByIdFilme,
     selectFilmesByIdAtor,
     deleteFilmeAtor,
-    deleteAtorByIdFilme
+    deleteAtorByIdFilme,
+    deleteFilmeByIdAtor
 }

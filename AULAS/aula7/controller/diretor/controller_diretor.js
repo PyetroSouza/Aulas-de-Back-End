@@ -20,6 +20,7 @@ const controllerAtividade = require('../atividade/controller_atividade.js')
 const controllerDiretorFoto = require('./controller_diretor_foto.js')
 const controllerDiretorNacionalidade = require("./controller_diretor_nacionalidade.js")
 const controllerDiretorAtividade = require('./controller_diretor_atividade.js')
+const controllerFilmeDiretor = require('../filme/controller_filme_diretor.js')
 
 
 const inserirNovoDiretor = async function (diretor, contentType) {
@@ -57,13 +58,22 @@ const inserirNovoDiretor = async function (diretor, contentType) {
                             return customMessage.SUCCESS_CREATED_ITEM_WARNING
                         }
                     }
-                    for (let atividade of diretor.atividade){
+                    for (let atividade of diretor.atividade) {
                         let diretorAtividade = {
                             "id_diretor": diretor.id,
                             "id_atividade": atividade.id
-                        }     
-                          let resultDiretorAtividade = await controllerDiretorAtividade.inserirNovoDiretorAtividade(diretorAtividade)
+                        }
+                        let resultDiretorAtividade = await controllerDiretorAtividade.inserirNovoDiretorAtividade(diretorAtividade)
                         if (!resultDiretorAtividade.status) {
+                            return customMessage.SUCCESS_CREATED_ITEM_WARNING
+                        }
+                    } for (let filme of diretor.filme) {
+                        let diretorFilme = {
+                            "id_filme": filme.id,
+                            "id_diretor": diretor.id
+                        }
+                        let resultDiretorFilme = await controllerFilmeDiretor.inserirNovoFilmeDiretor(diretorFilme)
+                        if (!resultDiretorFilme.status) {
                             return customMessage.SUCCESS_CREATED_ITEM_WARNING
                         }
                     }
@@ -124,19 +134,33 @@ const atualizarDiretor = async function (diretor, id, contentType) {
                                 }
                             }
                             let resultDeleteAtividades = await controllerDiretorAtividade.excluirAtividadeIdDiretor(diretor.id)
-                            if(resultDeleteAtividades.status){
-                                for (let itemDiretor of diretor.atividade){
+                            if (resultDeleteAtividades.status) {
+                                for (let itemDiretor of diretor.atividade) {
                                     let atividadeDiretor = {
                                         "id_diretor": diretor.id,
                                         "id_atividade": itemDiretor.id
                                     }
                                     let resultDiretorAtividade = await controllerDiretorAtividade.inserirNovoDiretorAtividade(atividadeDiretor)
-                                    if (!resultDiretorAtividade.status){
+                                    if (!resultDiretorAtividade.status) {
                                         return customMessage.SUCCESS_CREATED_ITEM_WARNING
                                     }
                                 }
                             }
                         }
+                        let resultDeleteFilmes = await controllerFilmeDiretor.excluirFilmeIdDiretor(diretor.id)
+                        if (resultDeleteFilmes.status) {
+                            for (let itemDiretor of diretor.filme) {
+                                let diretorFilme = {
+                                    "id_filme": itemDiretor.id,
+                                    "id_diretor": diretor.id
+                                }
+                                let resultDiretorFilme = await controllerFilmeDiretor.inserirNovoFilmeDiretor(diretorFilme)
+                                if (!resultDiretorFilme.status) {
+                                    return customMessage.SUCCESS_CREATED_ITEM_WARNING
+                                }
+                            }
+                        }
+
                         customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_UPDATE_ITEM.status
                         customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_UPDATE_ITEM.status_code
                         customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_UPDATE_ITEM.message
@@ -187,8 +211,12 @@ const listarDiretor = async function () {
                         diretor.nacionalidade = resultNacionalidades.response.nacionalidades_diretor
                     }
                     let resultAtividade = await controllerDiretorAtividade.buscarAtividadeIdDiretor(diretor.id)
-                    if (resultAtividade.status){
+                    if (resultAtividade.status) {
                         diretor.atividade = resultAtividade.response.atividades_diretor
+                    }
+                    let resultFilmes = await controllerFilmeDiretor.buscarFilmesIdDiretor(diretor.id)
+                    if (resultFilmes.status) {
+                        diretor.filme = resultFilmes.response.filme_diretor
                     }
                 }
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
@@ -238,8 +266,12 @@ const buscarDiretor = async function (id) {
                         }
 
                         let resultDiretorAtividade = await controllerDiretorAtividade.buscarAtividadeIdDiretor(diretor.id)
-                        if(resultDiretorAtividade.status){
+                        if (resultDiretorAtividade.status) {
                             diretor.atividade = resultDiretorAtividade.response.atividades_diretor
+                        }
+                        let resultFilmes = await controllerFilmeDiretor.buscarFilmesIdDiretor(diretor.id)
+                        if (resultFilmes.status) {
+                            diretor.filme = resultFilmes.response.filme_diretor
                         }
                     }
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status

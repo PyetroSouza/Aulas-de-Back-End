@@ -170,6 +170,22 @@ const deleteAtividadeByIdAtor = async function (idAtor) {
     }
 }
 
+const deleteAtorByIdAtividade = async function (idAtividade) {
+    try {
+        let sql = `delete from tbl_ator_atividade where id_atividade = ${idAtividade};`
+
+        let result = await knexConection.raw(sql)
+
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
+
 
 module.exports = {
     insertAtorAtividade,
@@ -179,5 +195,6 @@ module.exports = {
     selectAtorByIdAtividade,
     selectAtividadeByIdAtor,
     deleteAtorAtividade,
-    deleteAtividadeByIdAtor
+    deleteAtividadeByIdAtor,
+    deleteAtorByIdAtividade
 }

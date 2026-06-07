@@ -1,5 +1,5 @@
 /***************************************************************************************************************
- * Objetivo: Arquivo responsável pela validação, tratamento, manipulação de dados para realizar o CRUD de Diretor Atividade
+ * Objetivo: Arquivo responsável pela validação, tratamento, manipulação de dados para realizar o CRUD de Ator Atividade
  * Data: 05/06/2026
  * Autor: Pyetro Ferreira
  * Versão: 1.0
@@ -245,6 +245,23 @@ const excluirAtividadeIdAtor = async function (idAtor) {
     }
 }
 
+const excluirAtorIdAtividade = async function (idAtividade) {
+
+    let customMessage = JSON.parse(JSON.stringify(configMessage))
+    try {
+        let result = await atorAtividadeDAO.deleteAtorByIdAtividade(idAtividade)
+
+        if (result) {
+            return customMessage.SUCCESS_DELETED_ITEM
+        } else {
+            return customMessage.ERROR_INTERNAL_SERVER_MODEL
+        }
+
+    } catch (error) {
+        return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
+    }
+}
+
 const validarDados = async function (atorAtividade) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
@@ -267,5 +284,6 @@ module.exports = {
     buscarAtividadeIdAtor,
     buscarAtorIdAtividade,
     excluirAtorAtividade,
-    excluirAtividadeIdAtor
+    excluirAtividadeIdAtor,
+    excluirAtorIdAtividade
 }

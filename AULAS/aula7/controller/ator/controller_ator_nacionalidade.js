@@ -245,6 +245,23 @@ const excluirNacionalidadeIdAtor = async function (idAtor) {
     }
 }
 
+const excluirAtorIdNacionalidade = async function (idNacionalidade) {
+
+    let customMessage = JSON.parse(JSON.stringify(configMessage))
+    try {
+        let result = await atorNacionalidadeDAO.deleteAtorByIdNacionalidade(idNacionalidade)
+
+        if (result) {
+            return customMessage.SUCCESS_DELETED_ITEM
+        } else {
+            return customMessage.ERROR_INTERNAL_SERVER_MODEL
+        }
+
+    } catch (error) {
+        return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
+    }
+}
+
 const validarDados = async function (atorNacionalidade) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
@@ -267,5 +284,6 @@ module.exports = {
     buscarNacionalidadeIdAtor,
     buscarAtorIdNacionalidade,
     excluirAtorNacionalidade,
-    excluirNacionalidadeIdAtor
+    excluirNacionalidadeIdAtor,
+    excluirAtorIdNacionalidade
 }

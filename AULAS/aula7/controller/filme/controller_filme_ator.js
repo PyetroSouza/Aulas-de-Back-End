@@ -42,6 +42,38 @@ const inserirNovoFilmeAtor = async function (filmeAtor) {
 
 const atualizarFilmeAtor = async function (filmeAtor, id) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
+
+    try {
+
+        let resultBuscarFilmeAtor = await buscarFilmeAtor(id)
+
+
+        if (resultBuscarFilmeAtor.status) {
+            let validar = await validarDados(filmeAtor)
+            if (!validar) {
+                filmeAtor.id = Number(id)
+
+                let result = await filmeAtorDAO.updateFilmeAtor((filmeAtor))
+
+                if (result) {
+                    customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_UPDATE_ITEM.status
+                    customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_UPDATE_ITEM.status_code
+                    customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_UPDATE_ITEM.message
+                    customMessage.DEFAULT_MESSAGE.response = filmeAtor
+
+                    return customMessage.DEFAULT_MESSAGE //200
+                } else {
+                    return customMessage.ERROR_INTERNAL_SERVER_MODEL
+                }
+            } else {
+                return validar
+            }
+        } else {
+            return resultBuscarFilmeAtor
+        }
+    } catch (error) {
+        return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
+    }
 }
 
 const listarFilmeAtor = async function () {
@@ -55,7 +87,7 @@ const listarFilmeAtor = async function () {
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
                 customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_RESPONSE.status_code
                 customMessage.DEFAULT_MESSAGE.response.count = result.length
-                customMessage.DEFAULT_MESSAGE.response.filme_diretor = result
+                customMessage.DEFAULT_MESSAGE.response.filme_ator = result
 
                 return customMessage.DEFAULT_MESSAGE
             } else {
@@ -210,6 +242,22 @@ const excluirAtorIdFilme = async function (idFilme) {
     }
 }
 
+const excluirFilmesIdAtor = async function (idAtor) {
+    let customMessage = JSON.parse(JSON.stringify(configMessage))
+    try {
+        let result = await filmeAtorDAO.deleteFilmeByIdAtor(idAtor)
+        if (result) {
+            return customMessage.SUCCESS_DELETED_ITEM // 200, 204 deletado com sucesso
+        } else {
+            return customMessage.ERROR_INTERNAL_SERVER_MODEL // 500, na model
+        }
+
+    } catch (error) {
+        console.log(error)
+        return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER // 500, na controller
+    }
+}
+
 
 const validarDados = async function (filmeAtor) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
@@ -231,5 +279,6 @@ module.exports = {
     buscarAtorIdFilme,
     buscarFilmesIdAtor,
     excluirFilmeAtor,
-    excluirAtorIdFilme
+    excluirAtorIdFilme,
+    excluirFilmesIdAtor
 }

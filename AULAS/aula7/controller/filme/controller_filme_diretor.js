@@ -50,7 +50,7 @@ const atualizarFilmeDiretor = async function (filmeDiretor, id) {
     try {
 
         let resultBuscarFilmeDiretor = await buscarFilmeDiretor(id)
-        
+
 
         if (resultBuscarFilmeDiretor.status) {
             let validar = await validarDados(filmeDiretor)
@@ -246,6 +246,22 @@ const excluirDiretorIdFilme = async function (idFilme) {
     }
 }
 
+const excluirFilmeIdDiretor = async function (idDiretor) {
+    let customMessage = JSON.parse(JSON.stringify(configMessage))
+    try {
+        let result = await filmeDiretorDAO.deleteFilmeByIdDiretor(idDiretor)
+
+        if (result) {
+            return customMessage.SUCCESS_DELETED_ITEM
+        } else {
+            return customMessage.ERROR_INTERNAL_SERVER_MODEL
+        }
+
+    } catch (error) {
+        return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
+    }
+}
+
 const validarDados = async function (filmeDiretor) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
@@ -269,5 +285,6 @@ module.exports = {
     buscarDiretorIdFilme,
     buscarFilmesIdDiretor,
     excluirFilmeDiretor,
-    excluirDiretorIdFilme
+    excluirDiretorIdFilme,
+    excluirFilmeIdDiretor
 }

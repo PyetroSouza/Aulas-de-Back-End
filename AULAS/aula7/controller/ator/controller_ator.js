@@ -20,6 +20,7 @@ const controllerAtividade = require('../atividade/controller_atividade.js')
 const controllerAtorFoto = require('../ator/controller_ator_foto.js')
 const controllerAtorNacionalidade = require('../ator/controller_ator_nacionalidade.js')
 const controllerAtorAtividade = require('../ator/controller_ator_atividade.js')
+const controllerFilmeAtor = require('../filme/controller_filme_ator.js')
 
 const inserirNovoAtor = async function (ator, contentType) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
@@ -62,8 +63,17 @@ const inserirNovoAtor = async function (ator, contentType) {
                             "id_atividade": atividade.id
                         }
                         let resultAtorAtividade = await controllerAtorAtividade.inserirNovoAtorAtividade(atorAtividade)
-                        console.log(resultAtorAtividade)
                         if (!resultAtorAtividade.status) {
+                            return customMessage.SUCCESS_CREATED_ITEM_WARNING
+                        }
+                    }
+                    for (let filme of ator.filme) {
+                        let atorFilme = {
+                            "id_filme": filme.id,
+                            "id_ator": ator.id
+                        }
+                        let resultAtorFilme = await controllerFilmeAtor.inserirNovoFilmeAtor(atorFilme)
+                        if (!resultAtorFilme.status) {
                             return customMessage.SUCCESS_CREATED_ITEM_WARNING
                         }
                     }
@@ -138,6 +148,19 @@ const atualizarAtor = async function (ator, id, contentType) {
                                 }
                             }
                         }
+                        let resultDeleteFilmes = await controllerFilmeAtor.excluirFilmesIdAtor(ator.id)
+                        if (resultDeleteFilmes.status) {
+                            for (let itemFilme of ator.filme) {
+                                let atorFilme = {
+                                    "id_filme": itemFilme.id,
+                                    "id_ator": ator.id
+                                }
+                                let resultAtorFilme = await controllerFilmeAtor.inserirNovoFilmeAtor(atorFilme)
+                                if (!resultAtorFilme.status) {
+                                    return customMessage.SUCCESS_CREATED_ITEM_WARNING
+                                }
+                            }
+                        }
                         customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_UPDATE_ITEM.status
                         customMessage.DEFAULT_MESSAGE.status_code = customMessage.SUCCESS_UPDATE_ITEM.status_code
                         customMessage.DEFAULT_MESSAGE.message = customMessage.SUCCESS_UPDATE_ITEM.message
@@ -183,6 +206,10 @@ const listarAtor = async function () {
                     let resultAtividades = await controllerAtorAtividade.buscarAtividadeIdAtor(ator.id)
                     if (resultAtividades.status) {
                         ator.atividade = resultAtividades.response.atividades_ator
+                    }
+                    let resultFilmes = await controllerFilmeAtor.buscarFilmesIdAtor(ator.id)
+                    if (resultFilmes.status) {
+                        ator.filme = resultFilmes.response.filme_ator
                     }
                 }
                 customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
@@ -231,6 +258,10 @@ const buscarAtor = async function (id) {
                         let resultAtividades = await controllerAtorAtividade.buscarAtividadeIdAtor(ator.id)
                         if (resultAtividades.status) {
                             ator.atividade = resultAtividades.response.atividades_ator
+                        }
+                        let resultFilmes = await controllerFilmeAtor.buscarFilmesIdAtor(ator.id)
+                        if (resultFilmes.status) {
+                            ator.filme = resultFilmes.response.filme_ator
                         }
                     }
                     customMessage.DEFAULT_MESSAGE.status = customMessage.SUCCESS_RESPONSE.status
@@ -288,7 +319,18 @@ const validarDados = async function (ator) {
     } else if (ator.id_sexo == undefined || ator.id_sexo == "" || ator.id_sexo == null || isNaN(ator.id_sexo) || ator.id_sexo <= 0) {
         customMessage.ERROR_BAD_REQUEST.field = "[ID_SEXO] INVÁLIDO"
     }
-    else {
+    else if (ator.filme !== undefined && !Array.isArray(ator.filme)) {
+        return customMessage.ERROR_BAD_REQUEST
+
+    } else if (ator.nacionalidade !== undefined && !Array.isArray(ator.nacionalidade)) {
+        return customMessage.ERROR_BAD_REQUEST
+
+    } else if (ator.foto !== undefined && !Array.isArray(ator.foto)) {
+        return customMessage.ERROR_BAD_REQUEST
+
+    } else if (ator.atividade !== undefined && !Array.isArray(ator.atividade)) {
+        return customMessage.ERROR_BAD_REQUEST
+     } else {
         return false
     }
 

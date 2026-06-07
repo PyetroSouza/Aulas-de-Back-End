@@ -160,7 +160,7 @@ const excluirClassificacao = async function (id) {
 }
 const validarDados = async function (classificacao) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
-    if (classificacao.classificacao == undefined || classificacao.classificacao == "" || classificacao.classificacao == null || classificacao.classificacao.lenght > 5) {
+    if (classificacao.classificacao == undefined || classificacao.classificacao == "" || classificacao.classificacao == null || classificacao.classificacao.length > 5) {
         customMessage.ERROR_BAD_REQUEST.field = '[CLASSIFICAÇÃO] INVÁLIDO'
     } else if (classificacao.descricao == undefined || !isNaN(classificacao.descricao)) {
         customMessage.ERROR_BAD_REQUEST.field = "[DESCRIÇÃO] INVÁILIDO"

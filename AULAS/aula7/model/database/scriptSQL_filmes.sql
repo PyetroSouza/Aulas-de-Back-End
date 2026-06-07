@@ -259,4 +259,3 @@ constraint FK_ATOR_ATORATIVIDADE
 foreign key (id_ator)
 references tbl_ator(id)
 );
-

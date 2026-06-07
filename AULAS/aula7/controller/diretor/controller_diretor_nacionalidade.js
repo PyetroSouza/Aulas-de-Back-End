@@ -245,6 +245,23 @@ const excluirNacionalidadeIdDiretor = async function (idDiretor) {
     }
 }
 
+const excluirDiretorIdNacionalidade = async function (idNacionalidade) {
+
+    let customMessage = JSON.parse(JSON.stringify(configMessage))
+    try {
+        let result = await diretorNacionalidadeDAO.deleteDiretorByIdNacionalidade(idNacionalidade)
+
+        if (result) {
+            return customMessage.SUCCESS_DELETED_ITEM
+        } else {
+            return customMessage.ERROR_INTERNAL_SERVER_MODEL
+        }
+
+    } catch (error) {
+        return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
+    }
+}
+
 const validarDados = async function (diretorNacionalidade) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
@@ -267,5 +284,6 @@ module.exports = {
     buscarNacionalidadeIdDiretor,
     buscarDiretorIdNacionalidade,
     excluirDiretorNacionalidade,
-    excluirNacionalidadeIdDiretor
+    excluirNacionalidadeIdDiretor,
+    excluirDiretorIdNacionalidade
 }

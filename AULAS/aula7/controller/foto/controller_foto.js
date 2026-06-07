@@ -158,7 +158,7 @@ const excluirFoto = async function (id) {
 }
 const validarDados = async function (foto) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
-    if (foto.foto == undefined || foto.foto == '' || foto.foto == null || foto.foto.lenght > 200) {
+    if (foto.foto == undefined || foto.foto == '' || foto.foto == null || foto.foto.length > 200) {
         customMessage.ERROR_BAD_REQUEST.field = '[FOTO] INVÁLIDO'
     }
     else {

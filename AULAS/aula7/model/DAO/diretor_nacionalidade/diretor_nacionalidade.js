@@ -170,6 +170,22 @@ const deleteNacionalidadeByIdDiretor = async function (idDiretor) {
     }
 }
 
+const deleteDiretorByIdNacionalidade = async function (idNacionalidade) {
+    try {
+        let sql = `delete from tbl_diretor_nacionalidade where id_nacionalidade = ${idNacionalidade};`
+
+        let result = await knexConection.raw(sql)
+
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
+
 
 module.exports = {
     insertDiretorNacionalidade,
@@ -179,5 +195,6 @@ module.exports = {
     selectDiretorByIdNacionalidade,
     selectNacionalidadeByIdDiretor,
     deleteDiretorNacionalidade,
-    deleteNacionalidadeByIdDiretor
+    deleteNacionalidadeByIdDiretor,
+    deleteDiretorByIdNacionalidade
 }

@@ -245,6 +245,22 @@ const excluirAtividadeIdDiretor = async function (idDiretor) {
     }
 }
 
+const excluirDiretorIdAtividade = async function (idAtividade) {
+
+    let customMessage = JSON.parse(JSON.stringify(configMessage))
+    try {
+        let result = await diretorAtividadeDAO.deleteDiretorByIdAtividade(idAtividade)
+
+        if (result) {
+            return customMessage.SUCCESS_DELETED_ITEM
+        } else {
+            return customMessage.ERROR_INTERNAL_SERVER_MODEL
+        }
+
+    } catch (error) {
+        return customMessage.ERROR_INTERNAL_SERVER_CONTROLLER
+    }
+}
 const validarDados = async function (diretorAtividade) {
     let customMessage = JSON.parse(JSON.stringify(configMessage))
 
@@ -267,5 +283,6 @@ module.exports = {
     buscarAtividadeIdDiretor,
     buscarDiretorIdAtividade,
     excluirDiretorAtividade,
-    excluirAtividadeIdDiretor
+    excluirAtividadeIdDiretor,
+    excluirDiretorIdAtividade
 }
