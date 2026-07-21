@@ -27,7 +27,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Filme'
+              $ref: '#/components/schemas/FilmeInput'
         required: true
       responses:
         '201':
@@ -49,10 +49,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Filme'          
-           
+                $ref: '#/components/schemas/FilmeListResponse'
         '404':
           description: Not Found
   /v1/senai/locadora/filme/{id}:
@@ -75,13 +72,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Filme'          
+                $ref: '#/components/schemas/FilmeDetailResponse'
         '400':
           description: Invalid ID supplied
         '404':
           description: not found
         '505':
-          description: Error Internal Server (Controller /  Model) 
+          description: Error Internal Server (Controller / Model)
     put:
       tags:
         - Filme
@@ -100,11 +97,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Filme'
+              $ref: '#/components/schemas/FilmeInput'
         required: true
       responses:
         '200':
           description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilmeUpdateResponse'
         '400':
           description: Invalid ID supplied
         '404':
@@ -112,7 +113,7 @@ paths:
         '415':
           description: Invalid Content-Type
         '500':
-          description: Error Internel Server (Controller / Model)      
+          description: Error Internal Server (Controller / Model)
     delete:
       tags:
         - Filme
@@ -129,10 +130,14 @@ paths:
       responses:
         '200':
           description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilmeDeleteResponse'
         '400':
           description: Invalid ID supplied
         '404':
-          description: Not not found
+          description: Not found
         '500':
           description: 'Error Internal Server (Controller / Model)'
   /v1/senai/locadora/genero/:
@@ -141,7 +146,7 @@ paths:
         - Gênero
       summary: Adiciona um novo Gênero
       description: Endpoint para enviar os dados de Gênero a serem cadastrados
-      requestBody: 
+      requestBody:
         description: JSON contendo os dados de novo Gênero a ser inserido no sistema
         content:
           application/json:
@@ -149,13 +154,13 @@ paths:
               $ref: '#/components/schemas/Genero'
         required: true
       responses:
-        '201': 
+        '201':
           description: Successful operation
-          content: 
+          content:
             application/json:
               schema:
                 type: array
-                itens:
+                items:
                   $ref: '#/components/schemas/Genero'
     get:
       tags:
@@ -164,11 +169,120 @@ paths:
       description: Retorna um Gênero pelo ID
 components:
   schemas:
-    Filme:
+    # ---- Entidades relacionadas ----
+    Genero:
+      required:
+        - genero
+      type: object
+      properties:
+        id:
+          type: integer
+        genero:
+          type: string
+    GeneroRef:
+      description: Referência usada apenas para enviar o vínculo (id) no Filme
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          type: integer
+    Classificacao:
+      type: object
+      properties:
+        id:
+          type: integer
+        classificacao:
+          type: string
+        descricao:
+          type: string
+        idade_minima:
+          type: integer
+    Diretor:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        data_nascimento:
+          type: string
+          format: date-time
+        ano_inicio_carreira:
+          type: integer
+        id_sexo:
+          type: integer
+    DiretorRef:
+      description: Referência usada apenas para enviar o vínculo (id) no Filme
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          type: integer
+    Ator:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        data_nascimento:
+          type: string
+          format: date-time
+        ano_inicio_carreira:
+          type: integer
+        biografia:
+          type: string
+        id_sexo:
+          type: integer
+    AtorRef:
+      description: Referência usada apenas para enviar o vínculo (id) no Filme
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          type: integer
+    FilmeInput:
       required:
         - nome
         - sinopse
         - data_lancamento
+      type: object
+      properties:
+        nome:
+          type: string
+        sinopse:
+          type: string
+        data_lancamento:
+          type: string
+          format: date
+        duracao:
+          type: string
+        capa:
+          type: string
+        valor:
+          type: string
+          example: '50.00'
+        avaliacao:
+          type: string
+          example: '5.00'
+        id_classificacao:
+          type: integer
+        genero:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeneroRef'
+        diretor:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiretorRef'
+        ator:
+          type: array
+          items:
+            $ref: '#/components/schemas/AtorRef'
+    FilmeOutput:
       type: object
       properties:
         id:
@@ -177,24 +291,93 @@ components:
           type: string
         sinopse:
           type: string
-        data_lancamento:
-          type: string
-        duracao:
-          type: string
         capa:
           type: string
+        data_lancamento:
+          type: string
+          format: date-time
+        duracao:
+          type: string
         valor:
-          type: integer
+          type: string
+          example: '50.00'
         avaliacao:
-          type: integer
-    Genero:
-      required: 
-        - genero
-      type: objetc
+          type: string
+          example: '5.00'
+        classificacao:
+          type: array
+          items:
+            $ref: '#/components/schemas/Classificacao'
+        genero:
+          type: array
+          items:
+            $ref: '#/components/schemas/Genero'
+        diretor:
+          type: array
+          items:
+            $ref: '#/components/schemas/Diretor'
+        ator:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ator'
+
+    # ---- Envelopes de resposta ----
+    FilmeListResponse:
+      type: object
       properties:
-        id:
-          type: interger
-        genero: 
+        response:
+          type: object
+          properties:
+            count:
+              type: integer
+            filme:
+              type: array
+              items:
+                $ref: '#/components/schemas/FilmeOutput'
+        status:
+          type: boolean
+        status_code:
+          type: integer
+        message:
+          type: string
+    FilmeDetailResponse:
+      type: object
+      properties:
+        response:
+          $ref: '#/components/schemas/FilmeOutput'
+        status:
+          type: boolean
+        status_code:
+          type: integer
+        message:
+          type: string
+    FilmeUpdateResponse:
+      type: object
+      properties:
+        response:
+          allOf:
+            - $ref: '#/components/schemas/FilmeInput'
+            - type: object
+              properties:
+                id:
+                  type: integer
+        status:
+          type: boolean
+        status_code:
+          type: integer
+        message:
+          type: string
+    FilmeDeleteResponse:
+      type: object
+      properties:
+        response:
+          type: object
+          description: Objeto vazio retornado na exclusão
+        status:
+          type: boolean
+        status_code:
+          type: integer
+        message:
           type: string
   requestBodies:
     Filme:
@@ -202,11 +385,10 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Filme'
+            $ref: '#/components/schemas/FilmeInput'
     Genero:
       description: Objeto que deve ser enviado no Body das requisicoes
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Genero'
-    
