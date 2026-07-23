@@ -4,7 +4,7 @@ info:
   description: API destinada ao controle de Filmes para o projeto "Bem Legal" do SENAI
   termsOfService: http://swagger.io/terms/
   contact:
-    email: seunome@email.com
+    email: pyetroferreirasouzza9@gmail.com
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
