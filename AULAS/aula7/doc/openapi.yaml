@@ -1,0 +1,1553 @@
+openapi: 3.0.3
+info:
+  title: Projeto controle de Filmes - SENAI
+  description: API destinada ao controle de Filmes para o projeto "Bem Legal" do SENAI
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: seunome@email.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.4.26
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: http://localhost:8080
+tags:
+- name: Filme
+  description: Operações relacionadas aos filmes
+- name: Gênero
+  description: Operações relacionadas aos gêneros
+- name: Diretor
+  description: Operações relacionadas aos diretores
+- name: Ator
+  description: Operações relacionadas aos atores
+- name: Foto
+  description: Operações relacionadas às fotos
+- name: Sexo
+  description: Operações relacionadas aos sexos
+- name: Classificação
+  description: Operações relacionadas às classificações
+- name: Atividade
+  description: Operações relacionadas às atividades
+- name: Nacionalidade
+  description: Operações relacionadas às nacionalidades
+paths:
+  /v1/senai/locadora/filme:
+    post:
+      tags:
+      - Filme
+      summary: Adiciona um novo Filme
+      description: Endpoint para enviar os dados do filme a serem cadastrados
+      requestBody:
+        description: JSON contendo os dados do novo Filme a ser inserido no sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilmeInput'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '500':
+          description: Error Internal Server (Controller / Model)
+        '415':
+          description: Error Content Type
+    get:
+      tags:
+      - Filme
+      summary: Lista todos os Filmes
+      description: Listagem de todos os Filmes registrados no sistema
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FilmeGet'
+        '404':
+          description: Not Found
+  /v1/senai/locadora/filme/{id}:
+    get:
+      tags:
+      - Filme
+      summary: Buscar um Filme pelo ID
+      description: Retorna um Filme pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca do Filme
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilmeGet'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: not found
+        '505':
+          description: Error Internal Server (Controller / Model)
+    put:
+      tags:
+      - Filme
+      summary: Atualizar um filme pelo ID
+      description: Buscar e atualizar um filme pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca do Filme
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: Dados para atualizar um Filme
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilmeInput'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '415':
+          description: Invalid Content-Type
+        '500':
+          description: Error Internal Server (Controller / Model)
+    delete:
+      tags:
+      - Filme
+      summary: Delete um filme pelo ID
+      description: Buscar e Excluir um filme pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para buscar o filme
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '500':
+          description: Error Internal Server (Controller / Model)
+  /v1/senai/locadora/genero:
+    post:
+      tags:
+      - Gênero
+      summary: Adiciona um novo Gênero
+      description: Endpoint para enviar os dados de Gênero a serem cadastrados
+      requestBody:
+        description: JSON contendo os dados de novo Gênero a ser inserido no sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genero'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '500':
+          description: Error Internal Server (Controller / Model)
+        '415':
+          description: Error Content Type
+    get:
+      tags:
+      - Gênero
+      summary: Lista todos os Gêneros
+      description: Listagem de todos os Gêneros registrados no sistema
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Genero'
+        '404':
+          description: Not Found
+  /v1/senai/locadora/genero/{id}:
+    get:
+      tags:
+      - Gênero
+      summary: Buscar um Gênero pelo ID
+      description: Retorna um Gênero pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca do Gênero
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genero'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: not found
+        '505':
+          description: Error Internal Server (Controller / Model)
+    put:
+      tags:
+      - Gênero
+      summary: Atualizar um Gênero pelo ID
+      description: Buscar e atualizar um Gênero pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca do Gênero
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: Dados para atualizar um Gênero
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genero'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '415':
+          description: Invalid Content-Type
+        '500':
+          description: Error Internal Server (Controller / Model)
+    delete:
+      tags:
+      - Gênero
+      summary: Delete um Gênero pelo ID
+      description: Buscar e Excluir um Gênero pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para buscar o Gênero
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '500':
+          description: Error Internal Server (Controller / Model)
+  /v1/senai/locadora/diretor:
+    post:
+      tags:
+      - Diretor
+      summary: Adiciona um novo Diretor
+      description: Endpoint para enviar os dados do diretor a serem cadastrados
+      requestBody:
+        description: JSON contendo os dados do novo Diretor a ser inserido no sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiretorInput'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '500':
+          description: Error Internal Server (Controller / Model)
+        '415':
+          description: Error Content Type
+    get:
+      tags:
+      - Diretor
+      summary: Lista todos os Diretores
+      description: Listagem de todos os Diretores registrados no sistema
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DiretorGet'
+        '404':
+          description: Not Found
+  /v1/senai/locadora/diretor/{id}:
+    get:
+      tags:
+      - Diretor
+      summary: Buscar um Diretor pelo ID
+      description: Retorna um Diretor pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca do Diretor
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiretorGet'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: not found
+        '505':
+          description: Error Internal Server (Controller / Model)
+    put:
+      tags:
+      - Diretor
+      summary: Atualizar um Diretor pelo ID
+      description: Buscar e atualizar um Diretor pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca do Diretor
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: Dados para atualizar um Diretor
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiretorInput'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '415':
+          description: Invalid Content-Type
+        '500':
+          description: Error Internal Server (Controller / Model)
+    delete:
+      tags:
+      - Diretor
+      summary: Delete um Diretor pelo ID
+      description: Buscar e Excluir um Diretor pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para buscar o Diretor
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '500':
+          description: Error Internal Server (Controller / Model)
+  /v1/senai/locadora/ator:
+    post:
+      tags:
+      - Ator
+      summary: Adiciona um novo Ator
+      description: Endpoint para enviar os dados do ator a serem cadastrados
+      requestBody:
+        description: JSON contendo os dados do novo Ator a ser inserido no sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtorInput'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '500':
+          description: Error Internal Server (Controller / Model)
+        '415':
+          description: Error Content Type
+    get:
+      tags:
+      - Ator
+      summary: Lista todos os Atores
+      description: Listagem de todos os Atores registrados no sistema
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AtorGet'
+        '404':
+          description: Not Found
+  /v1/senai/locadora/ator/{id}:
+    get:
+      tags:
+      - Ator
+      summary: Buscar um Ator pelo ID
+      description: Retorna um Ator pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca do Ator
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AtorGet'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: not found
+        '505':
+          description: Error Internal Server (Controller / Model)
+    put:
+      tags:
+      - Ator
+      summary: Atualizar um Ator pelo ID
+      description: Buscar e atualizar um Ator pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca do Ator
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: Dados para atualizar um Ator
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtorInput'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '415':
+          description: Invalid Content-Type
+        '500':
+          description: Error Internal Server (Controller / Model)
+    delete:
+      tags:
+      - Ator
+      summary: Delete um Ator pelo ID
+      description: Buscar e Excluir um Ator pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para buscar o Ator
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '500':
+          description: Error Internal Server (Controller / Model)
+  /v1/senai/locadora/foto:
+    post:
+      tags:
+      - Foto
+      summary: Adiciona uma nova Foto
+      description: Endpoint para enviar os dados da foto a serem cadastrados
+      requestBody:
+        description: JSON contendo os dados da nova Foto a ser inserida no sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Foto'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '500':
+          description: Error Internal Server (Controller / Model)
+        '415':
+          description: Error Content Type
+    get:
+      tags:
+      - Foto
+      summary: Lista todas as Fotos
+      description: Listagem de todas as Fotos registradas no sistema
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Foto'
+        '404':
+          description: Not Found
+  /v1/senai/locadora/foto/{id}:
+    get:
+      tags:
+      - Foto
+      summary: Buscar uma Foto pelo ID
+      description: Retorna uma Foto pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca da Foto
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foto'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: not found
+        '505':
+          description: Error Internal Server (Controller / Model)
+    put:
+      tags:
+      - Foto
+      summary: Atualizar uma Foto pelo ID
+      description: Buscar e atualizar uma Foto pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca da Foto
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: Dados para atualizar uma Foto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Foto'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '415':
+          description: Invalid Content-Type
+        '500':
+          description: Error Internal Server (Controller / Model)
+    delete:
+      tags:
+      - Foto
+      summary: Delete uma Foto pelo ID
+      description: Buscar e Excluir uma Foto pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para buscar a Foto
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '500':
+          description: Error Internal Server (Controller / Model)
+  /v1/senai/locadora/sexo:
+    post:
+      tags:
+      - Sexo
+      summary: Adiciona um novo Sexo
+      description: Endpoint para enviar os dados de Sexo a serem cadastrados
+      requestBody:
+        description: JSON contendo os dados de novo Sexo a ser inserido no sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sexo'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '500':
+          description: Error Internal Server (Controller / Model)
+        '415':
+          description: Error Content Type
+    get:
+      tags:
+      - Sexo
+      summary: Lista todos os Sexos
+      description: Listagem de todos os Sexos registrados no sistema
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sexo'
+        '404':
+          description: Not Found
+  /v1/senai/locadora/sexo/{id}:
+    get:
+      tags:
+      - Sexo
+      summary: Buscar um Sexo pelo ID
+      description: Retorna um Sexo pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca do Sexo
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sexo'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: not found
+        '505':
+          description: Error Internal Server (Controller / Model)
+    put:
+      tags:
+      - Sexo
+      summary: Atualizar um Sexo pelo ID
+      description: Buscar e atualizar um Sexo pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca do Sexo
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: Dados para atualizar um Sexo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sexo'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '415':
+          description: Invalid Content-Type
+        '500':
+          description: Error Internal Server (Controller / Model)
+    delete:
+      tags:
+      - Sexo
+      summary: Delete um Sexo pelo ID
+      description: Buscar e Excluir um Sexo pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para buscar o Sexo
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '500':
+          description: Error Internal Server (Controller / Model)
+  /v1/senai/locadora/classificacao:
+    post:
+      tags:
+      - Classificação
+      summary: Adiciona uma nova Classificação
+      description: Endpoint para enviar os dados de Classificação a serem cadastrados
+      requestBody:
+        description: JSON contendo os dados de nova Classificação a ser inserida no
+          sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Classificacao'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '500':
+          description: Error Internal Server (Controller / Model)
+        '415':
+          description: Error Content Type
+    get:
+      tags:
+      - Classificação
+      summary: Lista todas as Classificações
+      description: Listagem de todas as Classificações registradas no sistema
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Classificacao'
+        '404':
+          description: Not Found
+  /v1/senai/locadora/classificacao/{id}:
+    get:
+      tags:
+      - Classificação
+      summary: Buscar uma Classificação pelo ID
+      description: Retorna uma Classificação pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca da Classificação
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Classificacao'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: not found
+        '505':
+          description: Error Internal Server (Controller / Model)
+    put:
+      tags:
+      - Classificação
+      summary: Atualizar uma Classificação pelo ID
+      description: Buscar e atualizar uma Classificação pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca da Classificação
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: Dados para atualizar uma Classificação
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Classificacao'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '415':
+          description: Invalid Content-Type
+        '500':
+          description: Error Internal Server (Controller / Model)
+    delete:
+      tags:
+      - Classificação
+      summary: Delete uma Classificação pelo ID
+      description: Buscar e Excluir uma Classificação pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para buscar a Classificação
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '500':
+          description: Error Internal Server (Controller / Model)
+  /v1/senai/locadora/atividade:
+    post:
+      tags:
+      - Atividade
+      summary: Adiciona uma nova Atividade
+      description: Endpoint para enviar os dados da atividade a serem cadastrados
+      requestBody:
+        description: JSON contendo os dados da nova Atividade a ser inserida no sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtividadeInput'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '500':
+          description: Error Internal Server (Controller / Model)
+        '415':
+          description: Error Content Type
+    get:
+      tags:
+      - Atividade
+      summary: Lista todas as Atividades
+      description: Listagem de todas as Atividades registradas no sistema
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AtividadeGet'
+        '404':
+          description: Not Found
+  /v1/senai/locadora/atividade/{id}:
+    get:
+      tags:
+      - Atividade
+      summary: Buscar uma Atividade pelo ID
+      description: Retorna uma Atividade pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca da Atividade
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AtividadeGet'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: not found
+        '505':
+          description: Error Internal Server (Controller / Model)
+    put:
+      tags:
+      - Atividade
+      summary: Atualizar uma Atividade pelo ID
+      description: Buscar e atualizar uma Atividade pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca da Atividade
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: Dados para atualizar uma Atividade
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtividadeInput'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '415':
+          description: Invalid Content-Type
+        '500':
+          description: Error Internal Server (Controller / Model)
+    delete:
+      tags:
+      - Atividade
+      summary: Delete uma Atividade pelo ID
+      description: Buscar e Excluir uma Atividade pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para buscar a Atividade
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '500':
+          description: Error Internal Server (Controller / Model)
+  /v1/senai/locadora/nacionalidade:
+    post:
+      tags:
+      - Nacionalidade
+      summary: Adiciona uma nova Nacionalidade
+      description: Endpoint para enviar os dados da nacionalidade a serem cadastrados
+      requestBody:
+        description: JSON contendo os dados da nova Nacionalidade a ser inserida no
+          sistema
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NacionalidadeInput'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input
+        '500':
+          description: Error Internal Server (Controller / Model)
+        '415':
+          description: Error Content Type
+    get:
+      tags:
+      - Nacionalidade
+      summary: Lista todas as Nacionalidades
+      description: Listagem de todas as Nacionalidades registradas no sistema
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NacionalidadeGet'
+        '404':
+          description: Not Found
+  /v1/senai/locadora/nacionalidade/{id}:
+    get:
+      tags:
+      - Nacionalidade
+      summary: Buscar uma Nacionalidade pelo ID
+      description: Retorna uma Nacionalidade pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca da Nacionalidade
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NacionalidadeGet'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: not found
+        '505':
+          description: Error Internal Server (Controller / Model)
+    put:
+      tags:
+      - Nacionalidade
+      summary: Atualizar uma Nacionalidade pelo ID
+      description: Buscar e atualizar uma Nacionalidade pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para realizar a busca da Nacionalidade
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: Dados para atualizar uma Nacionalidade
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NacionalidadeInput'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '415':
+          description: Invalid Content-Type
+        '500':
+          description: Error Internal Server (Controller / Model)
+    delete:
+      tags:
+      - Nacionalidade
+      summary: Delete uma Nacionalidade pelo ID
+      description: Buscar e Excluir uma Nacionalidade pelo ID
+      parameters:
+      - name: id
+        in: path
+        description: ID para buscar a Nacionalidade
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Not found
+        '500':
+          description: Error Internal Server (Controller / Model)
+components:
+  schemas:
+    IdRef:
+      description: Referência usada apenas para enviar o vínculo (id) no Filme
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: integer
+    Genero:
+      required:
+      - genero
+      type: object
+      properties:
+        id:
+          type: integer
+        genero:
+          type: string
+    Classificacao:
+      required:
+      - classificacao
+      type: object
+      properties:
+        id:
+          type: integer
+        classificacao:
+          type: string
+        descricao:
+          type: string
+        idade_minima:
+          type: integer
+    Sexo:
+      required:
+      - sexo
+      - sigla
+      type: object
+      properties:
+        id:
+          type: integer
+        sexo:
+          type: string
+        sigla:
+          type: string
+    Foto:
+      required:
+      - foto
+      type: object
+      properties:
+        id:
+          type: integer
+        foto:
+          type: string
+    Diretor:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        data_nascimento:
+          type: string
+          format: date-time
+        ano_inicio_carreira:
+          type: integer
+        id_sexo:
+          type: integer
+    DiretorInput:
+      required:
+      - nome
+      - data_nascimento
+      - ano_inicio_carreira
+      - id_sexo
+      type: object
+      properties:
+        nome:
+          type: string
+        data_nascimento:
+          type: string
+          format: date
+        ano_inicio_carreira:
+          type: string
+          example: '2000'
+        id_sexo:
+          type: string
+          example: '1'
+        foto:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+        nacionalidade:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+        atividade:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+        filme:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+    DiretorGet:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        data_nascimento:
+          type: string
+          format: date-time
+        ano_inicio_carreira:
+          type: integer
+        sexo:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sexo'
+        foto:
+          type: array
+          items:
+            $ref: '#/components/schemas/Foto'
+        nacionalidade:
+          type: array
+          items:
+            $ref: '#/components/schemas/Nacionalidade'
+        atividade:
+          type: array
+          items:
+            $ref: '#/components/schemas/Atividade'
+        filme:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilmeSummary'
+    Ator:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        data_nascimento:
+          type: string
+          format: date-time
+        ano_inicio_carreira:
+          type: integer
+        biografia:
+          type: string
+        id_sexo:
+          type: integer
+    AtorInput:
+      required:
+      - nome
+      - data_nascimento
+      - ano_inicio_carreira
+      - biografia
+      - id_sexo
+      type: object
+      properties:
+        nome:
+          type: string
+        data_nascimento:
+          type: string
+          format: date
+        ano_inicio_carreira:
+          type: string
+          example: '2000'
+        biografia:
+          type: string
+        id_sexo:
+          type: string
+          example: '1'
+        foto:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+        nacionalidade:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+        atividade:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+        filme:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+    AtorGet:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        data_nascimento:
+          type: string
+          format: date-time
+        ano_inicio_carreira:
+          type: integer
+        biografia:
+          type: string
+        sexo:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sexo'
+        fotos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Foto'
+        nacionalidade:
+          type: array
+          items:
+            $ref: '#/components/schemas/Nacionalidade'
+        atividade:
+          type: array
+          items:
+            $ref: '#/components/schemas/Atividade'
+        filme:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilmeSummary'
+    Nacionalidade:
+      type: object
+      properties:
+        id:
+          type: integer
+        nacionalidade:
+          type: string
+    NacionalidadeInput:
+      required:
+      - nacionalidade
+      type: object
+      properties:
+        nacionalidade:
+          type: string
+        diretor:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+        ator:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+    NacionalidadeGet:
+      type: object
+      properties:
+        id:
+          type: integer
+        nacionalidade:
+          type: string
+        diretor:
+          type: array
+          items:
+            $ref: '#/components/schemas/Diretor'
+        ator:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ator'
+    Atividade:
+      type: object
+      properties:
+        id:
+          type: integer
+        area_atuacao:
+          type: string
+    AtividadeInput:
+      required:
+      - area_atuacao
+      type: object
+      properties:
+        area_atuacao:
+          type: string
+        diretor:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+        ator:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+    AtividadeGet:
+      type: object
+      properties:
+        id:
+          type: integer
+        area_atuacao:
+          type: string
+        diretor:
+          type: array
+          items:
+            $ref: '#/components/schemas/Diretor'
+        ator:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ator'
+    FilmeSummary:
+      description: Versão "rasa" do Filme, sem genero/diretor/ator/classificacao expandidos
+        - usada quando o Filme aparece aninhado dentro de Diretor/Ator
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        sinopse:
+          type: string
+        capa:
+          type: string
+        data_lancamento:
+          type: string
+          format: date-time
+        duracao:
+          type: string
+        valor:
+          type: string
+          example: '50.00'
+        avaliacao:
+          type: string
+          example: '5.00'
+        id_classificacao:
+          type: integer
+    FilmeInput:
+      required:
+      - nome
+      - sinopse
+      - data_lancamento
+      type: object
+      properties:
+        nome:
+          type: string
+        sinopse:
+          type: string
+        data_lancamento:
+          type: string
+          format: date
+        duracao:
+          type: string
+        capa:
+          type: string
+        valor:
+          type: string
+          example: '50.00'
+        avaliacao:
+          type: string
+          example: '5.00'
+        id_classificacao:
+          type: integer
+        genero:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+        diretor:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+        ator:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdRef'
+    FilmeGet:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        sinopse:
+          type: string
+        capa:
+          type: string
+        data_lancamento:
+          type: string
+          format: date-time
+        duracao:
+          type: string
+        valor:
+          type: string
+          example: '50.00'
+        avaliacao:
+          type: string
+          example: '5.00'
+        classificacao:
+          type: array
+          items:
+            $ref: '#/components/schemas/Classificacao'
+        genero:
+          type: array
+          items:
+            $ref: '#/components/schemas/Genero'
+        diretor:
+          type: array
+          items:
+            $ref: '#/components/schemas/Diretor'
+        ator:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ator'
+  requestBodies:
+    Filme:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FilmeInput'
+    Genero:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Genero'
+    Diretor:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DiretorInput'
+    Ator:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AtorInput'
+    Foto:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Foto'
+    Sexo:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Sexo'
+    Classificacao:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Classificacao'
+    Atividade:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AtividadeInput'
+    Nacionalidade:
+      description: Objeto que deve ser enviado no Body das requisicoes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NacionalidadeInput'
